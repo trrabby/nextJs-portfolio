@@ -8,6 +8,7 @@ import styles from "./styles.module.css";
 
 const AdiminLogin = () => {
   const [toggle, setToggle] = useState(false);
+
   const {
     register,
     handleSubmit,
@@ -18,7 +19,6 @@ const AdiminLogin = () => {
   const onSubmit = async (formInfo: any) => {
     const email = formInfo.email;
     const password = formInfo.pass;
-    console.log(formInfo);
   };
 
   return (
@@ -37,7 +37,7 @@ const AdiminLogin = () => {
                 onSubmit={handleSubmit(onSubmit)}
                 className="mx-auto mt-10 flex flex-col gap-5 w-full lg:w-8/12"
               >
-                <label className="input input-bordered flex items-center gap-2 animate__animated animate__flipInX animate__slow	1s bg-primary px-2 rounded-lg">
+                <label className="flex items-center gap-2 animate__animated animate__flipInX animate__slow	1s bg-transparent px-2 rounded-lg border">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 16 16"
@@ -48,7 +48,7 @@ const AdiminLogin = () => {
                     <path d="M15 6.954 8.978 9.86a2.25 2.25 0 0 1-1.956 0L1 6.954V11.5A1.5 1.5 0 0 0 2.5 13h11a1.5 1.5 0 0 0 1.5-1.5V6.954Z" />
                   </svg>
                   <input
-                    className="text-white w-full p-3 rounded-lg bg-primary"
+                    className="text-white w-full p-3 rounded-lg bg-transparent"
                     type="email"
                     placeholder="Email"
                     {...register("email", { required: true })}
@@ -61,7 +61,7 @@ const AdiminLogin = () => {
                 )}
 
                 <div>
-                  <label className="input input-bordered flex items-center gap-2 animate__animated animate__flipInX animate__slow	1s bg-primary px-2 rounded-lg">
+                  <label className=" flex items-center gap-2 animate__animated animate__flipInX animate__slow	1s bg-transparent px-2 rounded-lg border">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       viewBox="0 0 16 16"
@@ -76,7 +76,7 @@ const AdiminLogin = () => {
                     </svg>
 
                     <input
-                      className="text-white w-full p-3 rounded-lg bg-primary"
+                      className="text-white w-full p-3 rounded-lg bg-transparent"
                       type={toggle ? "text" : "password"}
                       placeholder="Password"
                       {...register("pass", { required: true })}

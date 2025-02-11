@@ -7,6 +7,7 @@ import emailjs from "emailjs-com";
 import { config } from "@/config";
 import { toast } from "sonner";
 import { SectionHead } from "@/components/SectionHead";
+import styles from "../styles.module.css";
 
 export const Contacts = () => {
   const {
@@ -46,7 +47,9 @@ export const Contacts = () => {
   };
 
   return (
-    <div className="bg-primary">
+    <div
+      className={`${styles.contact_bg} bg-center bg-cover bg-fixed text-white `}
+    >
       <div>
         <SectionHead
           title={"Get In Touch"}
@@ -54,7 +57,7 @@ export const Contacts = () => {
         />
       </div>
 
-      <div className="contacts">
+      <div className="backdrop-blur-lg w-8/12 mx-auto p-5 shadow-xl shadow-accent rounded-xl">
         <form
           onSubmit={() => handleSubmit(onSubmit)}
           className="mx-auto md:mt-10 flex flex-col gap-5 w-full lg:w-8/12"
@@ -62,11 +65,11 @@ export const Contacts = () => {
           <label
             data-aos="flip-up"
             data-aos-duration="1000"
-            className="input input-bordered flex items-center gap-2 text-white bg-transparent border border-third shadow-md hover:shadow-accent pl-2"
+            className="input input-bordered flex items-center gap-2 text-white bg-transparent border border-third shadow-md hover:shadow-accent pl-2 rounded-lg"
           >
             <MdDriveFileRenameOutline />
             <input
-              className="text-white  bg-primary w-full p-3 rounded-lg "
+              className="text-white  bg-transparent w-full p-3"
               type="text"
               placeholder="Your Name"
               {...register("name", { required: true })}
@@ -78,11 +81,11 @@ export const Contacts = () => {
           <label
             data-aos="flip-up"
             data-aos-duration="1000"
-            className="input input-bordered  flex items-center gap-2 text-white bg-transparent  border border-third shadow-md hover:shadow-accent pl-2"
+            className="input input-bordered  flex items-center gap-2 text-white bg-transparent  border border-third shadow-md hover:shadow-accent pl-2  rounded-lg"
           >
             <MdDriveFileRenameOutline />
             <input
-              className="text-white bg-primary  w-full p-3 rounded-lg hover:shadow-primary"
+              className="text-white bg-transparent  w-full p-3"
               type="email"
               placeholder="Your Email"
               {...register("email", { required: true })}
@@ -94,11 +97,11 @@ export const Contacts = () => {
           <label
             data-aos="flip-up"
             data-aos-duration="1000"
-            className="input input-bordered flex items-center gap-2 text-white bg-transparent border border-third shadow-md hover:shadow-accent pl-2"
+            className="input input-bordered flex items-center gap-2 text-white bg-transparent border border-third shadow-md hover:shadow-accent pl-2 rounded-lg"
           >
             <MdDriveFileRenameOutline />
             <input
-              className="text-white bg-primary  w-full p-3 rounded-lg hover:shadow-primary"
+              className="text-white bg-transparent  w-full p-3 border-none "
               type="number"
               placeholder="Your Mobile Number"
               {...register("number", { required: true })}
@@ -129,7 +132,7 @@ export const Contacts = () => {
             <span className="text-red-600 text-xs">This field is required</span>
           )}
           <button
-            className="rounded bg-accent px-12 py-3 text-base font-medium text-white shadow hover:bg-transparent border hover:scale-105 duration-700 flex gap-3 justify-center items-center w-2/12 mx-auto"
+            className="rounded bg-accent px-12 py-2 text-base font-medium text-white shadow hover:bg-transparent border hover:scale-105 duration-700 flex gap-3 justify-center items-center w-3/12 mx-auto"
             type="submit"
           >
             Email
