@@ -3,6 +3,7 @@ import { useRef } from "react";
 import { About } from "./_homePageComponents/About";
 import { Home } from "./_homePageComponents/Home";
 import SidebarHome from "./_homePageComponents/Sidebar";
+import { Contacts } from "./_homePageComponents/Contacts";
 
 export default function Page() {
   const homeRef = useRef(null);
@@ -38,7 +39,7 @@ export default function Page() {
           <div>Projects</div>
         </section>
         <section ref={contactsRef} className="min-h-screen">
-          <div>Contacts</div>
+          <Contacts />
         </section>
       </div>
     </div>
