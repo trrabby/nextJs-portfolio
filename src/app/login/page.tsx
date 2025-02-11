@@ -19,6 +19,8 @@ const AdiminLogin = () => {
   const onSubmit = async (formInfo: any) => {
     const email = formInfo.email;
     const password = formInfo.pass;
+
+    console.log(email, password);
   };
 
   return (
