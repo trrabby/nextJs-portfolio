@@ -3,7 +3,6 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import { MdDriveFileRenameOutline } from "react-icons/md";
 import { Typewriter } from "react-simple-typewriter";
-import { Element } from "react-scroll";
 import emailjs from "emailjs-com";
 import { config } from "@/config";
 import { toast } from "sonner";
@@ -47,7 +46,7 @@ export const Contacts = () => {
   };
 
   return (
-    <div className="bg-gray-900">
+    <div className="bg-primary">
       <div>
         <SectionHead
           title={"Get In Touch"}
@@ -63,11 +62,11 @@ export const Contacts = () => {
           <label
             data-aos="flip-up"
             data-aos-duration="1000"
-            className="input input-bordered flex items-center gap-2 text-white bg-transparent border border-third shadow-md shadow-accent hover:shadow-primary"
+            className="input input-bordered flex items-center gap-2 text-white bg-transparent border border-third shadow-md hover:shadow-accent pl-2"
           >
             <MdDriveFileRenameOutline />
             <input
-              className="text-white bg-black w-full p-3 rounded-lg hover:shadow-primary"
+              className="text-white  bg-primary w-full p-3 rounded-lg "
               type="text"
               placeholder="Your Name"
               {...register("name", { required: true })}
@@ -79,11 +78,11 @@ export const Contacts = () => {
           <label
             data-aos="flip-up"
             data-aos-duration="1000"
-            className="input input-bordered flex items-center gap-2 text-white bg-transparent  border border-third shadow-md shadow-accent hover:shadow-primary"
+            className="input input-bordered  flex items-center gap-2 text-white bg-transparent  border border-third shadow-md hover:shadow-accent pl-2"
           >
             <MdDriveFileRenameOutline />
             <input
-              className="text-white w-full p-3 rounded-lg hover:shadow-primary"
+              className="text-white bg-primary  w-full p-3 rounded-lg hover:shadow-primary"
               type="email"
               placeholder="Your Email"
               {...register("email", { required: true })}
@@ -95,11 +94,11 @@ export const Contacts = () => {
           <label
             data-aos="flip-up"
             data-aos-duration="1000"
-            className="input input-bordered flex items-center gap-2 text-white bg-transparent border border-third shadow-md shadow-accent hover:shadow-primary"
+            className="input input-bordered flex items-center gap-2 text-white bg-transparent border border-third shadow-md hover:shadow-accent pl-2"
           >
             <MdDriveFileRenameOutline />
             <input
-              className="text-white w-full p-3 rounded-lg hover:shadow-primary"
+              className="text-white bg-primary  w-full p-3 rounded-lg hover:shadow-primary"
               type="number"
               placeholder="Your Mobile Number"
               {...register("number", { required: true })}
@@ -123,14 +122,14 @@ export const Contacts = () => {
             data-aos="flip-up"
             data-aos-duration="1000"
             onSelect={blur}
-            className="h-52 bg-transparent border border-third text-white font-bold p-5 text-xl rounded-lg shadow-md shadow-accent hover:shadow-primary"
+            className="h-52 bg-transparent border border-third text-white font-bold p-5 text-xl rounded-lg shadow-md shover:shadow-accent"
             {...register("message", { required: true })}
           />
           {errors.message && (
             <span className="text-red-600 text-xs">This field is required</span>
           )}
           <button
-            className="hover:bg-primary text-white md:text-lg text-base hover:text-accent w-6/12 mx-auto px-3 py-1 rounded-xl bg-transparent border border-accent duration-500 shadow-sm shadow-primary hover:shadow-primary"
+            className="rounded bg-accent px-12 py-3 text-base font-medium text-white shadow hover:bg-transparent border hover:scale-105 duration-700 flex gap-3 justify-center items-center w-2/12 mx-auto"
             type="submit"
           >
             Email
