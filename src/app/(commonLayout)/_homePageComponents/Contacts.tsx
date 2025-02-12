@@ -2,12 +2,12 @@
 import React from "react";
 import { useForm } from "react-hook-form";
 import { MdDriveFileRenameOutline } from "react-icons/md";
-import { Typewriter } from "react-simple-typewriter";
 import emailjs from "emailjs-com";
 import { config } from "@/config";
 import { toast } from "sonner";
 import { SectionHead } from "@/components/SectionHead";
 import styles from "../styles.module.css";
+import { Typewriter } from "react-simple-typewriter";
 
 export const Contacts = () => {
   const {
@@ -24,14 +24,14 @@ export const Contacts = () => {
       number: formInfo.number,
       message: formInfo.message,
     };
-    // console.log(templateParams);
+    console.log(templateParams);
 
     emailjs
       .send(
         config().EmailJS_Service_ID as string, // Replace with your EmailJS service ID
         config().EmailJS_Template_ID as string, // Replace with your EmailJS template ID
         templateParams,
-        config().EmailJS_User_ID as string // Replace with your EmailJS user ID
+        config().EmailJS_User_ID as string // Replace with your EmailJS user ID | Public key
       )
       .then(
         (response) => {
@@ -48,18 +48,18 @@ export const Contacts = () => {
 
   return (
     <div
-      className={`${styles.contact_bg} bg-center bg-cover bg-fixed text-white `}
+      className={`${styles.contact_bg} bg-center h-screen bg-cover bg-fixed text-white flex flex-col items-center justify-center`}
     >
-      <div>
+      <div className="w-full">
         <SectionHead
           title={"Get In Touch"}
           para={"Please Let Me Know If You Have Any Queries"}
         />
       </div>
 
-      <div className="backdrop-blur-lg w-8/12 mx-auto p-5 shadow-xl shadow-accent rounded-xl">
+      <div className="backdrop-blur-lg w-8/12 mx-auto p-5 shadow-sm shadow-accent rounded-xl">
         <form
-          onSubmit={() => handleSubmit(onSubmit)}
+          onSubmit={handleSubmit(onSubmit)}
           className="mx-auto md:mt-10 flex flex-col gap-5 w-full lg:w-8/12"
         >
           <label
@@ -125,7 +125,7 @@ export const Contacts = () => {
             data-aos="flip-up"
             data-aos-duration="1000"
             onSelect={blur}
-            className="h-52 bg-transparent border border-third text-white font-bold p-5 text-xl rounded-lg shadow-md shover:shadow-accent"
+            className="h-52 bg-transparent border border-third text-white font-bold p-5 text-base rounded-lg shadow-md shover:shadow-accent"
             {...register("message", { required: true })}
           />
           {errors.message && (

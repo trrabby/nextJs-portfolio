@@ -5,9 +5,12 @@ import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
 import { useForm } from "react-hook-form";
 import { SectionHead } from "@/components/SectionHead";
 import styles from "./styles.module.css";
+import { useLoginMutation } from "@/redux/features/auth/authApi";
+import { LoadingSpinner } from "@/components/LoadingSpinner";
 
 const AdiminLogin = () => {
   const [toggle, setToggle] = useState(false);
+  const [login, { isLoading }] = useLoginMutation();
 
   const {
     register,
@@ -17,8 +20,10 @@ const AdiminLogin = () => {
   } = useForm();
 
   const onSubmit = async (formInfo: any) => {
-    const email = formInfo.email;
-    const password = formInfo.pass;
+    // const email = formInfo.email;
+    // const password = formInfo.pass;
+    console.log({ formInfo });
+    login({ formInfo });
   };
 
   return (
@@ -107,7 +112,7 @@ const AdiminLogin = () => {
                   type="submit"
                 >
                   Get In
-                  {/* {loading ? <LoadingSpinner></LoadingSpinner> : "Get In"} */}
+                  {isLoading ? <LoadingSpinner></LoadingSpinner> : "Get In"}
                 </button>
               </form>
             </div>

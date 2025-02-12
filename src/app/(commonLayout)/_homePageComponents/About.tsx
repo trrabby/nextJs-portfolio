@@ -23,7 +23,7 @@ export const About = () => {
         <div
           data-aos="fade-up"
           data-aos-duration="1000"
-          className="mx-auto max-w-lg text-center"
+          className="mx-auto w-6/12 text-center"
         >
           <h2 className="text-3xl font-bold sm:text-4xl">Glimpse</h2>
 

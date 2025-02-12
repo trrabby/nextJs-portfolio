@@ -1,12 +1,13 @@
+import { config } from "@/config";
 import { MongoClient, MongoClientOptions } from "mongodb";
 
-const uri = process.env.MONGODB_URI; // Ensure this environment variable is set
+const uri = config().MONGODB_URI; // Ensure this environment variable is set
 const options: MongoClientOptions = {};
 
 let client: MongoClient;
 let clientPromise: Promise<MongoClient>;
 
-if (!process.env.MONGODB_URI) {
+if (!config().MONGODB_URI) {
   throw new Error("Please add your MongoDB URI to .env.local");
 }
 
