@@ -1,8 +1,8 @@
 "use client";
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { About } from "./_homePageComponents/About";
 import { Home } from "./_homePageComponents/Home";
-import SidebarHome from "./_homePageComponents/Sidebar";
+import Navbar from "./_homePageComponents/Navbar";
 import { Contacts } from "./_homePageComponents/Contacts";
 
 export default function Page() {
@@ -20,12 +20,36 @@ export default function Page() {
     contacts: contactsRef,
   };
 
+  const [showNavbar, setShowNavbar] = useState(true);
+  const [lastScrollY, setLastScrollY] = useState(0);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
+      if (currentScrollY > lastScrollY && currentScrollY > 80) {
+        setShowNavbar(false); // Hide on scroll down
+      } else {
+        setShowNavbar(true); // Show on scroll up
+      }
+      setLastScrollY(currentScrollY);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [lastScrollY]);
+
   return (
-    <div className="flex w-full ">
-      <div className="w-2/12">
-        <SidebarHome sectionRefs={sectionRefs} />
+    <div
+      className={`w-full relative ${
+        showNavbar
+          ? "transform -translate-y-0 duration-300"
+          : "transform -translate-y-24 duration-300"
+      }`}
+    >
+      <div className="sticky top-0 w-2/12 md:w-full z-50">
+        <Navbar sectionRefs={sectionRefs} />
       </div>
-      <div className="flex-1">
+      <div className="relative">
         <section ref={homeRef} className="min-h-screen">
           <Home />
         </section>

@@ -1,4 +1,3 @@
-"use client";
 import Image from "next/image";
 import profile from "../../../../public/portfolioAssets/profile.png";
 import { Typewriter } from "react-simple-typewriter";
