@@ -7,6 +7,7 @@ import { FiTwitter } from "react-icons/fi";
 import { SlSocialLinkedin } from "react-icons/sl";
 import { FaGithub } from "react-icons/fa";
 import styles from "../styles.module.css";
+import { useEffect, useState } from "react";
 
 const navlinks = [
   { id: "home", name: "Home" },
@@ -40,13 +41,43 @@ const social: TSocialProps[] = [
 ];
 
 export default function Navbar({ sectionRefs }: { sectionRefs: any }) {
-  const scrollToSection = (id: string) => {
-    sectionRefs[id]?.current?.scrollIntoView({ behavior: "smooth" });
-  };
+  const [showNavbar, setShowNavbar] = useState(true);
+  const [lastScrollY, setLastScrollY] = useState(0);
 
+  useEffect(() => {
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
+      if (currentScrollY > lastScrollY && currentScrollY > 80) {
+        setShowNavbar(false);
+      } else {
+        setShowNavbar(true);
+      }
+      setLastScrollY(currentScrollY);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [lastScrollY]);
+
+  const scrollToSection = (id: string) => {
+    const section = sectionRefs[id]?.current;
+    if (section) {
+      setShowNavbar(true); // Ensure navbar is visible before scrolling
+      setTimeout(() => {
+        const navbarHeight = 100; // Match your actual navbar height
+        const top =
+          section.getBoundingClientRect().top + window.scrollY - navbarHeight;
+        window.scrollTo({ top, behavior: "smooth" });
+      }, 100); // Wait for navbar to show
+    }
+  };
   return (
     <div
-      className={`${styles.navbar_backdrop} flex md:flex-col lg:flex-row justify-between p-2 w-2/12 md:w-full`}
+      className={`${
+        styles.navbar_backdrop
+      } flex md:flex-col lg:flex-row justify-between p-2 w-2/12 md:w-full transition-all duration-300 ${
+        showNavbar ? "md:translate-y-0" : "-translate-y-0 md:-translate-y-24"
+      }`}
     >
       <div className="flex justify-center items-center border-fourth">
         <Link href={"/"}>

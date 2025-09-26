@@ -83,3 +83,13 @@
   rotate: 90deg;
   z-index: -2;
 }
+
+.styled_button1 {
+  background: linear-gradient(90deg, #84fadf, #94969b);
+  padding: 10px 20px;
+  border-radius: 8px;
+  color: white;
+  font-weight: bold;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: background 0.3s ease;
+}

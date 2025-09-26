@@ -39,7 +39,7 @@ const social: TSocialProps[] = [
   },
 ];
 
-export default function Navbar({ sectionRefs }: { sectionRefs: any }) {
+export default function Sidebar({ sectionRefs }: { sectionRefs: any }) {
   const scrollToSection = (id: string) => {
     sectionRefs[id]?.current?.scrollIntoView({ behavior: "smooth" });
   };

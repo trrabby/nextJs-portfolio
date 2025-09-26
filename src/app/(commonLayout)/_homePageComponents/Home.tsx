@@ -16,7 +16,7 @@ export const Home = () => {
           {/* Profile Image (Desktop) */}
           <div className="md:flex hidden w-4/12 items-end justify-end">
             <Image
-              className="rounded-2xl"
+              className="rounded-2xl mt-24"
               src={profile}
               alt="Profile"
               height={500}
