@@ -1,10 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import * as React from "react";
 import Button from "@mui/material/Button";
-import MenuOpenIcon from "@mui/icons-material/MenuOpen";
-import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
+import { RiMenuFill } from "react-icons/ri";
+import { RiMenuFoldLine } from "react-icons/ri";
 import Sidebar from "../Sidebar";
-
 export default function SidebarDrawer({ sectionRefs }: { sectionRefs: any }) {
   const [open, setOpen] = React.useState(false);
 
@@ -16,14 +15,14 @@ export default function SidebarDrawer({ sectionRefs }: { sectionRefs: any }) {
             className="p-4 shadow-2xl shadow-primary rounded-full bg-transparent z-40"
             onClick={() => setOpen(!open)}
           >
-            <MenuOpenIcon className="w-20 h-20" />
+            <RiMenuFoldLine className="w-10 h-10 text-accent dark:text-fourth" />
           </div>
         ) : (
           <div
             className="p-4 shadow-primary rounded-full bg-transparent z-40"
             onClick={() => setOpen(!open)}
           >
-            <MenuOutlinedIcon className="w-20 h-20 " />
+            <RiMenuFill className="w-10 h-10 text-accent dark:text-fourth" />
           </div>
         )}
       </Button>

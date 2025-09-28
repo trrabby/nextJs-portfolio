@@ -161,7 +161,7 @@ export const Footer = ({ sectionRefs }: { sectionRefs: any }) => {
               </p>
             </div>
 
-            <div className="md:hidden">{social}</div>
+            <div className="md:hidden flex justify-center items-center">{social}</div>
           </div>
 
           <div

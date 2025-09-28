@@ -100,7 +100,8 @@ export default function Sidebar({
           <hr className="border border-gray-950 dark:border-fourth transition-all duration-300 mb-2" />
           <div className="flex gap-3 justify-center items-center">
             <p className="flex gap-2">
-              Switch to {theme === "dark" ? <p>Light</p> : <p>Dark</p>}
+              Switch to{" "}
+              {theme === "dark" ? <span>Light</span> : <span>Dark</span>}
             </p>
             <ThemeToggler />
           </div>{" "}

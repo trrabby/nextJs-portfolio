@@ -35,7 +35,7 @@ export default function Page() {
       <div className="fixed flex md:hidden top-0 left-4 z-50 bg-transparent">
         <SidebarDrawer sectionRefs={sectionRefs} />
       </div>
-      <div className="relative bg-fourth dark:bg-gray-900">
+      <div className="relative bg-fourth dark:bg-gray-900 transition-all duration-500">
         <section ref={homeRef} className="min-h-screen">
           <Banner />
         </section>
