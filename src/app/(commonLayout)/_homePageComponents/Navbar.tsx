@@ -8,6 +8,7 @@ import { SlSocialLinkedin } from "react-icons/sl";
 import { FaGithub } from "react-icons/fa";
 import styles from "../styles.module.css";
 import { useEffect, useState } from "react";
+import ThemeController from "./_ThemeController/ThemeToggler";
 
 const navlinks = [
   { id: "home", name: "Home" },
@@ -62,20 +63,26 @@ export default function Navbar({ sectionRefs }: { sectionRefs: any }) {
   const scrollToSection = (id: string) => {
     const section = sectionRefs[id]?.current;
     if (section) {
-      setShowNavbar(true); // Ensure navbar is visible before scrolling
-      setTimeout(() => {
-        const navbarHeight = 100; // Match your actual navbar height
-        const top =
-          section.getBoundingClientRect().top + window.scrollY - navbarHeight;
-        window.scrollTo({ top, behavior: "smooth" });
-      }, 100); // Wait for navbar to show
+      const navbarHeight = 100; // Adjust to your actual navbar height
+      const sectionTop = section.getBoundingClientRect().top + window.scrollY;
+      const currentScrollY = window.scrollY;
+
+      // Determine scroll direction based on section position
+      const isScrollingUp = sectionTop < currentScrollY;
+
+      // Only subtract navbarHeight if scrolling up to the section
+      const offset = isScrollingUp ? navbarHeight : 0;
+      const top = sectionTop - offset;
+
+      window.scrollTo({ top, behavior: "smooth" });
     }
   };
+
   return (
     <div
       className={`${
         styles.navbar_backdrop
-      } flex md:flex-col lg:flex-row justify-between p-2 w-2/12 md:w-full transition-all duration-300 ${
+      } dark:bg-gray-950 flex md:flex-col lg:flex-row justify-between items-center p-2 w-2/12 md:w-full transition-all duration-300 ${
         showNavbar ? "md:translate-y-0" : "-translate-y-0 md:-translate-y-24"
       }`}
     >
@@ -112,8 +119,8 @@ export default function Navbar({ sectionRefs }: { sectionRefs: any }) {
           </Link>
         ))}
       </div>
-      <div className={`${styles.triangle}`}></div>
-      <div className={`${styles.triangle2}`}></div>
+      <ThemeController />
+      <div className={`${styles.triangle} ${styles.navbar_backdrop_sm}`}></div>
     </div>
   );
 }

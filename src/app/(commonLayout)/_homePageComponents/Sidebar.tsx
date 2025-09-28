@@ -7,6 +7,8 @@ import { FiTwitter } from "react-icons/fi";
 import { SlSocialLinkedin } from "react-icons/sl";
 import { FaGithub } from "react-icons/fa";
 import styles from "../styles.module.css";
+import ThemeToggler from "./_ThemeController/ThemeToggler";
+import { useTheme } from "next-themes";
 
 const navlinks = [
   { id: "home", name: "Home" },
@@ -39,50 +41,83 @@ const social: TSocialProps[] = [
   },
 ];
 
-export default function Sidebar({ sectionRefs }: { sectionRefs: any }) {
+export default function Sidebar({
+  sectionRefs,
+  open,
+  onClose,
+}: {
+  sectionRefs: any;
+  open: boolean;
+  onClose: () => void;
+}) {
   const scrollToSection = (id: string) => {
     sectionRefs[id]?.current?.scrollIntoView({ behavior: "smooth" });
   };
 
+  const { theme } = useTheme();
+
   return (
-    <div
-      className={`${styles.navbar_backdrop} flex md:flex-col lg:flex-row justify-between p-2 w-2/12 md:w-full`}
-    >
-      <div className="flex justify-center items-center border-fourth">
-        <Link href={"/"}>
-          <Image
-            className=""
-            alt="Site Logo"
-            src={profileImg}
-            width={200}
-            height={60}
-          />
-        </Link>
-      </div>
-      <div className="flex flex-col md:flex-row gap-3 text-fourth text-lg text-right">
-        {navlinks.map(({ id, name }) => (
-          <button
-            key={id}
-            onClick={() => scrollToSection(id)}
-            className={`${styles.animated_underline} p-2 pr-4 rounded-md text-right font-bold transition-all duration-300 hover:text-accent hover:ease-linear hover:scale-110 relative group `}
-          >
-            {name}
-          </button>
-        ))}
-      </div>
-      <div className="flex gap-2 justify-between items-center">
-        {social.map((item) => (
-          <Link
-            className="hover:bg-third hover:scale-125 hover:duration-500 hover:text-primary w-8 h-8 text-white text-center flex justify-center items-center rounded-lg"
-            key={item.href}
-            href={item.href}
-          >
-            {item.logo}
+    <div className="flex">
+      {open && (
+        <div
+          onClick={() => onClose()}
+          className="w-4/12 h-screen fixed inset-0  bg-opacity-40 z-40"
+        ></div>
+      )}
+      <div
+        className={`${styles.navbar_backdrop_sm} ${
+          open
+            ? "fixed right-0 top-0 z-50 duration-500 flex flex-col justify-between"
+            : "fixed translate-y-[1000px] right-0 duration-500 top-0 "
+        }flex flex-col justify-between h-[calc(100vh-70px)] shadow-2xl shadow-primary bg-transparent rounded-l-2xl w-8/12 p-4`}
+      >
+        <div>
+          <Link href={"/"}>
+            <Image
+              className="p-2"
+              alt="Site Logo"
+              src={profileImg}
+              width={180}
+              height={60}
+            />
           </Link>
-        ))}
+        </div>
+        <div
+          onClick={() => onClose()}
+          className="flex flex-col gap-3 text-primary dark:text-fourth text-2xl text-left font-mono"
+        >
+          {navlinks.map(({ id, name }) => (
+            <button
+              key={id}
+              onClick={() => scrollToSection(id)}
+              className={`${styles.animated_underline} p-2 pr-4 rounded-md text-left font-bold transition-all duration-300 hover:text-accent hover:ease-linear hover:scale-110 relative group `}
+            >
+              {name}
+            </button>
+          ))}
+        </div>
+        <div className="text-gray-950 dark:text-fourth transition-all duration-300 font-mono">
+          <hr className="border border-gray-950 dark:border-fourth transition-all duration-300 mb-2" />
+          <div className="flex gap-3 justify-center items-center">
+            <p className="flex gap-2">
+              Switch to {theme === "dark" ? <p>Light</p> : <p>Dark</p>}
+            </p>
+            <ThemeToggler />
+          </div>{" "}
+          <hr className="border border-gray-950 dark:border-fourth transition-all duration-300 mb-2" />
+        </div>
+        <div className="flex gap-2 justify-between items-center text-gray-950 dark:text-fourth transition-all duration-300">
+          {social.map((item) => (
+            <Link
+              className="hover:bg-third hover:scale-125 hover:duration-500 hover:text-primary w-8 h-8  text-center flex justify-center items-center rounded-lg"
+              key={item.href}
+              href={item.href}
+            >
+              {item.logo}
+            </Link>
+          ))}
+        </div>
       </div>
-      <div className={`${styles.triangle}`}></div>
-      <div className={`${styles.triangle2}`}></div>
     </div>
   );
 }

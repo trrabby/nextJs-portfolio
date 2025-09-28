@@ -3,13 +3,15 @@
 import { Provider } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";
 import { persistor, store } from "@/redux/store";
-import { HeroUIProvider } from "@heroui/react";
+import { ThemeProvider } from "next-themes";
 
 export default function Providers({ children }: { children: React.ReactNode }) {
   return (
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
-        <HeroUIProvider>{children}</HeroUIProvider>
+        <ThemeProvider attribute={"class"} enableSystem defaultTheme="system">
+          {children}
+        </ThemeProvider>
       </PersistGate>
     </Provider>
   );

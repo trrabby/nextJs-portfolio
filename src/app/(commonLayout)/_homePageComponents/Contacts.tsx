@@ -7,7 +7,6 @@ import emailjs from "emailjs-com";
 import { config } from "@/config";
 import { toast } from "sonner";
 import { SectionHead } from "@/components/SectionHead";
-import styles from "../styles.module.css";
 
 export const Contacts = () => {
   const {
@@ -48,16 +47,19 @@ export const Contacts = () => {
 
   return (
     <div
-      className={`${styles.contact_bg} bg-center bg-cover bg-fixed text-white `}
+      id="#contact"
+      className={`bg-center bg-cover bg-fixed text-white pb-10 `}
     >
       <div>
         <SectionHead
           title={"Get In Touch"}
+          titleColor="text-gray-800 dark:text-fourth"
           para={"Please Let Me Know If You Have Any Queries"}
+          paraColor="text-gray-600 dark:text-fourth"
         />
       </div>
 
-      <div className="backdrop-blur-lg w-8/12 mx-auto p-5 shadow-xl shadow-accent rounded-xl">
+      <div className="backdrop-blur-lg md:w-8/12 w-10/12 mx-auto p-5 py-10 shadow-sm bg-white  dark:bg-gray-800 shadow-gray-800 rounded-xl">
         <form
           onSubmit={() => handleSubmit(onSubmit)}
           className="mx-auto md:mt-10 flex flex-col gap-5 w-full lg:w-8/12"
@@ -65,11 +67,11 @@ export const Contacts = () => {
           <label
             data-aos="flip-up"
             data-aos-duration="1000"
-            className="input input-bordered flex items-center gap-2 text-white bg-transparent border border-third shadow-md hover:shadow-accent pl-2 rounded-lg"
+            className="input input-bordered flex items-center gap-2 text-gray-800 dark:text-fourth  bg-transparent border border-third shadow-md hover:shadow-accent pl-2 rounded-lg"
           >
             <MdDriveFileRenameOutline />
             <input
-              className="text-white  bg-transparent w-full p-3"
+              className="text-gray-800 dark:text-fourth bg-transparent w-full p-3"
               type="text"
               placeholder="Your Name"
               {...register("name", { required: true })}
@@ -81,11 +83,11 @@ export const Contacts = () => {
           <label
             data-aos="flip-up"
             data-aos-duration="1000"
-            className="input input-bordered  flex items-center gap-2 text-white bg-transparent  border border-third shadow-md hover:shadow-accent pl-2  rounded-lg"
+            className="input input-bordered  flex items-center gap-2 text-gray-800 dark:text-fourth   bg-transparent  border border-third shadow-md hover:shadow-accent pl-2  rounded-lg"
           >
             <MdDriveFileRenameOutline />
             <input
-              className="text-white bg-transparent  w-full p-3"
+              className="text-gray-800 dark:text-fourth   bg-transparent  w-full p-3"
               type="email"
               placeholder="Your Email"
               {...register("email", { required: true })}
@@ -97,11 +99,11 @@ export const Contacts = () => {
           <label
             data-aos="flip-up"
             data-aos-duration="1000"
-            className="input input-bordered flex items-center gap-2 text-white bg-transparent border border-third shadow-md hover:shadow-accent pl-2 rounded-lg"
+            className="input input-bordered flex items-center gap-2 text-gray-800 dark:text-fourth  bg-transparent border border-third shadow-md hover:shadow-accent pl-2 rounded-lg"
           >
             <MdDriveFileRenameOutline />
             <input
-              className="text-white bg-transparent  w-full p-3 border-none "
+              className="text-gray-800 dark:text-fourth bg-transparent  w-full p-3 border-none "
               type="number"
               placeholder="Your Mobile Number"
               {...register("number", { required: true })}
@@ -110,7 +112,7 @@ export const Contacts = () => {
           {errors.number && (
             <span className="text-red-600 text-xs">This field is required</span>
           )}
-          <div className="text-white">
+          <div className="text-gray-800 dark:text-fourth">
             <Typewriter
               words={["Write Your Message Here..."]}
               loop={5}
@@ -132,7 +134,7 @@ export const Contacts = () => {
             <span className="text-red-600 text-xs">This field is required</span>
           )}
           <button
-            className="rounded bg-accent px-12 py-2 text-base font-medium text-white shadow hover:bg-transparent border hover:scale-105 duration-700 flex gap-3 justify-center items-center w-3/12 mx-auto"
+            className="rounded bg-transparent px-12 py-2 text-base font-medium text-accent drak:text-white shadow hover:bg-accent dark:hover:bg-slate-700 hover:text-fourth border hover:scale-105 duration-700 flex gap-3 justify-center items-center w-3/12 mx-auto"
             type="submit"
           >
             Email

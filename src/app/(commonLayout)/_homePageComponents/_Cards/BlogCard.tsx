@@ -11,7 +11,10 @@ import Stack from "@mui/material/Stack";
 
 export const BlogCard = () => {
   return (
-    <Card sx={{ maxWidth: 360, borderRadius: 3, boxShadow: 3, p: 1 }}>
+    <Card
+      className="bg-white dark:bg-gray-800"
+      sx={{ maxWidth: 360, borderRadius: 3, boxShadow: 3, p: 1 }}
+    >
       <CardMedia
         component="img"
         height="200"
@@ -28,11 +31,20 @@ export const BlogCard = () => {
           sx={{ fontWeight: "bold", borderRadius: "8px", mb: 1 }}
         />
 
-        <Typography variant="h6" sx={{ fontWeight: 600, mb: 1 }}>
+        <Typography
+          className="text-black dark:text-fourth"
+          variant="h6"
+          sx={{ fontWeight: 600, mb: 1 }}
+        >
           Website Review Check
         </Typography>
 
-        <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
+        <Typography
+          className="text-black dark:text-fourth"
+          variant="body2"
+          color="text.secondary"
+          sx={{ mb: 2 }}
+        >
           The place is close to Barceloneta Beach and bus stop just 2 min by
           walk and near to "Naviglio" where you can enjoy the main night life in
           Barcelona.
@@ -45,10 +57,18 @@ export const BlogCard = () => {
             sx={{ width: 32, height: 32 }}
           />
           <Box>
-            <Typography variant="body2" fontWeight={600}>
+            <Typography
+              className="text-black dark:text-fourth"
+              variant="body2"
+              fontWeight={600}
+            >
               Lewis Daniel
             </Typography>
-            <Typography variant="caption" color="text.secondary">
+            <Typography
+              className="text-black dark:text-fourth"
+              variant="caption"
+              color="text.secondary"
+            >
               January 10, 2024
             </Typography>
           </Box>

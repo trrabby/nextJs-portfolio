@@ -2,7 +2,7 @@ import React from "react";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
-import Button from "@mui/material/Button";
+import Link from "next/link";
 
 const productImage =
   "https://images.unsplash.com/photo-1464983953574-0892a716854b?auto=format&fit=crop&w=600&q=80";
@@ -10,8 +10,8 @@ const productImage =
 export const ProjectCards = () => {
   return (
     <Box
+      className="text-gray-800 dark:text-fourth bg-white dark:bg-gray-800"
       sx={{
-        background: "#fafbfc",
         borderRadius: 3,
         boxShadow: 1,
         p: { xs: 2, md: 4 },
@@ -23,7 +23,12 @@ export const ProjectCards = () => {
         alignItems: "center",
       }}
     >
-      <Grid container spacing={0} alignItems="center">
+      <Grid
+        className="text-black dark:text-fourth"
+        container
+        spacing={0}
+        alignItems="center"
+      >
         {/* Left: Content */}
         <Grid size={{ xs: 12, md: 6 }}>
           <Box sx={{ pr: { md: 6 }, py: 2 }}>
@@ -31,7 +36,6 @@ export const ProjectCards = () => {
               variant="h4"
               sx={{
                 fontWeight: 700,
-                color: "#1a2440",
                 fontFamily: "serif",
                 mb: 2,
               }}
@@ -41,11 +45,11 @@ export const ProjectCards = () => {
               Product
             </Typography>
             <Box sx={{ width: 40, height: 2, bgcolor: "#1a2440", mb: 2 }} />
-            <Typography sx={{ color: "#929292", mb: 2, fontSize: 15 }}>
+            <Typography sx={{ mb: 2, fontSize: 15 }}>
               Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut elit
               tellus, luctus nec ullamcorper mattis, pulvinar dapibus leo.
             </Typography>
-            <Typography sx={{ color: "#929292", fontSize: 14, mb: 2 }}>
+            <Typography sx={{ fontSize: 14, mb: 2 }}>
               <Box component={"span"} style={{ fontStyle: "italic" }}>
                 Lorem ipsum dolor sit amet consectetur adipiscing elit dolor
               </Box>
@@ -57,23 +61,12 @@ export const ProjectCards = () => {
                 FIRSTNAME SURNAME, REVIEWER
               </Box>
             </Typography>
-            <Button
-              variant="outlined"
-              sx={{
-                borderRadius: 2,
-                fontWeight: 600,
-                px: 3,
-                py: 1,
-                fontSize: 15,
-                borderColor: "#1a2440",
-                color: "#1a2440",
-                textTransform: "none",
-                mt: 1,
-                "&:hover": { borderColor: "#1a2440", background: "#f0f1f3" },
-              }}
+            <Link
+              className={`className="rounded bg-transparent px-8 py-3 text-base font-medium text-accent dark:text-fourth shadow hover:bg-accent dark:hover:bg-slate-700  hover:scale-105 hover:text-white hover:border-white duration-700 border border-blue-200 mt-5 hover:duration-500 rounded-md mr-5`}
+              href={"/projects/:id"}
             >
-              VIEW DETAILS
-            </Button>
+              View Details
+            </Link>
           </Box>
         </Grid>
         {/* Right: Product Image */}
