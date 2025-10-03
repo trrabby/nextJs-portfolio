@@ -1,7 +1,7 @@
-"use client";
 /* eslint-disable @typescript-eslint/no-explicit-any */
+"use client";
 import { Suspense, useEffect, useState } from "react";
-import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
+import { FaRegEye, FaRegEyeSlash, FaGoogle, FaGithub } from "react-icons/fa";
 import { useForm } from "react-hook-form";
 import { loginUser } from "@/services/AuthService";
 import { toast } from "sonner";
@@ -9,6 +9,8 @@ import { useAppDispatch } from "@/redux/hook";
 import { setUser } from "@/redux/features/auth/authSlice";
 import { getMyProfile } from "@/services/Users";
 import { useRouter, useSearchParams } from "next/navigation";
+import { signIn } from "next-auth/react";
+import Link from "next/link";
 
 function SearchParamsHandler({
   onRedirect,
@@ -17,9 +19,7 @@ function SearchParamsHandler({
 }) {
   const searchParams = useSearchParams();
   const redirect = searchParams.get("redirectPath");
-  if (redirect) {
-    toast.info("Please Login");
-  }
+  if (redirect) toast.info("Please Login");
 
   useEffect(() => {
     onRedirect(redirect);
@@ -45,118 +45,132 @@ const LoginForm = () => {
     formState: { errors },
   } = useForm<LoginFormData>();
 
+  // ✅ Existing Email+Password Login
   const onSubmit = async (formInfo: LoginFormData) => {
     const loginToastId = toast.loading("Signing in...");
-    const email = formInfo.email;
-    const password = formInfo.pass;
-
     try {
-      const res = await loginUser({ email, password });
+      const res = await loginUser({
+        email: formInfo.email,
+        password: formInfo.pass,
+      });
       if (res.success) {
-        toast.success(
-          `${res.message ? res.message : "Signed in successfully"}`,
-          {
-            id: loginToastId,
-          }
-        );
-        const user = await getMyProfile();
-        const payload = {
-          user: user.data,
-          token: res.data.accessToken,
-        };
-        dispatch(setUser(payload));
-        router.push(redirect || "/");
-      } else {
-        toast.error(res?.message, {
+        toast.success(res.message || "Signed in successfully", {
           id: loginToastId,
         });
+        const user = await getMyProfile();
+        dispatch(setUser({ user: user.data, token: res.data.accessToken }));
+        router.push(redirect || "/");
+      } else {
+        toast.error(res?.message, { id: loginToastId });
       }
     } catch (err: any) {
       console.error(err);
-      toast.error(err?.message, {
-        id: loginToastId,
-      });
+      toast.error(err?.message, { id: loginToastId });
     }
+  };
+
+  // ✅ OAuth Login (Google/Github)
+  const handleOAuthLogin = async (provider: "google" | "github") => {
+    await signIn(provider, { callbackUrl: redirect || "/" });
   };
 
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="mx-auto mt-10 flex flex-col gap-5 w-full lg:w-8/12"
+      className="mx-auto flex flex-col gap-6 w-full lg:w-8/12"
     >
       <Suspense fallback={null}>
         <SearchParamsHandler onRedirect={setRedirect} />
       </Suspense>
 
-      <label className="flex items-center gap-2 animate__animated animate__flipInX animate__slow	1s bg-transparent px-2 rounded-lg border">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 16 16"
-          fill="currentColor"
-          className="w-4 h-4 opacity-70"
-        >
-          <path d="M2.5 3A1.5 1.5 0 0 0 1 4.5v.793c.026.009.051.02.076.032L7.674 8.51c.206.1.446.1.652 0l6.598-3.185A.755.755 0 0 1 15 5.293V4.5A1.5 1.5 0 0 0 13.5 3h-11Z" />
-          <path d="M15 6.954 8.978 9.86a2.25 2.25 0 0 1-1.956 0L1 6.954V11.5A1.5 1.5 0 0 0 2.5 13h11a1.5 1.5 0 0 0 1.5-1.5V6.954Z" />
-        </svg>
+      {/* Email */}
+      <div className="flex flex-col w-full text-left">
+        <label className="text-sm font-semibold text-gray-200 mb-1">
+          Email
+        </label>
         <input
-          className="text-white w-full p-3 rounded-lg bg-transparent"
+          className="w-full px-4 py-3 rounded-lg bg-white/10 text-white placeholder-gray-600 border border-gray-600 focus:outline-none focus:border-accent focus:ring-2 focus:ring-accent transition"
           type="email"
-          placeholder="Email"
+          placeholder="Enter your email"
           {...register("email", { required: true })}
         />
-      </label>
-      {errors.email && (
-        <span className="text-red-600 text-xs">This field is required</span>
-      )}
+        {errors.email && (
+          <span className="text-red-500 text-xs mt-1">
+            This field is required
+          </span>
+        )}
+      </div>
 
-      <div>
-        <label className=" flex items-center gap-2 animate__animated animate__flipInX animate__slow	1s bg-transparent px-2 rounded-lg border">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 16 16"
-            fill="currentColor"
-            className="w-4 h-4 opacity-70"
-          >
-            <path
-              fillRule="evenodd"
-              d="M14 6a4 4 0 0 1-4.899 3.899l-1.955 1.955a.5.5 0 0 1-.353.146H5v1.5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1-.5-.5v-2.293a.5.5 0 0 1 .146-.353l3.955-3.955A4 4 0 1 1 14 6Zm-4-2a.75.75 0 0 0 0 1.5.5.5 0 0 1 .5.5.75.75 0 0 0 1.5 0 2 2 0 0 0-2-2Z"
-              clipRule="evenodd"
-            />
-          </svg>
-
+      {/* Password */}
+      <div className="flex flex-col w-full text-left relative">
+        <label className="text-sm font-semibold text-gray-200 mb-1">
+          Password
+        </label>
+        <div className="relative">
           <input
-            className="text-white w-full p-3 rounded-lg bg-transparent"
+            className="w-full px-4 py-3 rounded-lg bg-white/10 text-white placeholder-gray-600 border border-gray-600 focus:outline-none focus:border-accent focus:ring-2 focus:ring-accent transition"
             type={toggle ? "text" : "password"}
-            placeholder="Password"
+            placeholder="Enter your password"
             {...register("pass", { required: true })}
           />
           <span
             onClick={() => setToggle(!toggle)}
-            className="flex right-0 text-white font-extrabold "
+            className="absolute right-3 top-3 text-gray-300 cursor-pointer hover:text-accent transition"
           >
-            {toggle ? (
-              <FaRegEyeSlash className="text-fourth font-extrabold h-10" />
-            ) : (
-              <FaRegEye className="text-fourth font-extrabold h-10" />
-            )}
+            {toggle ? <FaRegEyeSlash size={20} /> : <FaRegEye size={20} />}
           </span>
-        </label>
+        </div>
+        {errors.pass && (
+          <span className="text-red-500 text-xs mt-1">
+            This field is required
+          </span>
+        )}
       </div>
-      {errors.pass && (
-        <span className="text-red-600 text-xs">This field is required</span>
-      )}
-      {/* {err && (
-                  <p className="text-red-500 flex w-full text-xs">{err}</p>
-                )} */}
 
+      {/* Submit */}
       <button
-        className="rounded bg-accent px-12 py-3 text-base font-medium text-white shadow hover:bg-transparent border hover:scale-105 duration-700 flex gap-3 justify-center items-center w-6/12 mx-auto"
         type="submit"
+        className="w-full py-3 rounded-lg bg-accent text-white font-semibold text-lg tracking-wide shadow-lg hover:bg-accent/90 hover:scale-[1.02] active:scale-[0.98] transition"
       >
         Get In
-        {/* {loading ? <LoadingSpinner></LoadingSpinner> : "Get In"} */}
       </button>
+
+      {/* Divider */}
+      <div className="flex items-center justify-center gap-4 my-2 text-gray-400">
+        <span className="h-px w-1/3 bg-gray-600"></span>
+        <span className="text-sm text-nowrap text-gray-300">OR</span>
+        <span className="h-px w-1/3 bg-gray-600"></span>
+      </div>
+
+      {/* OAuth Providers */}
+      <div className="flex gap-4">
+        <button
+          type="button"
+          onClick={() => handleOAuthLogin("google")}
+          className="flex-1 flex items-center justify-center gap-2 py-3 rounded-lg bg-white text-black font-medium hover:bg-gray-100 transition"
+        >
+          <FaGoogle /> Google
+        </button>
+        <button
+          type="button"
+          onClick={() => handleOAuthLogin("github")}
+          className="flex-1 flex items-center justify-center gap-2 py-3 rounded-lg bg-gray-900 text-white font-medium hover:bg-gray-800 transition"
+        >
+          <FaGithub /> GitHub
+        </button>
+      </div>
+
+      {/* Links */}
+      <div className="flex justify-between text-sm text-gray-300 mt-4">
+        <Link href="/forgot-password" className="hover:text-accent transition">
+          Forgot Password?
+        </Link>
+        <Link href="/register" className="hover:text-accent transition">
+          Create Account
+        </Link>
+      </div>
     </form>
   );
 };
+
 export default LoginForm;

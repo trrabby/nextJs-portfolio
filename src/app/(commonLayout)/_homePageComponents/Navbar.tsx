@@ -138,9 +138,11 @@ export default function Navbar({ sectionRefs }: { sectionRefs: any }) {
             />
           </div>
         ) : (
-          <Link href={"/login"}>
+          <Link className={`${styles.animated_underline}`} href={"/login"}>
             <Tooltip title="Sign in">
-              <PiSignInBold className="hover:scale-125 hover:duration-500 hover:text-third w-8 h-8 text-white text-center rounded-lg hover:shadow-lg hover:p-1" />
+              <PiSignInBold
+                className={`hover:scale-125 hover:duration-500 dark:hover:text-third w-8 h-8 text-white text-center rounded-lg hover:shadow-lg hover:p-1`}
+              />
             </Tooltip>
           </Link>
         )}
