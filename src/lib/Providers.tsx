@@ -1,18 +1,16 @@
 "use client"; // Ensure this runs on the client side
 
-import { Provider } from "react-redux";
-import { PersistGate } from "redux-persist/integration/react";
-import { persistor, store } from "@/redux/store";
 import { ThemeProvider } from "next-themes";
+import { Toaster } from "sonner";
+import StoreProvider from "@/redux/StoreProvider/StoreProvider";
 
 export default function Providers({ children }: { children: React.ReactNode }) {
   return (
-    <Provider store={store}>
-      <PersistGate loading={null} persistor={persistor}>
-        <ThemeProvider attribute={"class"} enableSystem defaultTheme="system">
-          {children}
-        </ThemeProvider>
-      </PersistGate>
-    </Provider>
+    <StoreProvider>
+      <ThemeProvider attribute={"class"} enableSystem defaultTheme="system">
+        <Toaster richColors position="top-center" />
+        {children}
+      </ThemeProvider>
+    </StoreProvider>
   );
 }

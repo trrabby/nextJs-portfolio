@@ -1,7 +1,6 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { configureStore } from "@reduxjs/toolkit";
-import { baseApi } from "./api/baseApi";
 import authReducer from "./features/auth/authSlice";
-
 import {
   persistReducer,
   persistStore,
@@ -12,30 +11,36 @@ import {
   PURGE,
   REGISTER,
 } from "redux-persist";
-import storage from "redux-persist/lib/storage";
+import storage from "./storage";
 
-const persistAuthConfig = {
+//! We will not do this
+//! This is a global variable so we will avoid this
+// const store = configureStore({});
+
+const persistOptions = {
   key: "auth",
   storage,
 };
 
-const persistedAuthReducer = persistReducer(persistAuthConfig, authReducer);
+const persistedAuth = persistReducer(persistOptions, authReducer);
 
-export const store = configureStore({
-  reducer: {
-    [baseApi.reducerPath]: baseApi.reducer,
-    auth: persistedAuthReducer,
-  },
-  middleware: (getDefaultMiddlewares) =>
-    getDefaultMiddlewares({
-      serializableCheck: {
-        ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
-      },
-    }).concat(baseApi.middleware),
-});
+export const makeStore = () => {
+  return configureStore({
+    reducer: {
+      auth: persistedAuth,
+    },
+    middleware: (getDefaultMiddlewares: any) =>
+      getDefaultMiddlewares({
+        serializableCheck: {
+          ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+        },
+      }).concat(),
+  });
+};
 
-// Infer the `RootState` and `AppDispatch` types
-export type RootState = ReturnType<typeof store.getState>;
-export type AppDispatch = typeof store.dispatch;
-
-export const persistor = persistStore(store);
+// Infer the type of makeStore
+export type AppStore = ReturnType<typeof makeStore>;
+// Infer the `RootState` and `AppDispatch` types from the store itself
+export type RootState = ReturnType<AppStore["getState"]>;
+export type AppDispatch = AppStore["dispatch"];
+export const persistor = persistStore(makeStore());

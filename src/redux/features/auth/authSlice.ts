@@ -1,18 +1,29 @@
 import { RootState } from "@/redux/store";
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-export type TUser = {
-  userId: string;
-  role: string;
+export interface IUser {
+  _id: string;
   name: string;
-  imgUrl: string;
-  iat: number;
-  exp: number;
-};
+  email: string;
+  role: string;
+  number?: string;
+  imgUrl?: string;
+  city?: string;
+  colony?: string;
+  postOffice?: string;
+  subDistrict?: string;
+  status?: string;
+  createdAt?: string;
+  updatedAt?: string;
+  passwordChangedAt?: string;
+  needsPasswordChange?: boolean;
+  isDeleted?: boolean;
+  __v?: number;
+}
 
 type TAuthState = {
-  user: null | TUser;
-  token: null | string;
+  user: IUser | null;
+  token: string | null;
 };
 
 const initialState: TAuthState = {
@@ -24,10 +35,9 @@ const authSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
-    setUser: (state, action) => {
-      const { user, token } = action.payload;
-      state.user = user;
-      state.token = token;
+    setUser: (state, action: PayloadAction<{ user: IUser; token: string }>) => {
+      state.user = action.payload.user;
+      state.token = action.payload.token;
     },
     logout: (state) => {
       state.user = null;
@@ -40,6 +50,6 @@ export const { setUser, logout } = authSlice.actions;
 
 export default authSlice.reducer;
 
-export const useCurrentToken = (state: RootState) =>
-  (state.auth as TAuthState).token;
+// selectors
+export const useCurrentToken = (state: RootState) => state.auth.token;
 export const selectCurrentUser = (state: RootState) => state.auth.user;

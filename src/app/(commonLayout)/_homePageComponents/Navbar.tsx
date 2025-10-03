@@ -9,6 +9,12 @@ import { FaGithub } from "react-icons/fa";
 import styles from "../styles.module.css";
 import { useEffect, useState } from "react";
 import ThemeController from "./_ThemeController/ThemeToggler";
+import { useAppSelector } from "@/redux/hook";
+import { selectCurrentUser } from "@/redux/features/auth/authSlice";
+import { PiSignInBold } from "react-icons/pi";
+import Tooltip from "@mui/material/Tooltip";
+import StatusVariantSquare from "./_Navbar/StatusVariantSquare";
+import DashboardMenu from "./_Navbar/DashboardMenu";
 
 const navlinks = [
   { id: "home", name: "Home" },
@@ -44,7 +50,10 @@ const social: TSocialProps[] = [
 export default function Navbar({ sectionRefs }: { sectionRefs: any }) {
   const [showNavbar, setShowNavbar] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
+  const [DashboardOpen, setDashboardOpen] = useState(false);
+  const user = useAppSelector(selectCurrentUser);
 
+  console.log(user);
   useEffect(() => {
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
@@ -82,7 +91,7 @@ export default function Navbar({ sectionRefs }: { sectionRefs: any }) {
     <div
       className={`${
         styles.navbar_backdrop
-      } dark:bg-gray-950 flex md:flex-col lg:flex-row justify-between items-center p-2 w-2/12 md:w-full transition-all duration-300 ${
+      } dark:bg-gray-950 flex flex-row justify-between items-center p-2 w-2/12 md:w-full transition-all duration-300 ${
         showNavbar ? "md:translate-y-0" : "-translate-y-0 md:-translate-y-24"
       }`}
     >
@@ -92,8 +101,8 @@ export default function Navbar({ sectionRefs }: { sectionRefs: any }) {
             className=""
             alt="Site Logo"
             src={profileImg}
-            width={200}
             height={60}
+            width={200}
           />
         </Link>
       </div>
@@ -119,7 +128,24 @@ export default function Navbar({ sectionRefs }: { sectionRefs: any }) {
           </Link>
         ))}
       </div>
-      <ThemeController />
+      <div className="flex items-center justify-center gap-2">
+        {user ? (
+          <div onClick={() => setDashboardOpen(!DashboardOpen)}>
+            <StatusVariantSquare img={user.imgUrl!} />
+            <DashboardMenu
+              open={DashboardOpen}
+              setDashboardOpen={setDashboardOpen}
+            />
+          </div>
+        ) : (
+          <Link href={"/login"}>
+            <Tooltip title="Sign in">
+              <PiSignInBold className="hover:scale-125 hover:duration-500 hover:text-third w-8 h-8 text-white text-center rounded-lg hover:shadow-lg hover:p-1" />
+            </Tooltip>
+          </Link>
+        )}
+        <ThemeController />
+      </div>
       <div className={`${styles.triangle} ${styles.navbar_backdrop_sm}`}></div>
     </div>
   );

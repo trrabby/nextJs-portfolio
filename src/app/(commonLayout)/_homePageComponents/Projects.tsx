@@ -14,7 +14,7 @@ const Projects = () => {
         paraColor="text-gray-600 dark:text-fourth"
       />
       <div className="flex justify-center items-center w-10/12 mx-auto">
-        <div className="grid md:grid-cols-2 grid-cols-1 gap-3 justify-center items-center">
+        <div className="grid lg:grid-cols-2 grid-cols-1 gap-3 justify-center items-center">
           {projects.slice(0, 2).map((project) => (
             <div key={project}>
               <ProjectCards />

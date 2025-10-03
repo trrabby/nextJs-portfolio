@@ -14,7 +14,7 @@ const Blogs = () => {
         paraColor="text-gray-600 dark:text-fourth"
       />
       <div className="flex justify-center items-center mt-10">
-        <div className="grid md:grid-cols-3 grid-cols-1 justify-center items-center gap-5">
+        <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 justify-center items-center gap-5">
           {MyBlogs.slice(0, 3).map((blog) => (
             <div key={blog}>
               <BlogCard />
