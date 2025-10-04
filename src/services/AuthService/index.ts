@@ -117,8 +117,19 @@ export const reCaptchaTokenVerification = async (token: string) => {
 };
 
 export const logout = async () => {
-  (await cookies()).delete("accessToken");
-  (await cookies()).delete("refreshToken");
+  const cookieStore = await cookies();
+
+  // Remove your backend JWT tokens
+  cookieStore.delete("accessToken");
+  cookieStore.delete("refreshToken");
+
+  // Remove NextAuth session cookies
+  cookieStore.delete("next-auth.session-token");
+  cookieStore.delete("__Secure-next-auth.session-token");
+  cookieStore.delete("next-auth.csrf-token");
+  cookieStore.delete("next-auth.callback-url");
+
+  return { success: true };
 };
 
 export const refreshToken = async () => {

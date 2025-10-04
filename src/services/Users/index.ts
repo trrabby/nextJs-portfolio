@@ -8,7 +8,7 @@ import { FieldValues } from "react-hook-form";
 
 export const registerUser = async (userData: FieldValues) => {
   try {
-    const res = await fetch(`${config().Backend_URL}/auth/register`, {
+    const res = await fetch(`${config().Backend_URL}/users/register`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -56,14 +56,14 @@ export const getUsers = async (
 };
 
 // get a user
-export const getAUser = async (email: string) => {
+export const getMyProfileByEmail = async (email: string) => {
   try {
-    const res = await fetch(`${config().Backend_URL}/users?email=${email}`, {
-      method: "GET",
-      headers: {
-        Authorization: (await cookies()).get("accessToken")!.value,
-      },
-    });
+    const res = await fetch(
+      `${config().Backend_URL}/users/meByEmail/${email}`,
+      {
+        method: "GET",
+      }
+    );
     const data = await res.json();
     return data;
   } catch (error: any) {

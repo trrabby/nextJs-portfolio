@@ -71,7 +71,9 @@ const LoginForm = () => {
 
   // ✅ OAuth Login (Google/Github)
   const handleOAuthLogin = async (provider: "google" | "github") => {
-    await signIn(provider, { callbackUrl: redirect || "/" });
+    await signIn(provider, {
+      callbackUrl: redirect || "/",
+    });
   };
 
   return (

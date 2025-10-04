@@ -1,8 +1,11 @@
-import { logout } from "@/redux/features/auth/authSlice";
 import { useAppDispatch } from "@/redux/hook";
 import Link from "next/link";
 import React from "react";
 import { FaUserCircle, FaTachometerAlt, FaSignOutAlt } from "react-icons/fa";
+import { signOut } from "next-auth/react";
+import { logout as serverLogout } from "@/services/AuthService";
+import { logout as reduxLogout } from "@/redux/features/auth/authSlice";
+import { toast } from "sonner";
 
 type DashboardMenuProps = {
   open: boolean;
@@ -28,9 +31,18 @@ export default function DashboardMenu({
 }: DashboardMenuProps) {
   const dispatch = useAppDispatch();
 
-  const handleLogout = () => {
-    dispatch(logout());
+  const handleLogout = async () => {
+    try {
+      await serverLogout(); // Delete cookies (server-side)
+      await signOut({ redirect: false }); // Clear NextAuth session
+      dispatch(reduxLogout()); // Clear Redux user
+      toast.success("Logged out successfully");
+    } catch (err) {
+      console.error("Logout error:", err);
+      toast.error("Something went wrong while logging out");
+    }
   };
+
   if (!open) return null;
   return (
     <div

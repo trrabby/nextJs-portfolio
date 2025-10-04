@@ -9,12 +9,14 @@ import { FaGithub } from "react-icons/fa";
 import styles from "../styles.module.css";
 import { useEffect, useState } from "react";
 import ThemeController from "./_ThemeController/ThemeToggler";
-import { useAppSelector } from "@/redux/hook";
-import { selectCurrentUser } from "@/redux/features/auth/authSlice";
+import { useAppDispatch, useAppSelector } from "@/redux/hook";
+import { selectCurrentUser, setUser } from "@/redux/features/auth/authSlice";
 import { PiSignInBold } from "react-icons/pi";
 import Tooltip from "@mui/material/Tooltip";
 import StatusVariantSquare from "./_Navbar/StatusVariantSquare";
 import DashboardMenu from "./_Navbar/DashboardMenu";
+import { useSession } from "next-auth/react";
+import { getMyProfileByEmail } from "@/services/Users";
 
 const navlinks = [
   { id: "home", name: "Home" },
@@ -52,6 +54,23 @@ export default function Navbar({ sectionRefs }: { sectionRefs: any }) {
   const [lastScrollY, setLastScrollY] = useState(0);
   const [DashboardOpen, setDashboardOpen] = useState(false);
   const user = useAppSelector(selectCurrentUser);
+  const dispatch = useAppDispatch();
+  const { data: session, status } = useSession();
+  // console.log(session, status);
+  useEffect(() => {
+    const syncReduxUser = async () => {
+      if (status === "authenticated" && session?.user?.email) {
+        const userProfile = await getMyProfileByEmail(session?.user?.email);
+        dispatch(
+          setUser({
+            user: userProfile.data,
+            token: "oauth",
+          })
+        );
+      }
+    };
+    syncReduxUser();
+  }, [session, status, dispatch]);
 
   console.log(user);
   useEffect(() => {
