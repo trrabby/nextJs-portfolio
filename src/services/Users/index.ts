@@ -17,7 +17,7 @@ export const registerUser = async (userData: FieldValues) => {
     });
     revalidateTag("USERS");
     const result = await res.json();
-    console.log(result);
+    // console.log(result);
     if (result.success) {
       (await cookies()).set("accessToken", result.data.accessToken);
       (await cookies()).set("refreshToken", result?.data?.refreshToken);
@@ -97,7 +97,7 @@ export const updateUser = async (userData: FormData, email: string) => {
       body: userData,
     });
     const result = await res.json();
-    console.log(result);
+    // console.log(result);
 
     return result;
   } catch (error: any) {

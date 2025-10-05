@@ -97,7 +97,7 @@ const authOptions: NextAuthOptions = {
           );
 
           const data = await response.json();
-          console.log({ "login response form nextauth": data });
+          // console.log({ "login response form nextauth": data });
           if (data?.data?.accessToken && data?.data?.refreshToken) {
             token.accessToken = data.data.accessToken;
             token.refreshToken = data.data.refreshToken;

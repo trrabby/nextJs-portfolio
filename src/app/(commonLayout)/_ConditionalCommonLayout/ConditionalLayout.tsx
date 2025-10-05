@@ -1,0 +1,34 @@
+// ConditionalLayout.tsx (Client Component)
+"use client";
+
+import { usePathname } from "next/navigation";
+import Navbar from "../_homePageComponents/_Navbar/Navbar";
+import { Footer } from "../_homePageComponents/Footer";
+import SidebarDrawer from "../_homePageComponents/_Sidebar/SidebarDrawer";
+
+export default function ConditionalLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  const pathname = usePathname();
+  const hideLayoutOn = ["/login", "/register"];
+  const showLayout = !hideLayoutOn.includes(pathname);
+
+  return (
+    <>
+      {showLayout && (
+        <>
+          <div className="sticky hidden md:flex top-0 w-full z-50">
+            <Navbar />
+          </div>
+          <div className="fixed flex md:hidden top-0 left-4 z-50 bg-transparent">
+            <SidebarDrawer />
+          </div>
+        </>
+      )}
+      <div>{children}</div>
+      {showLayout && <Footer />}
+    </>
+  );
+}

@@ -149,7 +149,7 @@ const LoginForm = () => {
         <button
           type="button"
           onClick={() => handleOAuthLogin("google")}
-          className="flex-1 flex items-center justify-center gap-2 py-3 rounded-lg bg-white text-black font-medium hover:bg-gray-100 transition"
+          className="flex-1 flex items-center justify-center gap-2 py-3 rounded-lg bg-white text-black font-medium hover:bg-gray-100 transition hover:text-accent"
         >
           <FaGoogle /> Google
         </button>

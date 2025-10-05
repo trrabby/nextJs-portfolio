@@ -1,3 +1,4 @@
+"use client";
 /* eslint-disable react/no-unescaped-entities */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -11,9 +12,13 @@ import logo1 from "../../../../public/portfolioAssets/SiteLog/t4.png";
 import { FaAngleDoubleUp } from "react-icons/fa";
 import Link from "next/link";
 import Image from "next/image";
+import { useSectionRefs } from "@/Context/RefContext";
 
-export const Footer = ({ sectionRefs }: { sectionRefs: any }) => {
+export const Footer = () => {
   const [init, setInit] = useState(false);
+  // ✅ use the shared refs
+  const { homeRef, aboutRef, blogsRef, projectsRef, contactsRef } =
+    useSectionRefs();
 
   useEffect(() => {
     initParticlesEngine(async (engine: any) => {
@@ -46,16 +51,22 @@ export const Footer = ({ sectionRefs }: { sectionRefs: any }) => {
   );
 
   const scrollToSection = (id: string) => {
-    const section = sectionRefs[id]?.current;
+    const refMap: Record<string, React.RefObject<HTMLElement | null>> = {
+      home: homeRef,
+      about: aboutRef,
+      blogs: blogsRef,
+      projects: projectsRef,
+      contacts: contactsRef,
+    };
+
+    const section = refMap[id]?.current;
     if (section) {
-      const navbarHeight = 100; // Adjust to your actual navbar height
+      const navbarHeight = 100; // Adjust to actual height
       const sectionTop = section.getBoundingClientRect().top + window.scrollY;
       const currentScrollY = window.scrollY;
 
-      // Determine scroll direction based on section position
+      // Scroll direction logic
       const isScrollingUp = sectionTop < currentScrollY;
-
-      // Only subtract navbarHeight if scrolling up to the section
       const offset = isScrollingUp ? navbarHeight : 0;
       const top = sectionTop - offset;
 
@@ -161,7 +172,9 @@ export const Footer = ({ sectionRefs }: { sectionRefs: any }) => {
               </p>
             </div>
 
-            <div className="md:hidden flex justify-center items-center">{social}</div>
+            <div className="md:hidden flex justify-center items-center">
+              {social}
+            </div>
           </div>
 
           <div
@@ -183,26 +196,11 @@ export const Footer = ({ sectionRefs }: { sectionRefs: any }) => {
             >
               Contact Me
             </div>
-
-            <a>
-              {/* {!user && (
-                <a className="hover:text-primary">
-                  <Link to={"/login"}>Admin Login</Link>
-                </a>
-              )}
-              {user && (
-                <p className="hover:text-primary">
-                  <Link to={"/dashboard"} target="_blank">
-                    Admin Dashboard
-                  </Link>
-                </p>
-              )} */}
-            </a>
           </div>
         </div>
 
-        <div className="flex items-center justify-center w-full ">
-          <div className="lg:w-4/12 mx-auto text-center text-sm border-x-2 border-accent text-fourth font-bold pt-5">
+        <div className="flex items-center justify-center w-full">
+          <div className="lg:w-4/12 mx-auto text-center text-sm border-x-2 px-1 lg:px-10 border-accent text-fourth font-bold lg:pt-5">
             Copyright &copy; {new Date().getFullYear()} All rights reserved.
           </div>
 

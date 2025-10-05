@@ -1,10 +1,12 @@
+"use client";
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import * as React from "react";
 import Button from "@mui/material/Button";
-import { RiMenuFill } from "react-icons/ri";
-import { RiMenuFoldLine } from "react-icons/ri";
-import Sidebar from "../Sidebar";
-export default function SidebarDrawer({ sectionRefs }: { sectionRefs: any }) {
+import { RiMenuFill, RiMenuFoldLine } from "react-icons/ri";
+import Sidebar from "./Sidebar";
+// adjust path if needed
+
+export default function SidebarDrawer() {
   const [open, setOpen] = React.useState(false);
 
   return (
@@ -26,11 +28,9 @@ export default function SidebarDrawer({ sectionRefs }: { sectionRefs: any }) {
           </div>
         )}
       </Button>
-      <Sidebar
-        open={open}
-        onClose={() => setOpen(false)}
-        sectionRefs={sectionRefs}
-      />
+
+      {/* ✅ sectionRefs comes from context now */}
+      <Sidebar open={open} onClose={() => setOpen(false)} />
     </div>
   );
 }

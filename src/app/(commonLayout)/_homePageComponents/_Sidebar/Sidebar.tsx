@@ -1,14 +1,22 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import Image from "next/image";
 import Link from "next/link";
-import profileImg from "../../../../public/portfolioAssets/SiteLog/t3.png";
+import profileImg from "../../../../../public/portfolioAssets/SiteLog/t3.png";
 import { FiFacebook } from "react-icons/fi";
 import { FiTwitter } from "react-icons/fi";
 import { SlSocialLinkedin } from "react-icons/sl";
 import { FaGithub } from "react-icons/fa";
-import styles from "../styles.module.css";
-import ThemeToggler from "./_ThemeController/ThemeToggler";
+import styles from "../../styles.module.css";
 import { useTheme } from "next-themes";
+import ThemeToggler from "../_ThemeController/ThemeToggler";
+import { useScrollToSection } from "@/hooks/ScrollToSection";
+import { useAppSelector } from "@/redux/hook";
+import { selectCurrentUser } from "@/redux/features/auth/authSlice";
+import StatusVariantSquare from "../_Navbar/StatusVariantSquare";
+import DashboardMenu from "../_Navbar/DashboardMenu";
+import { useState } from "react";
+import Tooltip from "@mui/material/Tooltip";
+import { PiSignInBold } from "react-icons/pi";
 
 const navlinks = [
   { id: "home", name: "Home" },
@@ -42,19 +50,16 @@ const social: TSocialProps[] = [
 ];
 
 export default function Sidebar({
-  sectionRefs,
   open,
   onClose,
 }: {
-  sectionRefs: any;
   open: boolean;
   onClose: () => void;
 }) {
-  const scrollToSection = (id: string) => {
-    sectionRefs[id]?.current?.scrollIntoView({ behavior: "smooth" });
-  };
-
+  const { scrollToSectionSmDevice } = useScrollToSection();
+  const user = useAppSelector(selectCurrentUser);
   const { theme } = useTheme();
+  const [DashboardOpen, setDashboardOpen] = useState(false);
 
   return (
     <div className="flex">
@@ -89,7 +94,7 @@ export default function Sidebar({
           {navlinks.map(({ id, name }) => (
             <button
               key={id}
-              onClick={() => scrollToSection(id)}
+              onClick={() => scrollToSectionSmDevice(id)}
               className={`${styles.animated_underline} p-2 pr-4 rounded-md text-left font-bold transition-all duration-300 hover:text-accent hover:ease-linear hover:scale-110 relative group `}
             >
               {name}
@@ -106,6 +111,31 @@ export default function Sidebar({
             <ThemeToggler />
           </div>{" "}
           <hr className="border border-gray-950 dark:border-fourth transition-all duration-300 mb-2" />
+        </div>
+        {/* User Section */}
+        <div className="flex items-center justify-center gap-2">
+          {user ? (
+            <div onClick={() => setDashboardOpen(!DashboardOpen)}>
+              <StatusVariantSquare img={user.imgUrl!} />
+              <DashboardMenu
+                open={DashboardOpen}
+                setDashboardOpen={setDashboardOpen}
+              />
+            </div>
+          ) : (
+            <Link
+              onClick={() => onClose()}
+              className={`${styles.animated_underline} text-gray-950 dark:text-fourth transition-all duration-300 font-mono`}
+              href={"/login"}
+            >
+              <div className="flex gap-3 justify-center items-center">
+                <p className="flex gap-2">Sign In</p>
+                <Tooltip title="Sign in">
+                  <PiSignInBold className="hover:scale-125 hover:duration-500 dark:hover:text-third w-8 h-8 text-white text-center rounded-lg hover:shadow-lg hover:p-1" />
+                </Tooltip>
+              </div>
+            </Link>
+          )}
         </div>
         <div className="flex gap-2 justify-between items-center text-gray-950 dark:text-fourth transition-all duration-300">
           {social.map((item) => (
