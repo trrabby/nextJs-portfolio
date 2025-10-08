@@ -4,16 +4,12 @@
 import { config } from "@/config";
 import { revalidateTag } from "next/cache";
 import { cookies } from "next/headers";
-import { FieldValues } from "react-hook-form";
 
-export const registerUser = async (userData: FieldValues) => {
+export const registerUser = async (userData: FormData) => {
   try {
     const res = await fetch(`${config().Backend_URL}/users/register`, {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(userData),
+      body: userData,
     });
     revalidateTag("USERS");
     const result = await res.json();

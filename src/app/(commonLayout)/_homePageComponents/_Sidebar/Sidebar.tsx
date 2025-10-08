@@ -9,7 +9,7 @@ import { FaGithub } from "react-icons/fa";
 import styles from "../../styles.module.css";
 import { useTheme } from "next-themes";
 import ThemeToggler from "../_ThemeController/ThemeToggler";
-import { useScrollToSection } from "@/hooks/ScrollToSection";
+import { useScrollToSection } from "@/hooks/useScrollToSection";
 import { useAppSelector } from "@/redux/hook";
 import { selectCurrentUser } from "@/redux/features/auth/authSlice";
 import StatusVariantSquare from "../_Navbar/StatusVariantSquare";

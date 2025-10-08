@@ -17,7 +17,7 @@ import StatusVariantSquare from "./StatusVariantSquare";
 import DashboardMenu from "./DashboardMenu";
 import { useSession } from "next-auth/react";
 import { getMyProfileByEmail } from "@/services/Users"; // ✅ new import
-import { useScrollToSection } from "@/hooks/ScrollToSection";
+import { useScrollToSection } from "@/hooks/useScrollToSection";
 import ThemeToggler from "../_ThemeController/ThemeToggler";
 
 const navlinks = [

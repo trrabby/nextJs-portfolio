@@ -2,10 +2,7 @@ import { useAppDispatch } from "@/redux/hook";
 import Link from "next/link";
 import React from "react";
 import { FaUserCircle, FaTachometerAlt, FaSignOutAlt } from "react-icons/fa";
-import { signOut } from "next-auth/react";
-import { logout as serverLogout } from "@/services/AuthService";
-import { logout as reduxLogout } from "@/redux/features/auth/authSlice";
-import { toast } from "sonner";
+import { logoutUser } from "@/utils/LogOut";
 
 type DashboardMenuProps = {
   open: boolean;
@@ -30,18 +27,6 @@ export default function DashboardMenu({
   setDashboardOpen,
 }: DashboardMenuProps) {
   const dispatch = useAppDispatch();
-
-  const handleLogout = async () => {
-    try {
-      await serverLogout(); // Delete cookies (server-side)
-      await signOut({ redirect: false }); // Clear NextAuth session
-      dispatch(reduxLogout()); // Clear Redux user
-      toast.success("Logged out successfully");
-    } catch (err) {
-      console.error("Logout error:", err);
-      toast.error("Something went wrong while logging out");
-    }
-  };
 
   if (!open) return null;
   return (
@@ -73,7 +58,7 @@ export default function DashboardMenu({
           </li>
           <li className="flex justify-center items-center gap-3 px-4 py-2 rounded-lg cursor-pointer w-full">
             <div
-              onClick={handleLogout}
+              onClick={() => logoutUser(dispatch)}
               className="flex gap-2 justify-center items-center text-red-500 hover:bg-red-500 hover:text-white transition px-6 py-2 rounded-xl"
             >
               <FaSignOutAlt className="w-5 h-5" />
