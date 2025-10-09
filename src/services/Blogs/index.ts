@@ -31,9 +31,7 @@ export const getBlogs = async (
 ) => {
   try {
     const res = await fetch(
-      `${
-        config().Backend_URL
-      }/blogs?limit=${limit}&page=${page}&searchTerm=${query}`,
+      `${config().Backend_URL}/blogs?limit=${limit}&page=${page}&${query}`,
       {
         next: {
           tags: ["BLOGS"],

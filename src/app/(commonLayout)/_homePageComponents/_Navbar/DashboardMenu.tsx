@@ -1,8 +1,7 @@
-import { useAppDispatch } from "@/redux/hook";
 import Link from "next/link";
 import React from "react";
 import { FaUserCircle, FaTachometerAlt, FaSignOutAlt } from "react-icons/fa";
-import { logoutUser } from "@/utils/LogOut";
+import { useLogout } from "@/hooks/useLogOut";
 
 type DashboardMenuProps = {
   open: boolean;
@@ -26,7 +25,7 @@ export default function DashboardMenu({
   open,
   setDashboardOpen,
 }: DashboardMenuProps) {
-  const dispatch = useAppDispatch();
+  const logout = useLogout();
 
   if (!open) return null;
   return (
@@ -58,7 +57,7 @@ export default function DashboardMenu({
           </li>
           <li className="flex justify-center items-center gap-3 px-4 py-2 rounded-lg cursor-pointer w-full">
             <div
-              onClick={() => logoutUser(dispatch)}
+              onClick={() => logout("/")}
               className="flex gap-2 justify-center items-center text-red-500 hover:bg-red-500 hover:text-white transition px-6 py-2 rounded-xl"
             >
               <FaSignOutAlt className="w-5 h-5" />

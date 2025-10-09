@@ -21,7 +21,7 @@ const ThemeToggler = () => {
           className="rounded-full p-4 shadow-sm cursor-pointer"
         >
           {theme === "light" ? (
-            <RxMoon className=" hover:duration-500 w-8 h-8 text-white text-center flex justify-center items-center rounded-lg ease-in-out"></RxMoon>
+            <RxMoon className=" hover:duration-500 w-8 h-8 text-black text-center flex justify-center items-center rounded-lg ease-in-out"></RxMoon>
           ) : (
             <FiSun className=" hover:duration-500 w-8 h-8 text-white text-center flex justify-center items-center rounded-lg ease-in-out"></FiSun>
           )}

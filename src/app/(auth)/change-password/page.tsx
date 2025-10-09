@@ -3,7 +3,7 @@
 
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { useAppDispatch, useAppSelector } from "@/redux/hook";
+import { useAppSelector } from "@/redux/hook";
 import { selectCurrentUser } from "@/redux/features/auth/authSlice";
 import { IUser } from "@/constants";
 import { toast } from "sonner";
@@ -11,8 +11,7 @@ import Link from "next/link";
 import { AiOutlineArrowLeft } from "react-icons/ai";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { changePassword } from "@/services/AuthService";
-import { useRouter } from "next/navigation";
-import { logoutUser } from "@/utils/LogOut";
+import { useLogout } from "@/hooks/useLogOut";
 
 interface ChangePasswordForm {
   oldPassword: string;
@@ -23,8 +22,7 @@ interface ChangePasswordForm {
 const ChangePasswordPage = () => {
   const user = useAppSelector(selectCurrentUser) as IUser | null;
   const [loading, setLoading] = useState(false);
-  const router = useRouter();
-  const dispatch = useAppDispatch();
+  const logout = useLogout();
 
   const {
     register,
@@ -73,8 +71,7 @@ const ChangePasswordPage = () => {
         toast.success(result.message || "Password updated successfully!", {
           id: toastId,
         });
-        await logoutUser(dispatch);
-        router.push("/login");
+        await logout("login");
         toast.info("Please login with new password");
       } else {
         toast.error(result.message || "Failed to update password", {
