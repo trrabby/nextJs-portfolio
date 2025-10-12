@@ -6,7 +6,15 @@ import React from "react";
 import { FiSun } from "react-icons/fi";
 import { RxMoon } from "react-icons/rx";
 
-const ThemeToggler = () => {
+interface ThemeTogglerProps {
+  lightCss?: string;
+  logoSize?: string;
+}
+
+const ThemeToggler: React.FC<ThemeTogglerProps> = ({
+  lightCss = "text-white",
+  logoSize = "h-8 w-8",
+}) => {
   const { theme, setTheme } = useTheme();
   return (
     <div>
@@ -21,9 +29,13 @@ const ThemeToggler = () => {
           className="rounded-full p-4 shadow-sm cursor-pointer"
         >
           {theme === "light" ? (
-            <RxMoon className=" hover:duration-500 w-8 h-8 text-black text-center flex justify-center items-center rounded-lg ease-in-out"></RxMoon>
+            <RxMoon
+              className={`hover:duration-500 ${logoSize} ${lightCss} text-center flex justify-center items-center rounded-lg ease-in-out`}
+            ></RxMoon>
           ) : (
-            <FiSun className=" hover:duration-500 w-8 h-8 text-white text-center flex justify-center items-center rounded-lg ease-in-out"></FiSun>
+            <FiSun
+              className={`hover:duration-500 ${logoSize} text-white text-center flex justify-center items-center rounded-lg ease-in-out`}
+            ></FiSun>
           )}
         </div>
       </Tooltip>

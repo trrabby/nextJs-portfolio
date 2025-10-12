@@ -79,7 +79,7 @@ const LoginForm = () => {
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="mx-auto flex flex-col gap-6 w-full lg:w-8/12"
+      className="mx-auto mt-5 flex flex-col gap-6 w-full lg:w-8/12"
     >
       <Suspense fallback={null}>
         <SearchParamsHandler onRedirect={setRedirect} />

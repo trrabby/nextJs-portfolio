@@ -186,7 +186,7 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
                   : "px-2 py-2 justify-center"
               )}
             >
-              <ThemeToggler />
+              <ThemeToggler lightCss="text-black" logoSize="h-6 w-6" />
               {expanded && (
                 <span>Switch to {theme === "dark" ? "Light" : "Dark"}</span>
               )}
@@ -197,18 +197,20 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
           name: "Logout",
           custom: true,
           element: (
-            <button
-              onClick={() => logout("/")}
-              className={cn(
-                "flex items-center justify-center gap-2 text-red-500 hover:bg-red-500 hover:text-white rounded-md transition-colors duration-300 w-full font-bold",
-                expanded
-                  ? "px-4 py-2 mt-2 text-base"
-                  : "px-2 py-2 justify-center"
-              )}
-            >
-              <LogOut className="h-6 w-6 font-bold" />
-              {expanded && <span>Logout</span>}
-            </button>
+            <Tooltip title="Log Out" placement="right">
+              <button
+                onClick={() => logout("/")}
+                className={cn(
+                  "flex items-center justify-center gap-2 text-red-500 hover:bg-red-500 hover:text-white rounded-md transition-colors duration-300 w-full font-bold",
+                  expanded
+                    ? "px-4 py-2 mt-2 text-base"
+                    : "px-2 py-2 justify-center"
+                )}
+              >
+                <LogOut className="h-6 w-6 font-bold" />
+                {expanded && <span>Logout</span>}
+              </button>
+            </Tooltip>
           ),
         },
       ],

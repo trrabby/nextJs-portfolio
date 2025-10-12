@@ -7,7 +7,7 @@ import Link from "next/link";
 const Login = () => {
   return (
     <div
-      className={`${styles.loginImgBg} min-h-screen flex items-center justify-center px-4 bg-cover relative`}
+      className={`${styles.loginImgBg} bg-fixed min-h-screen flex items-center justify-center px-4 bg-cover relative`}
     >
       {/* Return/Home Button */}
       <Link
@@ -18,7 +18,7 @@ const Login = () => {
         <span>Home</span>
       </Link>
 
-      <div className="w-full max-w-2xl bg-white/10 backdrop-blur-xl border border-white/20 rounded-3xl shadow-2xl p-10 text-center space-y-2">
+      <div className="w-full max-w-2xl bg-white/10 backdrop-blur-xl border border-white/20 rounded-3xl shadow-2xl p-10 text-center space-y-2 my-5">
         {/* Section Head */}
         <SectionHead
           title="SIGN IN"
@@ -28,7 +28,7 @@ const Login = () => {
         />
 
         {/* Login Form */}
-        <div className="mt-0">
+        <div>
           <LoginForm />
         </div>
       </div>
