@@ -36,6 +36,10 @@ const authOptions: NextAuthOptions = {
     GitHubProvider({
       clientId: config().Github_Client_ID!,
       clientSecret: config().Github_Client_Secret!,
+      authorization: {
+        url: "https://github.com/login/oauth/authorize",
+        params: { scope: "read:user user:email" },
+      },
     }),
   ],
 
@@ -47,26 +51,41 @@ const authOptions: NextAuthOptions = {
     // STEP 1️⃣ Handle sign-in (Google/GitHub)
     async signIn({ user, account }) {
       try {
+        const provider = account?.provider;
+        const providerToken = account?.access_token;
+        // console.log(
+        //   "SIGNIN PROVIDER:",
+        //   provider,
+        //   "TOKEN:",
+        //   providerToken,
+        //   "user",
+        //   user
+        // );
+
         const existingUser = await getMyProfileByEmail(user.email as string);
 
-        // Optional: Auto-register if user doesn’t exist
+        // Auto-register if user doesn’t exist
+        if (!existingUser?.data && user?.email && providerToken) {
+          let registerEndpoint = "";
 
-        if (!existingUser?.data && account && user?.email) {
-          // Use provider access_token as bearer token
-          const providerToken = account.access_token;
-          //   console.log({ "reg token for frontend": providerToken });
-          await fetch(`${config().Backend_URL}/users/registerViaProviders`, {
+          if (provider === "google") {
+            registerEndpoint = `${
+              config().Backend_URL
+            }/users/registerViaGoogle`;
+          } else if (provider === "github") {
+            registerEndpoint = `${
+              config().Backend_URL
+            }/users/registerViaGithub`;
+          }
+
+          await fetch(registerEndpoint, {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
               Authorization: `${providerToken}`,
             },
             body: JSON.stringify({
-              name: user.name,
-              email: user.email,
-              password: Math.random().toString(36).slice(-10),
-              imgUrl: user.image || "",
-              authProvider: account?.provider,
+              authProvider: provider,
             }),
           });
         }
@@ -81,28 +100,31 @@ const authOptions: NextAuthOptions = {
     // STEP 2️⃣ After sign-in, issue backend tokens and store in cookies
     async jwt({ token, account, user }) {
       try {
-        // Only call backend once (first login)
         if (account && user?.email) {
-          // Use provider access_token as bearer token
+          const provider = account.provider;
           const providerToken = account.access_token;
-          //   console.log({ "token for frontend": providerToken });
-          const response = await fetch(
-            `${config().Backend_URL}/auth/login-through-providers`,
-            {
-              method: "POST",
-              headers: {
-                Authorization: `${providerToken}`,
-              },
-            }
-          );
+          let loginUrl = "";
+
+          if (provider === "google") {
+            loginUrl = `${config().Backend_URL}/auth/login-through-google`;
+          } else if (provider === "github") {
+            loginUrl = `${config().Backend_URL}/auth/login-through-github`;
+          }
+
+          const response = await fetch(loginUrl, {
+            method: "POST",
+            headers: {
+              Authorization: `${providerToken}`,
+            },
+          });
 
           const data = await response.json();
-          // console.log({ "login response form nextauth": data });
+          console.log("Login response from backend:", data);
+
           if (data?.data?.accessToken && data?.data?.refreshToken) {
             token.accessToken = data.data.accessToken;
             token.refreshToken = data.data.refreshToken;
 
-            // ✅ Save tokens to HTTP-only cookies
             const cookieStore = await cookies();
             cookieStore.set("accessToken", data.data.accessToken);
             cookieStore.set("refreshToken", data.data.refreshToken);
