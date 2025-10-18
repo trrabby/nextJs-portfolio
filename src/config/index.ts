@@ -1,5 +1,6 @@
 export const config = () => ({
   Backend_URL: process.env.NEXT_PUBLIC_Backend_URL,
+  ImgBB_URL: process.env.NEXT_PUBLIC_aip_imgbb,
   EmailJS_Service_ID: process.env.NEXT_PUBLIC_EmailJS_Service_ID,
   EmailJS_Template_ID: process.env.NEXT_PUBLIC_EmailJS_Template_ID,
   EmailJS_User_ID: process.env.NEXT_PUBLIC_EmailJS_User_ID,

@@ -224,7 +224,7 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
       {/* Sidebar */}
       <aside
         className={cn(
-          "fixed md:static z-50 min-h-screen flex flex-col justify-between border-r border-gray-300 dark:border-gray-700 bg-white/70 dark:bg-gray-900/70 backdrop-blur-xl transition-all duration-300",
+          "fixed top-0 left-0 h-screen z-50 flex flex-col justify-between border-r border-gray-300 dark:border-gray-700 bg-white/70 dark:bg-gray-900/70 backdrop-blur-xl transition-all duration-300",
           expanded ? "w-60" : "w-16"
         )}
       >
@@ -370,7 +370,14 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
       </aside>
 
       {/* Main content */}
-      <main className="flex-1 ml-16 md:ml-0 p-6">{children}</main>
+      <main
+        className={cn(
+          "flex-1 p-6 transition-all duration-300",
+          expanded ? "ml-60" : "ml-16"
+        )}
+      >
+        {children}
+      </main>
     </div>
   );
 };
