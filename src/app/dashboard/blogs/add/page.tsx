@@ -213,10 +213,10 @@ const AddBlogPage = () => {
           <button
             type="submit"
             disabled={isSubmitting}
-            className={`w-full py-4 font-semibold rounded-xl text-white text-lg transition-all duration-200 ${
+            className={`w-full py-4 font-semibold rounded-xl  text-accent hover:text-fourth dark:text-white  text-lg transition-all duration-200 ${
               isSubmitting
                 ? "bg-gray-400 cursor-not-allowed"
-                : "bg-[#1a0033] hover:bg-[#04d1a1]"
+                : "bg-transparent border-2 border-accent hover:bg-[#04d1a1]"
             }`}
           >
             {isSubmitting ? "Publishing..." : "Publish Blog"}

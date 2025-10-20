@@ -17,7 +17,6 @@ import { Selection } from "@tiptap/extensions";
 
 // --- UI Primitives ---
 import { Button } from "@/components/tiptap-ui-primitive/button";
-import { Spacer } from "@/components/tiptap-ui-primitive/spacer";
 import {
   Toolbar,
   ToolbarGroup,
@@ -41,16 +40,8 @@ import { ImageUploadButton } from "@/components/tiptap-ui/image-upload-button";
 import { ListDropdownMenu } from "@/components/tiptap-ui/list-dropdown-menu";
 import { BlockquoteButton } from "@/components/tiptap-ui/blockquote-button";
 import { CodeBlockButton } from "@/components/tiptap-ui/code-block-button";
-import {
-  ColorHighlightPopover,
-  ColorHighlightPopoverContent,
-  ColorHighlightPopoverButton,
-} from "@/components/tiptap-ui/color-highlight-popover";
-import {
-  LinkPopover,
-  LinkContent,
-  LinkButton,
-} from "@/components/tiptap-ui/link-popover";
+import { ColorHighlightPopoverContent } from "@/components/tiptap-ui/color-highlight-popover";
+import { LinkContent } from "@/components/tiptap-ui/link-popover";
 import { MarkButton } from "@/components/tiptap-ui/mark-button";
 import { TextAlignButton } from "@/components/tiptap-ui/text-align-button";
 import { UndoRedoButton } from "@/components/tiptap-ui/undo-redo-button";
@@ -74,10 +65,9 @@ import { handleImageUpload, MAX_FILE_SIZE } from "@/lib/tiptap-utils";
 // --- Styles ---
 import "@/components/tiptap-templates/simple/simple-editor.scss";
 import { CustomImage } from "@/components/tiptap-node/image-upload-node/custom-img-resizer";
+import ResizeImageModal from "./resizeImageModal/Resize-imgModal";
 
 const MainToolbarContent = ({
-  onHighlighterClick,
-  onLinkClick,
   isMobile,
   editor,
 }: {
@@ -86,123 +76,175 @@ const MainToolbarContent = ({
   isMobile: boolean;
   editor: any;
 }) => {
+  const [openResizeModal, setOpenResizeModal] = React.useState(false);
+
+  const handleResize = (width: string, height: string) => {
+    editor?.chain().focus().updateAttributes("image", { width, height }).run();
+  };
+
   return (
-    <>
-      <Spacer />
+    <div className="flex flex-col gap-2 justify-center items-center overflow-y-visible p-1 rounded-lg  border-b border-b-third w-full">
+      <div className="flex">
+        <ToolbarGroup>
+          <UndoRedoButton action="undo" />
+          <UndoRedoButton action="redo" />
+        </ToolbarGroup>
 
-      <ToolbarGroup>
-        <UndoRedoButton action="undo" />
-        <UndoRedoButton action="redo" />
-      </ToolbarGroup>
+        <ToolbarSeparator />
 
-      <ToolbarSeparator />
+        <ToolbarGroup>
+          <HeadingDropdownMenu levels={[1, 2, 3, 4]} portal={isMobile} />
+          <ListDropdownMenu
+            types={["bulletList", "orderedList", "taskList"]}
+            portal={isMobile}
+          />
+          <BlockquoteButton />
+          <CodeBlockButton />
+        </ToolbarGroup>
 
-      <ToolbarGroup>
-        <HeadingDropdownMenu levels={[1, 2, 3, 4]} portal={isMobile} />
-        <ListDropdownMenu
-          types={["bulletList", "orderedList", "taskList"]}
-          portal={isMobile}
-        />
-        <BlockquoteButton />
-        <CodeBlockButton />
-      </ToolbarGroup>
+        <ToolbarSeparator />
 
-      <ToolbarSeparator />
+        <ToolbarGroup>
+          <MarkButton type="bold" />
+          <MarkButton type="italic" />
+          <MarkButton type="strike" />
+          <MarkButton type="code" />
+          <MarkButton type="underline" />
+        </ToolbarGroup>
 
-      <ToolbarGroup>
-        <MarkButton type="bold" />
-        <MarkButton type="italic" />
-        <MarkButton type="strike" />
-        <MarkButton type="code" />
-        <MarkButton type="underline" />
-        {!isMobile ? (
-          <ColorHighlightPopover />
-        ) : (
-          <ColorHighlightPopoverButton onClick={onHighlighterClick} />
-        )}
-        {!isMobile ? <LinkPopover /> : <LinkButton onClick={onLinkClick} />}
-      </ToolbarGroup>
+        <ToolbarSeparator />
 
-      <ToolbarSeparator />
+        <ToolbarGroup>
+          <MarkButton type="superscript" />
+          <MarkButton type="subscript" />
+        </ToolbarGroup>
 
-      <ToolbarGroup>
-        <MarkButton type="superscript" />
-        <MarkButton type="subscript" />
-      </ToolbarGroup>
+        <ToolbarSeparator />
 
-      <ToolbarSeparator />
+        <ToolbarGroup>
+          <TextAlignButton align="left" />
+          <TextAlignButton align="center" />
+          <TextAlignButton align="right" />
+          <TextAlignButton align="justify" />
+        </ToolbarGroup>
 
-      <ToolbarGroup>
-        <TextAlignButton align="left" />
-        <TextAlignButton align="center" />
-        <TextAlignButton align="right" />
-        <TextAlignButton align="justify" />
-      </ToolbarGroup>
+        <ToolbarSeparator />
 
-      <ToolbarSeparator />
-
-      <ToolbarGroup>
-        <ImageUploadButton text="Add" />
-      </ToolbarGroup>
-
-      <Spacer />
+        <ToolbarGroup>
+          <ImageUploadButton text="Add" />
+        </ToolbarGroup>
+      </div>
 
       {isMobile && <ToolbarSeparator />}
+      <div>
+        <ToolbarGroup>
+          <Button
+            onClick={() =>
+              editor
+                ?.chain()
+                .focus()
+                .updateAttributes("image", { align: "left" })
+                .run()
+            }
+          >
+            Left
+          </Button>
+          <Button
+            onClick={() =>
+              editor
+                ?.chain()
+                .focus()
+                .updateAttributes("image", { align: "center" })
+                .run()
+            }
+          >
+            Center
+          </Button>
+          <Button
+            onClick={() =>
+              editor
+                ?.chain()
+                .focus()
+                .updateAttributes("image", { align: "right" })
+                .run()
+            }
+          >
+            Right
+          </Button>
+          <div style={{ display: "flex", gap: "8px" }}>
+            {/* Other editor buttons */}
+            <Button onClick={() => setOpenResizeModal(true)}>Resize</Button>
 
-      <ToolbarGroup>
-        <Button
-          onClick={() =>
-            editor
-              ?.chain()
-              .focus()
-              .updateAttributes("image", { align: "left" })
-              .run()
-          }
-        >
-          Left
-        </Button>
-        <Button
-          onClick={() =>
-            editor
-              ?.chain()
-              .focus()
-              .updateAttributes("image", { align: "center" })
-              .run()
-          }
-        >
-          Center
-        </Button>
-        <Button
-          onClick={() =>
-            editor
-              ?.chain()
-              .focus()
-              .updateAttributes("image", { align: "right" })
-              .run()
-          }
-        >
-          Right
-        </Button>
-        <Button
-          onClick={() => {
-            const width = prompt("Enter width (px or %)") || "auto";
-            const height = prompt("Enter height (px or %)") || "auto";
+            <ResizeImageModal
+              open={openResizeModal}
+              onClose={() => setOpenResizeModal(false)}
+              onResize={handleResize}
+            />
+          </div>
+          <Button
+            data-style="ghost"
+            onClick={() => {
+              editor?.chain().focus().clearContent(true).run();
+            }}
+          >
+            Clear
+          </Button>
 
-            editor
-              ?.chain()
-              .focus()
-              .updateAttributes("customImage", { width, height })
-              .run();
-          }}
-        >
-          Resize
-        </Button>
-      </ToolbarGroup>
+          <ToolbarGroup>
+            <Button
+              onClick={() =>
+                editor
+                  ?.chain()
+                  .focus()
+                  .updateAttributes("paragraph", { style: "line-height:1" })
+                  .run()
+              }
+            >
+              1
+            </Button>
+            <Button
+              onClick={() =>
+                editor
+                  ?.chain()
+                  .focus()
+                  .updateAttributes("paragraph", { style: "line-height:1.5" })
+                  .run()
+              }
+            >
+              1.5
+            </Button>
+            <Button
+              onClick={() =>
+                editor
+                  ?.chain()
+                  .focus()
+                  .updateAttributes("paragraph", {
+                    style: "margin-top:0;margin-bottom:0;line-height:1.5",
+                  })
+                  .run()
+              }
+            >
+              Remove Spacing
+            </Button>
+            <Button
+              onClick={() =>
+                editor
+                  ?.chain()
+                  .focus()
+                  .toggleHighlight({ color: "#539c06" })
+                  .run()
+              }
+            >
+              Yellow Highlight
+            </Button>
+          </ToolbarGroup>
+        </ToolbarGroup>
 
-      {/* <ToolbarGroup>
+        {/* <ToolbarGroup>
         <ThemeToggle />
       </ToolbarGroup> */}
-    </>
+      </div>
+    </div>
   );
 };
 
@@ -290,7 +332,6 @@ export function SimpleEditor({ value, onChange }: SimpleEditorProps) {
     onUpdate: ({ editor }) => {
       onChange(editor.getHTML()); // sync editor content with parent form
     },
-    
   });
 
   const rect = useCursorVisibility({

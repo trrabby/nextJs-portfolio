@@ -9,6 +9,7 @@ body {
   font-family: "Inter", sans-serif;
   background: transparent;
   transition: background-color 0.25s ease, color 0.25s ease;
+  width: 100%;
 }
 
 /* ---------- Editor Wrapper ---------- */
@@ -21,8 +22,9 @@ body {
     background-color 0.25s ease;
   overflow: visible;
   margin: 1rem auto;
-  max-width: 980px;
+  width: 980px;
   z-index: 20;
+  overflow-y: scroll;
 }
 
 /* Dark mode wrapper (Next-themes adds .dark to <html>) */
@@ -197,21 +199,62 @@ body {
 .simple-editor-content {
   width: 100%;
   margin: 0 auto;
-  padding: 1rem 1.25rem;
   font-family: "DM Sans", sans-serif;
-  line-height: 0; /* <--- fixed: sensible line-height */
-  font-size: 1rem;
   text-align: left;
-  overflow: hidden;
+
+  /* 🩵 realistic text layout */
+  line-height: 1.6; /* similar to Word’s single spacing (~1.15–1.5) */
+  font-size: 16px;
+  word-spacing: 0.02em;
+  letter-spacing: 0.01em;
+}
+
+.simple-editor-content p {
+  margin: 0 0 0.75rem; /* slight gap between paragraphs like Word */
+}
+
+/* ---------- Task Lists (checkbox visibility fix) ---------- */
+.simple-editor-content [data-type="taskList"] {
+  list-style: none;
+  padding-left: 1.5rem;
+}
+
+.simple-editor-content [data-type="taskItem"] {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+  margin: 0.4rem 0;
+}
+
+/* TaskItem checkboxes */
+.simple-editor-content
+  .ProseMirror
+  [data-type="taskItem"]
+  input[type="checkbox"] {
+  display: inline-block !important;
+  width: 1rem;
+  height: 1rem;
+  margin-right: 0.5rem;
+  vertical-align: middle;
+  accent-color: #04d1a1;
+  cursor: pointer;
+}
+
+/* Dark mode checkboxes */
+.dark .simple-editor-content [data-type="taskItem"] input[type="checkbox"] {
+  accent-color: #04d1a1;
+  background-color: #0b1220;
+  border: 1px solid #04d1a1;
 }
 
 /* TipTap ProseMirror area */
 .simple-editor-content .tiptap.ProseMirror {
-  min-height: 320px;
+  min-height: 300px;
+  max-height: 450px;
   padding-left: 20px; /* left padding the editor content */
   padding-right: 12px;
   padding-top: 12px;
-  background: transparent;
+  background: none;
   color: #0f172a; /* dark text for light mode */
   caret-color: #205a4c83; /* visible cursor */
   outline: none;
@@ -260,26 +303,13 @@ body {
   padding-left: 0.5rem;
 }
 
-// /* Wrap text around left-aligned images */
-// .simple-editor-content .tiptap.ProseMirror img[align="left"] {
-//   float: left;
-//   margin: 0 1rem 1rem 0; /* space on right and bottom */
-//   max-width: 50%; /* adjust size as needed */
-// }
-
-// /* Wrap text around right-aligned images */
-// .simple-editor-content .tiptap.ProseMirror img[align="right"] {
-//   float: right;
-//   margin: 0 0 1rem 1rem; /* space on left and bottom */
-//   max-width: 50%;
-// }
-
-// /* Centered images stay block, centered */
-// .simple-editor-content .tiptap.ProseMirror img[align="center"] {
-//   display: block;
-//   margin: 1rem auto;
-//   max-width: 100%;
-// }
+/* Force realistic line spacing */
+.simple-editor-content .ProseMirror p,
+.simple-editor-content .ProseMirror li {
+  line-height: 0.6 !important;
+  margin: 0 0 0.7rem !important;
+  font-size: 16px;
+}
 
 .custom-image-left {
   float: left;
@@ -301,10 +331,14 @@ body {
 
 /* ---------- Responsive ---------- */
 @media screen and (max-width: 640px) {
-  .simple-editor-wrapper {
-    margin: 0.75rem;
-  }
   .simple-editor-content {
     padding: 0.75rem;
+  }
+
+  .simple-editor-wrapper {
+    margin: 0.75rem;
+    width: 300px;
+    z-index: 20;
+    overflow-y: scroll;
   }
 }
