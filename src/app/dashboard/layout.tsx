@@ -220,16 +220,16 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
   ];
 
   return (
-    <div className="min-h-screen flex bg-gray-100 dark:bg-gray-950 text-gray-800 dark:text-gray-100 transition-all">
+    <div className="min-h-screen flex justify-start items-start gap-1 bg-gray-100 dark:bg-gray-950 text-gray-800 dark:text-gray-100 transition-all">
       {/* Sidebar */}
       <aside
         className={cn(
-          "fixed top-0 left-0 h-screen z-50 flex flex-col justify-between border-r border-gray-300 dark:border-gray-700 bg-white/70 dark:bg-gray-900/70 backdrop-blur-xl transition-all duration-300",
-          expanded ? "w-60" : "w-16"
+          "md:fixed top-0 md:top-0 left-0 h-screen z-50 flex flex-col justify-between border-r border-gray-300 dark:border-gray-700 bg-white/70 dark:bg-gray-900/70 backdrop-blur-xl transition-all duration-300 pt-20 md:pt-0",
+          expanded ? "md:w-60" : "w-12 md:w-16"
         )}
       >
         {/* Sidebar header */}
-        <div className="flex flex-col items-center md:items-start">
+        <div className="flex flex-col items-center md:items-start ">
           <div
             className="flex items-center gap-2 p-4 font-bold text-xl cursor-pointer"
             onClick={toggleSidebar}
@@ -277,9 +277,9 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
                       onClick={() => toggleMenu(name)}
                       className={cn(
                         "flex items-center justify-between w-full px-4 py-3 rounded-md transition-colors duration-300",
-                        "hover:bg-gray-200/50 dark:hover:bg-gray-800/70",
+                        "hover:bg-gray-200/50 dark:hover:bg-gray-800/70 hover:border-x hover:border-accent",
                         isActive
-                          ? "text-accent font-semibold bg-accent/10 dark:bg-accent/15"
+                          ? "text-accent font-semibold bg-accent/10 dark:bg-accent/15 border-x border-accent"
                           : "text-gray-700 dark:text-gray-300"
                       )}
                     >
@@ -310,7 +310,7 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
                       href={path!}
                       className={cn(
                         "flex items-center gap-3 w-full px-4 py-3 rounded-md transition-colors duration-300",
-                        "hover:bg-gray-200/50 dark:hover:bg-gray-800/70",
+                        "hover:bg-gray-200/50 dark:hover:bg-gray-800/70 hover:border-x hover:border-accent",
                         isActive
                           ? "text-accent font-semibold bg-accent/10 dark:bg-accent/15"
                           : "text-gray-700 dark:text-gray-300"
@@ -345,11 +345,13 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
                             key={sub.name}
                             href={sub.path}
                             className={cn(
-                              "flex items-center gap-3 py-2 text-sm rounded-md transition-colors duration-300",
-                              expanded ? "pl-12 pr-4" : "px-6",
-                              "hover:bg-gray-200/50 dark:hover:bg-gray-800/70",
+                              "flex items-center gap-2 py-2 md:mx-2 text-sm rounded-md transition-colors duration-300 my-1 right-0",
+                              expanded
+                                ? "pl-10 md:pl-10"
+                                : "pl-5 md:pl-3 border-t border-accent",
+                              "hover:bg-gray-200/50 dark:hover:bg-gray-800/70 hover:border-r hover:border-accent",
                               pathname === sub.path
-                                ? "text-accent font-semibold bg-accent/10 dark:bg-accent/15"
+                                ? "text-accent font-semibold bg-accent/10 dark:bg-accent/15 border-r border-accent"
                                 : "text-gray-500 dark:text-gray-400"
                             )}
                           >
@@ -372,8 +374,8 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
       {/* Main content */}
       <main
         className={cn(
-          "flex-1 p-6 transition-all duration-300",
-          expanded ? "ml-60" : "ml-16"
+          "flex-1 p-2 md:p-6 transition-all duration-300",
+          expanded ? "md:ml-60" : "md:ml-16"
         )}
       >
         {children}

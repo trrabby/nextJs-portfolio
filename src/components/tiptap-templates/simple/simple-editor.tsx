@@ -14,6 +14,8 @@ import { Highlight } from "@tiptap/extension-highlight";
 import { Subscript } from "@tiptap/extension-subscript";
 import { Superscript } from "@tiptap/extension-superscript";
 import { Selection } from "@tiptap/extensions";
+import { TextStyle } from "@tiptap/extension-text-style";
+import Color from "@tiptap/extension-color";
 
 // --- UI Primitives ---
 import { Button } from "@/components/tiptap-ui-primitive/button";
@@ -50,6 +52,7 @@ import { UndoRedoButton } from "@/components/tiptap-ui/undo-redo-button";
 import { ArrowLeftIcon } from "@/components/tiptap-icons/arrow-left-icon";
 import { HighlighterIcon } from "@/components/tiptap-icons/highlighter-icon";
 import { LinkIcon } from "@/components/tiptap-icons/link-icon";
+import { RiArrowRightDoubleFill } from "react-icons/ri";
 
 // --- Hooks ---
 import { useIsMobile } from "@/hooks/use-mobile";
@@ -67,6 +70,9 @@ import "@/components/tiptap-templates/simple/simple-editor.scss";
 import { CustomImage } from "@/components/tiptap-node/image-upload-node/custom-img-resizer";
 import ResizeImageModal from "./resizeImageModal/Resize-imgModal";
 
+import { Menu, MenuItem, ListItemIcon, ListItemText } from "@mui/material";
+import { FormatColorFill } from "@mui/icons-material";
+
 const MainToolbarContent = ({
   isMobile,
   editor,
@@ -80,6 +86,40 @@ const MainToolbarContent = ({
 
   const handleResize = (width: string, height: string) => {
     editor?.chain().focus().updateAttributes("image", { width, height }).run();
+  };
+
+  // highlight menu
+  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const open = Boolean(anchorEl);
+
+  const highlightColors = [
+    { name: "Yellow", color: "#ffd54f", text: "#000" },
+    { name: "Red", color: "#ff5252", text: "#fff" },
+    { name: "Ash", color: "#b0bec5", text: "#000" },
+  ];
+
+  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  const handleHighlight = (color: string) => {
+    const textColor = color === "#ff5252" ? "#fff" : "#000"; // ensures contrast
+    editor
+      ?.chain()
+      .focus()
+      .setColor(textColor)
+      .toggleHighlight({ color })
+      .run();
+    handleClose();
+  };
+
+  const handleHighlightClear = () => {
+    editor?.chain().focus().unsetHighlight().run();
+    handleClose();
   };
 
   return (
@@ -132,55 +172,6 @@ const MainToolbarContent = ({
 
         <ToolbarGroup>
           <ImageUploadButton text="Add" />
-        </ToolbarGroup>
-      </div>
-
-      {isMobile && <ToolbarSeparator />}
-      <div>
-        <ToolbarGroup>
-          <Button
-            onClick={() =>
-              editor
-                ?.chain()
-                .focus()
-                .updateAttributes("image", { align: "left" })
-                .run()
-            }
-          >
-            Left
-          </Button>
-          <Button
-            onClick={() =>
-              editor
-                ?.chain()
-                .focus()
-                .updateAttributes("image", { align: "center" })
-                .run()
-            }
-          >
-            Center
-          </Button>
-          <Button
-            onClick={() =>
-              editor
-                ?.chain()
-                .focus()
-                .updateAttributes("image", { align: "right" })
-                .run()
-            }
-          >
-            Right
-          </Button>
-          <div style={{ display: "flex", gap: "8px" }}>
-            {/* Other editor buttons */}
-            <Button onClick={() => setOpenResizeModal(true)}>Resize</Button>
-
-            <ResizeImageModal
-              open={openResizeModal}
-              onClose={() => setOpenResizeModal(false)}
-              onResize={handleResize}
-            />
-          </div>
           <Button
             data-style="ghost"
             onClick={() => {
@@ -189,54 +180,108 @@ const MainToolbarContent = ({
           >
             Clear
           </Button>
+        </ToolbarGroup>
+      </div>
 
-          <ToolbarGroup>
+      {isMobile && <ToolbarSeparator />}
+      <div>
+        <ToolbarGroup>
+          <div className="border-r-2 border-accent flex gap-1 pr-2 mr-2">
+            <p className="flex items-center gap-1">
+              Align Photo <RiArrowRightDoubleFill />
+            </p>
             <Button
               onClick={() =>
                 editor
                   ?.chain()
                   .focus()
-                  .updateAttributes("paragraph", { style: "line-height:1" })
+                  .updateAttributes("image", { align: "left" })
                   .run()
               }
             >
-              1
+              Left
             </Button>
             <Button
               onClick={() =>
                 editor
                   ?.chain()
                   .focus()
-                  .updateAttributes("paragraph", { style: "line-height:1.5" })
+                  .updateAttributes("image", { align: "center" })
                   .run()
               }
             >
-              1.5
+              Center
             </Button>
             <Button
               onClick={() =>
                 editor
                   ?.chain()
                   .focus()
-                  .updateAttributes("paragraph", {
-                    style: "margin-top:0;margin-bottom:0;line-height:1.5",
-                  })
+                  .updateAttributes("image", { align: "right" })
                   .run()
               }
             >
-              Remove Spacing
+              Right
             </Button>
-            <Button
-              onClick={() =>
-                editor
-                  ?.chain()
-                  .focus()
-                  .toggleHighlight({ color: "#539c06" })
-                  .run()
-              }
-            >
-              Yellow Highlight
-            </Button>
+            <div style={{ display: "flex", gap: "8px" }}>
+              {/* Other editor buttons */}
+              <Button onClick={() => setOpenResizeModal(true)}>Resize</Button>
+
+              <ResizeImageModal
+                open={openResizeModal}
+                onClose={() => setOpenResizeModal(false)}
+                onResize={handleResize}
+              />
+            </div>
+          </div>
+
+          <ToolbarGroup className="relative">
+            <div>
+              <Button color="inherit" onClick={handleClick}>
+                Highlight
+              </Button>
+
+              <Menu anchorEl={anchorEl} open={open} onClose={handleClose}>
+                {highlightColors.map(({ name, color }) => (
+                  <MenuItem
+                    key={color}
+                    onClick={() => handleHighlight(color)}
+                    sx={{
+                      display: "flex",
+                      alignItems: "center",
+                      gap: 1,
+                    }}
+                  >
+                    <ListItemIcon>
+                      <span
+                        style={{
+                          display: "inline-block",
+                          width: 18,
+                          height: 18,
+                          borderRadius: 3,
+                          backgroundColor: color,
+                          border: "1px solid #ccc",
+                        }}
+                      />
+                    </ListItemIcon>
+                    <ListItemText>{name}</ListItemText>
+                  </MenuItem>
+                ))}
+
+                <MenuItem onClick={() => handleHighlightClear()}>
+                  <ListItemIcon>
+                    <FormatColorFill
+                      fontSize="small"
+                      sx={{
+                        transform: "rotate(180deg)",
+                        color: "#777",
+                      }}
+                    />
+                  </ListItemIcon>
+                  <ListItemText>Clear Highlight</ListItemText>
+                </MenuItem>
+              </Menu>
+            </div>
           </ToolbarGroup>
         </ToolbarGroup>
 
@@ -315,6 +360,9 @@ export function SimpleEditor({ value, onChange }: SimpleEditorProps) {
       TaskList,
       TaskItem.configure({ nested: true }),
       Highlight.configure({ multicolor: true }),
+      // << new ones for text color >>
+      TextStyle,
+      Color.configure({ types: ["textStyle"] }),
       Image,
       Typography,
       Superscript,

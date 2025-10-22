@@ -10,6 +10,8 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 import { SimpleEditor } from "@/components/tiptap-templates/simple/simple-editor";
 import { useRouter } from "next/navigation";
+import { SectionHead } from "@/components/SectionHead";
+import { Typewriter } from "react-simple-typewriter";
 
 export interface IBlogFormData {
   title: string;
@@ -93,18 +95,24 @@ const AddBlogPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br  py-12 px-4">
+    <div className="min-h-screen bg-gradient-to-br md:py-12 md:px-4">
       <motion.div
         initial={{ opacity: 0, y: 40 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
-        className="max-w-6xl mx-auto bg-white dark:bg-gray-900 rounded-3xl shadow-2xl p-10"
+        className="mx-auto bg-white dark:bg-gray-900 rounded-3xl shadow-2xl md:p-10"
       >
-        <h2 className="text-4xl font-bold text-center text-[#04d1a1] mb-12">
-          Add New Blog
-        </h2>
+        <SectionHead
+          title="Add New Blog"
+          titleColor="text-[#04d1a1] dark:text-[#04d1a1] pb-4"
+          para={`Turn On PC mode on your browser to access all features.`}
+          paraColor="lg:hidden text-[#04d1a1] dark:text-gray-300"
+        />
 
-        <form onSubmit={handleSubmit(onSubmit)} className="space-y-8">
+        <form
+          onSubmit={handleSubmit(onSubmit)}
+          className="space-y-8 w-10/12 mx-auto"
+        >
           {/* Title & Category */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {/** Title */}
@@ -141,7 +149,7 @@ const AddBlogPage = () => {
             <label className="font-medium mb-2">Tags (comma separated)</label>
             <input
               type="text"
-              placeholder="e.g., React, Next.js, Web Dev"
+              placeholder="e.g., React,Next.js,Web Dev"
               {...register("tags", { required: true })}
               className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#04d1a1] bg-gray-50 dark:bg-gray-800 dark:border-[#04d1a1]"
             />
@@ -149,7 +157,22 @@ const AddBlogPage = () => {
 
           {/* Blog Content */}
           <div className="flex flex-col">
-            <label className="font-medium mb-2">Content</label>
+            <label className="font-medium mb-2 h-6">
+              <Typewriter
+                words={[
+                  "Write your blog content...",
+                  "Write your content here...",
+                  "Share your thoughts...",
+                  "Express your ideas...",
+                ]}
+                loop={true}
+                cursor
+                cursorStyle="|"
+                typeSpeed={70}
+                deleteSpeed={50}
+                delaySpeed={1500}
+              />
+            </label>
             <Controller
               name="content"
               control={control}

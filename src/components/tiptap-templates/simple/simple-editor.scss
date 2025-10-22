@@ -304,9 +304,15 @@ body {
 }
 
 /* Force realistic line spacing */
+// .simple-editor-content .ProseMirror p,
+// .simple-editor-content .ProseMirror li {
+//   line-height: 0.6 !important;
+//   margin: 0 0 0.7rem !important;
+//   font-size: 16px;
+// }
 .simple-editor-content .ProseMirror p,
 .simple-editor-content .ProseMirror li {
-  line-height: 0.6 !important;
+  line-height: var(--line-height, 1.6);
   margin: 0 0 0.7rem !important;
   font-size: 16px;
 }
