@@ -1,95 +1,171 @@
+/* eslint-disable react/no-unescaped-entities */
+"use client";
+
 import Image from "next/image";
-import profile from "../../../../public/portfolioAssets/profile.png";
+import { motion } from "framer-motion";
 import { Typewriter } from "react-simple-typewriter";
 import { FaDownload } from "react-icons/fa";
 import Link from "next/link";
-import styles from "../styles.module.css";
+import profile from "../../../../public/portfolioAssets/profile.png"; // Assuming your path is correct
+
+// --- Color Strategy ---
+// Dark Mode (Default): Background: #0B0F1B, Accent: #00C9A7 (Teal-Aqua), Secondary: #B19CD9 (Lavender)
+// Light Mode (dark: Prefix): Background: #FFFFFF (White), Accent: #8499bb (Purple), Secondary: #FFD700 (Gold)
 
 export const Banner = () => {
+  // Define base colors (Dark Mode default) and light mode overrides (dark: prefix)
+
   return (
-    <div
-      className={`relative ${styles.banner} bg-fixed bg-center bg-cover h-screen flex items-center justify-center overflow-hidden`}
+    // Set Dark Mode colors as default, Light Mode colors use the 'dark:' prefix (requires manual toggle)
+    <section
+      className={`relative flex items-center justify-center h-screen overflow-hidden bg-accent/10 dark:bg-gray-950 pt-20 rounded-b-xl`}
     >
-      {/* Main Content */}
-      <div className="relative content-container flex items-center md:pt-0 pt-3">
-        <div className="backdrop-blur-sm text-left flex md:flex-row flex-col justify-center md:justify-start items-center md:gap-16 md:py-32 p-5">
-          {/* Profile Image (Desktop) */}
-          <div className="md:flex hidden w-4/12 items-end justify-end">
+      {/* 2. Sophisticated Blur Lights (Aura Glows) */}
+      {/* Note: Tailwind needs full color classes to be compiled, using string interpolation for dynamic colors is risky. */}
+      {/* I'll use the specific hex codes in the classes to ensure compilation. */}
+      <div
+        className={`absolute top-[-10%] left-[-10%] w-[500px] h-[500px] bg-accent dark:bg-primary/20 rounded-full blur-[150px] -z-10 opacity-70 animate-pulse-slow`}
+      ></div>
+      <div
+        className={`absolute bottom-[-10%] right-[-10%] w-[400px] h-[400px] bg-[#B19CD9]/15 dark:bg-primary/20 rounded-full blur-[150px] -z-10 opacity-70`}
+      ></div>
+
+      {/* Main Content Container */}
+      <motion.div
+        initial={{ opacity: 0, y: 40 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8 }}
+        className="flex flex-col md:flex-row items-center justify-center gap-16 md:gap-24 px-6 md:px-20 text-center md:text-left z-10"
+      >
+        {/* Profile with Refined Glow */}
+        <motion.div
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ delay: 0.2, duration: 0.7 }}
+          className="relative flex justify-center items-center w-[300px] h-[300px] md:w-[350px] md:h-[350px] flex-shrink-0 rounded-full"
+        >
+          {/* Animated Outer Ring */}
+          <motion.div
+            className={`absolute w-[calc(100%+20px)] h-[calc(100%+20px)] rounded-full border-4 border-[#00C9A7]/30 dark:border-primary/40 blur-[4px]`}
+            animate={{
+              scale: [1, 1.05, 1],
+              opacity: [0.5, 0.8, 0.5],
+            }}
+            transition={{ repeat: Infinity, duration: 6, ease: "easeInOut" }}
+          ></motion.div>
+
+          {/* Floating Profile Image Container */}
+          <motion.div
+            animate={{ y: [0, -8, 0] }}
+            transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+            className={`relative w-[280px] h-[280px] md:w-[320px] md:h-[320px] rounded-full overflow-hidden 
+              shadow-[0_0_60px_rgba(0,201,167,0.6)] dark:shadow-[0_0_60px_rgba(0,201,167,0.6)] 
+              border-4 border-[#00C9A7] p-5 dark:border-third z-10 bg-[#0B0F1B]`} // ← added z-10 and background
+          >
             <Image
-              className="rounded-2xl mt-24"
               src={profile}
               alt="Profile"
-              height={500}
-              width={500}
+              width={280}
+              height={280}
+              style={{ objectFit: "cover", objectPosition: "top" }}
+              priority
+              placeholder="blur"
+              className="rounded-full object-top"
             />
-          </div>
+          </motion.div>
+        </motion.div>
 
-          <div className="flex flex-col justify-center items-center">
-            <div className="space-y-8  md:pl-20 p-2 rounded-lg flex flex-col md:items-start justify-center">
-              {/* Heading */}
-              <div className="text-4xl font-extrabold sm:text-5xl space-y-6">
-                {/* Profile Image (Mobile) */}
-                <div className="md:hidden block items-end justify-start">
-                  <Image
-                    className="w-44 rounded-2xl border-accent shadow-xl"
-                    src={profile}
-                    alt="Profile"
-                    height={500}
-                    width={500}
-                  />
-                </div>
-                <p className="text-[#5bfcdc] dark:text-gray-700  drop-shadow-2xl  animate-pulse">
-                  Hi,{" "}
-                </p>
-                <p className="text-white">I am</p>
-                <strong className="font-extrabold text-white sm:block mt-3 text-nowrap">
-                  Towfiqur Rahman
-                </strong>
-              </div>
+        {/* Text Content */}
+        <div className="flex flex-col items-center md:items-start space-y-4 md:space-y-6">
+          <motion.p
+            initial={{ opacity: 0, x: -30 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: 0.4, duration: 0.5 }}
+            // Dark Mode: Teal-Aqua, Light Mode: Purple
+            className={`text-[#00C9A7] dark:text-fourth text-xl md:text-2xl font-semibold tracking-wider`}
+          >
+            Hi there, I'm
+          </motion.p>
 
-              {/* Typewriter Effect */}
-              <p className="mt-4 md:text-2xl text-xl text-white font-extrabold">
-                A &nbsp;
-                <Typewriter
-                  words={[
-                    "Web Developer",
-                    "MERN Stack Developer",
-                    "Front End Web Developer",
-                    "React Developer",
-                    "UI Developer",
-                    "Web Developer",
-                  ]}
-                  loop={5}
-                  cursor
-                  cursorStyle="|"
-                  typeSpeed={70}
-                  deleteSpeed={50}
-                  delaySpeed={1000}
-                />
-              </p>
-            </div>
-            {/* Buttons Section */}
-            <div className="md:w-auto w-8/12 mt-8 flex md:justify-start justify-center items-center gap-4">
-              {/* Download Resume */}
-              <Link
-                className="rounded bg-accent dark:bg-slate-700 px-6 md:px-12 py-3 text-base font-medium text-white shadow hover:bg-transparent border hover:scale-105 duration-700 flex gap-3 justify-center items-center"
-                href="https://drive.google.com/file/d/1OUsLkQwZTCdwPm5hca7qvK-ozsuN4ygl/view"
-                target="_blank"
-              >
-                <FaDownload className="animate-bounce" /> Resume
-              </Link>
+          <motion.h1
+            initial={{ opacity: 0, x: -30 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: 0.6, duration: 0.6 }}
+            // Dark Mode: White, Light Mode: Dark Gray
+            className={`text-gray-600 dark:text-[#8499bb] text-5xl md:text-7xl font-extrabold leading-tight`}
+          >
+            Towfiqur{" "}
+            <span className={`text-[#00C9A7] dark:text-[#00C9A7]`}>Rahman</span>
+          </motion.h1>
 
-              {/* Read Blogs */}
-              <Link
-                className="rounded px-6 md:px-12 py-3 text-base font-medium text-white shadow hover:bg-accent dark:hover:bg-slate-700  hover:scale-105 duration-700  border text-center cursor-pointer text-nowrap"
-                href={"/blogs"}
-              >
-                Read Blogs
-              </Link>
-            </div>
-          </div>
+          <motion.p
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.9, duration: 0.7 }}
+            // Dark Mode: White/Gray, Light Mode: Dark Gray
+            className={`text-gray-600 dark:text-[#8499bb] text-xl md:text-3xl font-medium pt-1`}
+          >
+            A{" "}
+            <span className={`text-[#00C9A7] dark:text-[#00C9A7] font-bold`}>
+              <Typewriter
+                words={[
+                  "MERN Stack Developer",
+                  "Full-Stack Engineer",
+                  "Backend Developer",
+                  "Database Architect",
+                  "Front-End Engineer",
+                ]}
+                loop={0}
+                cursor
+                cursorStyle="_"
+                typeSpeed={80}
+                deleteSpeed={40}
+                delaySpeed={1500}
+              />
+            </span>
+          </motion.p>
+
+          <motion.p
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 1.2, duration: 0.7 }}
+            // Dark Mode: Gray, Light Mode: Slightly Darker Gray
+            className={`text-gray-600 dark:text-[#8499bb] max-w-lg mt-4 text-md`}
+          >
+            I specialize in crafting fast, reliable full-stack applications,
+            merging robust backend logic with captivating, modern interfaces.
+          </motion.p>
+
+          {/* Buttons - Primary style is now the Dark Mode style */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 1.5, duration: 0.8 }}
+            className="flex flex-wrap justify-center md:justify-start gap-4 mt-8"
+          >
+            <Link
+              href="https://drive.google.com/file/d/1OUsLkQwZTCdwPm5hca7qvK-ozsuN4ygl/view"
+              target="_blank"
+              // Primary Button (Dark Mode style)
+              className={`flex items-center gap-2 bg-[#00C9A7] text-[#0B0F1B] dark:bg-[#8499bb] dark:text-white 
+                         px-7 py-3 rounded-full font-bold shadow-lg shadow-[#00C9A7]/30 dark:shadow-[#8499bb]/30 
+                         hover:scale-[1.03] transition-transform duration-300`}
+            >
+              <FaDownload /> Download Resume
+            </Link>
+
+            <Link
+              href="/blogs"
+              // Secondary Button (Dark Mode style)
+              className={`border border-[#00C9A7] text-[#8499bb] dark:border-[#8499bb] dark:text-[#4B5563] 
+                         px-7 py-3 rounded-full font-medium hover:bg-[#00C9A7] hover:text-[#0B0F1B]
+                         dark:hover:bg-[#8499bb] dark:hover:text-white transition-all duration-300`}
+            >
+              Read Blogs
+            </Link>
+          </motion.div>
         </div>
-      </div>
-    </div>
+      </motion.div>
+    </section>
   );
 };
