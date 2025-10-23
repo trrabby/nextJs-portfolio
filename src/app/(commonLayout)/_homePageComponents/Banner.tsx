@@ -60,7 +60,7 @@ export const Banner = () => {
             transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
             className={`relative w-[280px] h-[280px] md:w-[320px] md:h-[320px] rounded-full overflow-hidden 
               shadow-[0_0_60px_rgba(0,201,167,0.6)] dark:shadow-[0_0_60px_rgba(0,201,167,0.6)] 
-              border-4 border-[#00C9A7] p-5 dark:border-third z-10 bg-[#0B0F1B]`} // ← added z-10 and background
+              border-4 border-[#00C9A7] p-5 dark:border-third z-10 dark:bg-gray-950`}
           >
             <Image
               src={profile}
@@ -70,7 +70,7 @@ export const Banner = () => {
               style={{ objectFit: "cover", objectPosition: "top" }}
               priority
               placeholder="blur"
-              className="rounded-full object-top"
+              className="rounded-full object-top "
             />
           </motion.div>
         </motion.div>
@@ -92,7 +92,7 @@ export const Banner = () => {
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.6, duration: 0.6 }}
             // Dark Mode: White, Light Mode: Dark Gray
-            className={`text-gray-600 dark:text-[#8499bb] text-5xl md:text-7xl font-extrabold leading-tight`}
+            className={`text-gray-600 dark:text-[#8499bb] text-3xl md:text-7xl font-extrabold leading-tight`}
           >
             Towfiqur{" "}
             <span className={`text-[#00C9A7] dark:text-[#00C9A7]`}>Rahman</span>
@@ -130,7 +130,7 @@ export const Banner = () => {
             animate={{ opacity: 1 }}
             transition={{ delay: 1.2, duration: 0.7 }}
             // Dark Mode: Gray, Light Mode: Slightly Darker Gray
-            className={`text-gray-600 dark:text-[#8499bb] max-w-lg mt-4 text-md`}
+            className={`text-gray-600 dark:text-[#8499bb] max-w-lg mt-4 text-md py-2`}
           >
             I specialize in crafting fast, reliable full-stack applications,
             merging robust backend logic with captivating, modern interfaces.
@@ -147,11 +147,9 @@ export const Banner = () => {
               href="https://drive.google.com/file/d/1OUsLkQwZTCdwPm5hca7qvK-ozsuN4ygl/view"
               target="_blank"
               // Primary Button (Dark Mode style)
-              className={`flex items-center gap-2 bg-[#00C9A7] text-[#0B0F1B] dark:bg-[#8499bb] dark:text-white 
-                         px-7 py-3 rounded-full font-bold shadow-lg shadow-[#00C9A7]/30 dark:shadow-[#8499bb]/30 
-                         hover:scale-[1.03] transition-transform duration-300`}
+              className={`flex items-center gap-2 bg-[#00C9A7] text-[#0B0F1B] dark:bg-[#8499bb] dark:text-white px-7 py-3 rounded-full font-bold shadow-lg shadow-[#00C9A7]/30 dark:shadow-[#8499bb]/30 hover:scale-[1.03] transition-transform duration-300  `}
             >
-              <FaDownload /> Download Resume
+              <FaDownload className="animate-bounce" /> Download Resume
             </Link>
 
             <Link
