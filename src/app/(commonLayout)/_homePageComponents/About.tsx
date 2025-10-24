@@ -1,4 +1,5 @@
 /* eslint-disable react/no-unescaped-entities */
+"use client";
 import React, { useState } from "react";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import "react-tabs/style/react-tabs.css";
@@ -20,7 +21,6 @@ import {
 } from "react-icons/fi";
 
 // Local asset imports
-import bootstrap from "../../../../public/portfolioAssets/skill-icon/bootstrap.png";
 import nextImg from "../../../../public/portfolioAssets/skill-icon/next.png";
 import reactRouter from "../../../../public/portfolioAssets/skill-icon/react-router.svg";
 import expressImg from "../../../../public/portfolioAssets/skill-icon/express.png";
@@ -29,6 +29,9 @@ import redux from "../../../../public/portfolioAssets/skill-icon/redux-svgrepo-c
 import ts from "../../../../public/portfolioAssets/skill-icon/typescript-official-svgrepo-com.svg";
 import mongoose from "../../../../public/portfolioAssets/skill-icon/mongoose.png";
 import nextAuth from "../../../../public/portfolioAssets/skill-icon/nextAuth.png";
+import daisi from "../../../../public/portfolioAssets/skill-icon/daisi.png";
+import shadcn from "../../../../public/portfolioAssets/skill-icon/shadcn.png";
+import antd from "../../../../public/portfolioAssets/skill-icon/antdesign.png";
 
 // --- Types ---
 interface Skill {
@@ -97,24 +100,20 @@ const SKILLS_DATA: SkillsData = {
         src: "https://www.vectorlogo.zone/logos/tailwindcss/tailwindcss-icon.svg",
       },
       {
-        name: "Bootstrap",
-        src: bootstrap,
-      },
-      {
         name: "Material UI",
         src: "https://mui.com/static/logo.png",
       },
       {
         name: "Ant Design",
-        src: "https://gw.alipayobjects.com/zos/rmsportal/KDpgvguMpGfqaHPjNoDE.svg",
+        src: antd,
       },
       {
         name: "DaisyUI",
-        src: "https://daisyui.com/favicon.ico",
+        src: daisi,
       },
       {
         name: "shadcn/ui",
-        src: "https://avatars.githubusercontent.com/u/137688599?s=200&v=4",
+        src: shadcn,
       },
     ],
     "Backend & Runtime": [
@@ -220,24 +219,20 @@ const SKILLS_DATA: SkillsData = {
       src: "https://www.vectorlogo.zone/logos/tailwindcss/tailwindcss-icon.svg",
     },
     {
-      name: "Bootstrap",
-      src: bootstrap,
-    },
-    {
       name: "Material UI",
       src: "https://mui.com/static/logo.png",
     },
     {
       name: "Ant Design",
-      src: "https://gw.alipayobjects.com/zos/rmsportal/KDpgvguMpGfqaHPjNoDE.svg",
+      src: antd,
     },
     {
       name: "DaisyUI",
-      src: "https://daisyui.com/favicon.ico",
+      src: daisi,
     },
     {
       name: "shadcn/ui",
-      src: "https://avatars.githubusercontent.com/u/137688599?s=200&v=4",
+      src: shadcn,
     },
   ],
   "Backend & Runtime": [
@@ -524,14 +519,14 @@ export const About: React.FC = () => {
             transition={{ delay: 0.5, duration: 0.5 }}
             className="text-center mt-10 md:w-4/12 w-10/12 mx-auto bottom-0"
           >
-            <TabList className="flex justify-around items-center bg-third dark:bg-gray-950 rounded-2xl p-2 shadow-xl border border-gray-200 dark:border-gray-700">
-              <Tab className="flex-1 py-2 text-sm md:text-base font-semibold text-gray-600 dark:text-gray-300 hover:text-accent dark:hover:text-accent focus:outline-none transition-colors duration-300 cursor-pointer react-tabs__tab--selected:bg-accent react-tabs__tab--selected:text-white react-tabs__tab--selected:rounded-xl">
+            <TabList className="flex justify-around items-center bg-third dark:bg-gray-950 rounded-2xl p-2 shadow-xl border border-gray-500 dark:border-gray-700">
+              <Tab className="flex-1 py-2 text-sm md:text-base font-semibold text-gray-600 dark:text-accent/70 hover:text-accent dark:hover:text-accent focus:outline-none transition-colors duration-300 cursor-pointer">
                 Education
               </Tab>
-              <Tab className="flex-1 py-2 text-sm md:text-base font-semibold text-gray-600 dark:text-gray-300 hover:text-accent dark:hover:text-accent focus:outline-none transition-colors duration-300 cursor-pointer react-tabs__tab--selected:bg-accent react-tabs__tab--selected:text-white react-tabs__tab--selected:rounded-xl">
+              <Tab className="flex-1 py-2 text-sm md:text-base font-semibold text-gray-600 dark:text-accent/70 hover:text-accent dark:hover:text-accent focus:outline-none transition-colors duration-300 cursor-pointer">
                 Skills
               </Tab>
-              <Tab className="flex-1 py-2 text-sm md:text-base font-semibold text-gray-600 dark:text-gray-300 hover:text-accent dark:hover:text-accent focus:outline-none transition-colors duration-300 cursor-pointer react-tabs__tab--selected:bg-accent react-tabs__tab--selected:text-white react-tabs__tab--selected:rounded-xl">
+              <Tab className="flex-1 py-2 text-sm md:text-base font-semibold text-gray-600 dark:text-accent/70 hover:text-accent dark:hover:text-accent focus:outline-none transition-colors duration-300 cursor-pointer">
                 Courses
               </Tab>
             </TabList>
@@ -663,9 +658,7 @@ export const About: React.FC = () => {
                       <br />
                       I am pursuing here the next level technologies of Web
                       Development. Technologies include: TypeScript, Mongoose,
-                      Redux, Next.Js, **DBMS**, **SQL**, **PostgreSQL**,
-                      **Prisma**, **Docker**, **AWS**, **GraphQL**, **Vitest**,
-                      **Jest**.
+                      Redux, Next.Js, DBMS, PostgreSQL, Prisma, Docker, AWS.
                       <br />
                     </div>
                   </div>

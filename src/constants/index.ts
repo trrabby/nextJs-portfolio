@@ -16,3 +16,20 @@ export interface IUser {
   isDeleted?: boolean;
   status?: "active" | "blocked";
 }
+
+export interface IBlog {
+  _id?: string;
+  title: string;
+  category: string;
+  author:
+    | string
+    | { name: string; email: string; imgUrl: string; role: string };
+  tags: string[];
+  content: string;
+  coverImage: string;
+  previousUploadedImg?: string[];
+  thumbnails: string[];
+  featured?: boolean;
+  isDeleted?: boolean;
+  createdAt?: Date;
+}

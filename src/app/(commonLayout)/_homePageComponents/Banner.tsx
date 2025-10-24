@@ -1,28 +1,17 @@
 /* eslint-disable react/no-unescaped-entities */
 "use client";
-
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { Typewriter } from "react-simple-typewriter";
 import { FaDownload } from "react-icons/fa";
 import Link from "next/link";
-import profile from "../../../../public/portfolioAssets/profile.png"; // Assuming your path is correct
-
-// --- Color Strategy ---
-// Dark Mode (Default): Background: #0B0F1B, Accent: #00C9A7 (Teal-Aqua), Secondary: #B19CD9 (Lavender)
-// Light Mode (dark: Prefix): Background: #FFFFFF (White), Accent: #8499bb (Purple), Secondary: #FFD700 (Gold)
+import profile from "../../../../public/portfolioAssets/profile.png";
 
 export const Banner = () => {
-  // Define base colors (Dark Mode default) and light mode overrides (dark: prefix)
-
   return (
-    // Set Dark Mode colors as default, Light Mode colors use the 'dark:' prefix (requires manual toggle)
     <section
       className={`relative flex items-center justify-center h-screen overflow-hidden bg-accent/10 dark:bg-gray-950 pt-20 rounded-b-xl`}
     >
-      {/* 2. Sophisticated Blur Lights (Aura Glows) */}
-      {/* Note: Tailwind needs full color classes to be compiled, using string interpolation for dynamic colors is risky. */}
-      {/* I'll use the specific hex codes in the classes to ensure compilation. */}
       <div
         className={`absolute top-[-10%] left-[-10%] w-[500px] h-[500px] bg-accent dark:bg-primary/20 rounded-full blur-[150px] -z-10 opacity-70 animate-pulse-slow`}
       ></div>

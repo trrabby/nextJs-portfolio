@@ -30,14 +30,32 @@ export const getBlogs = async (
   query?: { [key: string]: string | string[] | undefined }
 ) => {
   try {
-    const res = await fetch(
-      `${config().Backend_URL}/blogs?limit=${limit}&page=${page}&${query}`,
-      {
-        next: {
-          tags: ["BLOGS"],
-        },
-      }
-    );
+    // Build dynamic query params
+    const params = new URLSearchParams();
+
+    if (page) params.append("page", page);
+    if (limit) params.append("limit", limit);
+
+    if (query) {
+      Object.entries(query).forEach(([key, value]) => {
+        if (Array.isArray(value)) {
+          value.forEach((v) => v && params.append(key, v));
+        } else if (value) {
+          params.append(key, value);
+        }
+      });
+    }
+
+    // Construct the final URL with only valid params
+    const url = `${config().Backend_URL}/blogs${
+      params.toString() ? `?${params.toString()}` : ""
+    }`;
+
+    const res = await fetch(url, {
+      method: "GET",
+      next: { tags: ["BLOGS"] },
+    });
+
     const data = await res.json();
     return data;
   } catch (error: any) {
