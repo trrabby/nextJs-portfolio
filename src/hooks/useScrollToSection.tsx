@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 // hooks/useScrollToSection.ts
 "use client";
 
