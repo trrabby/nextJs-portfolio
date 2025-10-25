@@ -3,6 +3,7 @@
 
 import { useEffect, useRef } from "react";
 import { useSectionRefs } from "@/Context/RefContext";
+import { useScrollToSection } from "@/hooks/useScrollToSection";
 
 export default function ClientSectionRefs({
   children,
@@ -11,6 +12,8 @@ export default function ClientSectionRefs({
 }) {
   const { homeRef, aboutRef, blogsRef, projectsRef, contactsRef } =
     useSectionRefs();
+
+  const { handleStoredScroll } = useScrollToSection();
 
   // attach refs to sections after render
   const sectionRefs = {
@@ -34,7 +37,10 @@ export default function ClientSectionRefs({
       if (key && sectionRefs[key])
         sectionRefs[key].current = section as HTMLElement;
     });
-  }, []);
+
+    // Handle stored scroll after refs are attached
+    handleStoredScroll();
+  }, [handleStoredScroll]);
 
   return <div ref={containerRef}>{children}</div>;
 }

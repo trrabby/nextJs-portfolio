@@ -29,9 +29,9 @@ export const BlogCard = ({ blog }: BlogCardProps) => {
     text.length <= maxLength ? text : text.slice(0, maxLength) + "...";
 
   return (
-    <div className="flex flex-col bg-fourth dark:bg-gray-800 rounded-xl shadow-md hover:shadow-lg transition-transform duration-300 transform hover:-translate-y-1 w-full sm:w-[90%] md:w-80 mx-auto md:mx-0 overflow-hidden">
+    <div className="flex flex-col bg-white dark:bg-gray-800 rounded-xl shadow-md hover:shadow-lg transition-transform duration-300 transform hover:-translate-y-1 w-full sm:w-[90%] md:w-80 mx-auto md:mx-0 overflow-hidden">
       {/* Image */}
-      <div className="relative bg-fourth p-2">
+      <div className="relative bg-white p-2">
         <div className="h-48">
           <Image
             src={

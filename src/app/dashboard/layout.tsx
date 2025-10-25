@@ -28,7 +28,7 @@ import {
   UserCheck,
 } from "lucide-react";
 import { motion } from "framer-motion";
-import ThemeToggler from "../(commonLayout)/_homePageComponents/_ThemeController/ThemeToggler";
+import ThemeToggler from "../(CommonLayout)/_homePageComponents/_ThemeController/ThemeToggler";
 import { useTheme } from "next-themes";
 import { cn } from "@/utils/utils";
 import Tooltip from "@mui/material/Tooltip";

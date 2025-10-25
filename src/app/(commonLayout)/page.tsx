@@ -1,11 +1,11 @@
 // app/page.tsx (Server Component)
-import ConditionalLayout from "./_ConditionalCommonLayout/ConditionalLayout";
+import HomePageLayout from "./_HomePageLayout/HomePageLayout";
 import ScrollSections from "./_ScrollSections/ScrolSections";
 
 export default function Page() {
   return (
-    <ConditionalLayout>
+    <HomePageLayout>
       <ScrollSections />
-    </ConditionalLayout>
+    </HomePageLayout>
   );
 }

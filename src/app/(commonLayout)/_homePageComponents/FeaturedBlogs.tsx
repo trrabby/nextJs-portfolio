@@ -2,7 +2,7 @@
 import { SectionHead } from "@/components/SectionHead";
 import Link from "next/link";
 import { getBlogs } from "@/services/Blogs";
-import { BlogCard } from "@/app/(commonLayout)/_homePageComponents/_Cards/BlogCard";
+import { BlogCard } from "@/app/(CommonLayout)/_homePageComponents/_Cards/BlogCard";
 import { IBlog } from "@/constants";
 
 const FeaturedBlogs = async () => {
@@ -10,7 +10,7 @@ const FeaturedBlogs = async () => {
     featured: "true",
     author: "686d39d04e5a05d9420dc7e3",
   });
-  console.log("✅ Blogs fetched:", res.data.result);
+  // console.log("✅ Blogs fetched:", res.data.result);
 
   return (
     <div>

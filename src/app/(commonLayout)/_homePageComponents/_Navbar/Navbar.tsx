@@ -16,15 +16,15 @@ import Tooltip from "@mui/material/Tooltip";
 import StatusVariantSquare from "./StatusVariantSquare";
 import DashboardMenu from "./DashboardMenu";
 import { useSession } from "next-auth/react";
-import { getMyProfileByEmail } from "@/services/Users"; // ✅ new import
+import { getMyProfileByEmail } from "@/services/Users";
 import { useScrollToSection } from "@/hooks/useScrollToSection";
 import ThemeToggler from "../_ThemeController/ThemeToggler";
 
 const navlinks = [
   { id: "home", name: "Home" },
   { id: "about", name: "About" },
-  { id: "blogs", name: "Blogs" },
-  { id: "projects", name: "Projects" },
+  { id: "blogs", name: "Blogs", hasSubmenu: true },
+  { id: "projects", name: "Projects", hasSubmenu: true },
   { id: "contacts", name: "Contacts" },
 ];
 
@@ -32,6 +32,14 @@ type TSocialProps = {
   logo: React.ReactNode;
   href: string;
 };
+
+type TSubmenuItem = {
+  name: string;
+  action: () => void;
+  type: "scroll" | "link";
+  href?: string;
+};
+
 const social: TSocialProps[] = [
   { logo: <FiFacebook />, href: "https://facebook.com/profile.trrabby" },
   { logo: <SlSocialLinkedin />, href: "https://linkedin.com/in/towfiqueWeb" },
@@ -43,10 +51,11 @@ export default function Navbar() {
   const [showNavbar, setShowNavbar] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
   const [DashboardOpen, setDashboardOpen] = useState(false);
+  const [activeSubmenu, setActiveSubmenu] = useState<string | null>(null);
   const user = useAppSelector(selectCurrentUser);
   const dispatch = useAppDispatch();
   const { data: session, status } = useSession();
-  const { scrollToSection } = useScrollToSection(); //hook to scroll to sections
+  const { scrollToSection } = useScrollToSection();
 
   useEffect(() => {
     const syncReduxUser = async () => {
@@ -63,12 +72,12 @@ export default function Navbar() {
     syncReduxUser();
   }, [session, status, dispatch]);
 
-  // Scroll hide/show behavior
   useEffect(() => {
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
       if (currentScrollY > lastScrollY && currentScrollY > 80) {
         setShowNavbar(false);
+        setActiveSubmenu(null);
       } else {
         setShowNavbar(true);
       }
@@ -79,31 +88,39 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, [lastScrollY]);
 
-  // ✅ Updated scrollToSection function
+  const handleSubmenuAction = (item: TSubmenuItem) => {
+    if (item.type === "scroll") item.action();
+    setActiveSubmenu(null);
+  };
 
-  // const scrollToSection = (id: string) => {
-  //   const refMap: Record<string, React.RefObject<HTMLElement | null>> = {
-  //     home: homeRef,
-  //     about: aboutRef,
-  //     blogs: blogsRef,
-  //     projects: projectsRef,
-  //     contacts: contactsRef,
-  //   };
+  const blogsSubmenu: TSubmenuItem[] = [
+    {
+      name: "Featured Blogs",
+      action: () => scrollToSection("blogs"),
+      type: "scroll",
+    },
+    { name: "All Blogs", action: () => {}, type: "link", href: "/blogs" },
+  ];
 
-  //   const section = refMap[id]?.current;
-  //   if (section) {
-  //     const navbarHeight = 100; // Adjust to actual height
-  //     const sectionTop = section.getBoundingClientRect().top + window.scrollY;
-  //     const currentScrollY = window.scrollY;
+  const projectsSubmenu: TSubmenuItem[] = [
+    {
+      name: "Featured Projects",
+      action: () => scrollToSection("projects"),
+      type: "scroll",
+    },
+    { name: "All Projects", action: () => {}, type: "link", href: "/projects" },
+  ];
 
-  //     // Scroll direction logic
-  //     const isScrollingUp = sectionTop < currentScrollY;
-  //     const offset = isScrollingUp ? navbarHeight : 0;
-  //     const top = sectionTop - offset;
-
-  //     window.scrollTo({ top, behavior: "smooth" });
-  //   }
-  // };
+  const getSubmenuItems = (menuId: string): TSubmenuItem[] => {
+    switch (menuId) {
+      case "blogs":
+        return blogsSubmenu;
+      case "projects":
+        return projectsSubmenu;
+      default:
+        return [];
+    }
+  };
 
   return (
     <div
@@ -127,15 +144,65 @@ export default function Navbar() {
       </div>
 
       {/* Navlinks */}
-      <div className="flex flex-col md:flex-row gap-3 text-fourth text-lg text-right">
-        {navlinks.map(({ id, name }) => (
-          <button
+      <div className="flex flex-col md:flex-row gap-3 text-fourth text-lg text-right relative">
+        {navlinks.map(({ id, name, hasSubmenu }) => (
+          <div
             key={id}
-            onClick={() => scrollToSection(id)}
-            className={`${styles.animated_underline} p-2 pr-4 rounded-md text-right font-bold transition-all duration-300 hover:text-accent hover:ease-linear hover:scale-110 relative group`}
+            className="relative group"
+            onMouseEnter={() => hasSubmenu && setActiveSubmenu(id)}
+            onMouseLeave={() => hasSubmenu && setActiveSubmenu(null)}
           >
-            {name}
-          </button>
+            <button
+              onClick={() => !hasSubmenu && scrollToSection(id)}
+              className={`${styles.animated_underline} p-2 pr-4 rounded-md font-bold transition-all duration-300 hover:text-accent hover:scale-110 relative flex items-center gap-1`}
+            >
+              {name}
+              {hasSubmenu && (
+                <svg
+                  className={`w-4 h-4 transition-transform duration-200 ${
+                    activeSubmenu === id ? "rotate-180" : ""
+                  }`}
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M19 9l-7 7-7-7"
+                  />
+                </svg>
+              )}
+            </button>
+
+            {hasSubmenu && activeSubmenu === id && (
+              <div
+                className={`${styles.submenuContent} absolute top-full right-0 mt-1 shadow-lg z-50`}
+              >
+                {getSubmenuItems(id).map((item, index) =>
+                  item.type === "link" && item.href ? (
+                    <Link
+                      key={index}
+                      href={item.href}
+                      className={`${styles.submenuItem} block text-right w-full`}
+                      onClick={() => setActiveSubmenu(null)}
+                    >
+                      {item.name}
+                    </Link>
+                  ) : (
+                    <button
+                      key={index}
+                      onClick={() => handleSubmenuAction(item)}
+                      className={`${styles.submenuItem} block text-right w-full`}
+                    >
+                      {item.name}
+                    </button>
+                  )
+                )}
+              </div>
+            )}
+          </div>
         ))}
       </div>
 
@@ -146,7 +213,7 @@ export default function Navbar() {
             key={item.href}
             href={item.href}
             target="_blank"
-            className="hover:bg-third hover:scale-125 hover:duration-500 hover:text-primary w-8 h-8 text-white text-center flex justify-center items-center rounded-lg"
+            className="hover:bg-third hover:scale-125 hover:duration-500 hover:text-primary w-8 h-8 text-white flex justify-center items-center rounded-lg"
           >
             {item.logo}
           </Link>
@@ -164,7 +231,7 @@ export default function Navbar() {
             />
           </div>
         ) : (
-          <Link className={`${styles.animated_underline}`} href={"/login"}>
+          <Link className={styles.animated_underline} href={"/login"}>
             <Tooltip title="Sign in">
               <PiSignInBold className="hover:scale-125 hover:duration-500 dark:hover:text-third w-8 h-8 text-white text-center rounded-lg hover:shadow-lg hover:p-1" />
             </Tooltip>

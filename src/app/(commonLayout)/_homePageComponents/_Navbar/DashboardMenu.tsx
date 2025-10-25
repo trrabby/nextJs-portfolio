@@ -1,5 +1,7 @@
+"use client";
+
 import Link from "next/link";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { FaUserCircle, FaTachometerAlt, FaSignOutAlt } from "react-icons/fa";
 import { useLogout } from "@/hooks/useLogOut";
 
@@ -9,16 +11,8 @@ type DashboardMenuProps = {
 };
 
 const navlinks = [
-  {
-    name: "Profile",
-    link: "/profile",
-    Icon: <FaUserCircle />,
-  },
-  {
-    name: "Dashboard",
-    link: "/dashboard",
-    Icon: <FaTachometerAlt />,
-  },
+  { name: "Profile", link: "/profile", Icon: <FaUserCircle /> },
+  { name: "Dashboard", link: "/dashboard", Icon: <FaTachometerAlt /> },
 ];
 
 export default function DashboardMenu({
@@ -26,42 +20,70 @@ export default function DashboardMenu({
   setDashboardOpen,
 }: DashboardMenuProps) {
   const logout = useLogout();
+  const [visible, setVisible] = useState(false);
 
-  if (!open) return null;
+  // Sync internal visibility for smooth transition
+  useEffect(() => {
+    if (open) {
+      setVisible(true);
+    } else {
+      // wait for animation before hiding completely
+      const timeout = setTimeout(() => setVisible(false), 300);
+      return () => clearTimeout(timeout);
+    }
+  }, [open]);
+
+  if (!visible && !open) return null;
+
   return (
     <div
-      className="absolute min-h-screen inset-0 z-50 flex items-start justify-end"
+      className={`fixed inset-0 z-50 flex items-start justify-end transition-opacity duration-300 ${
+        open ? "opacity-100" : "opacity-0 pointer-events-none"
+      }`}
       onClick={() => setDashboardOpen(false)}
     >
       {/* Backdrop */}
-      <div className="absolute inset-0 bg-black bg-opacity-40"></div>
+      <div
+        className={`absolute h-screen inset-0 bg-black/40 transition-opacity duration-300 ${
+          open ? "opacity-100" : "opacity-0"
+        }`}
+      ></div>
 
       {/* Menu */}
       <div
-        className="relative mt-20 mr-4 w-48 bg-white dark:bg-gray-800 rounded-xl shadow-lg p-2 animate-fadeIn"
-        onClick={(e) => e.stopPropagation()} // prevent closing when clicking inside menu
+        className={`relative mt-[500px] -mr-5 md:mt-20 md:mr-20 w-48 bg-white dark:bg-gray-800 rounded-xl shadow-xl border border-gray-200 dark:border-gray-700 p-2 transform transition-all duration-300 ease-in-out ${
+          open
+            ? "translate-x-0 opacity-100 ease-in"
+            : "translate-x-20 opacity-0"
+        }`}
+        onClick={(e) => e.stopPropagation()}
       >
-        <ul className="flex flex-col space-y-2">
-          <li>
-            {navlinks.map((item) => (
-              <Link key={item.name} href={`${item.link}`}>
+        {/* Arrow */}
+        <div className="absolute -top-2 right-4 w-4 h-4 bg-white dark:bg-gray-800 border-t border-l border-gray-200 dark:border-gray-700 transform rotate-45"></div>
+
+        <ul className="flex flex-col space-y-1">
+          {navlinks.map((item) => (
+            <li key={item.name}>
+              <Link href={item.link}>
                 <div
                   onClick={() => setDashboardOpen(false)}
-                  className="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-accent hover:text-white cursor-pointer transition"
+                  className="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-200 cursor-pointer transition-colors duration-200"
                 >
-                  {item.Icon}
-                  <span>{item.name}</span>
+                  <span className="text-lg">{item.Icon}</span>
+                  <span className="font-medium">{item.name}</span>
                 </div>
               </Link>
-            ))}
-          </li>
-          <li className="flex justify-center items-center gap-3 px-4 py-2 rounded-lg cursor-pointer w-full">
+            </li>
+          ))}
+
+          {/* Logout */}
+          <li className="border-t border-gray-200 dark:border-gray-700 mt-1 pt-1">
             <div
               onClick={() => logout("/")}
-              className="flex gap-2 justify-center items-center text-red-500 hover:bg-red-500 hover:text-white transition px-6 py-2 rounded-xl"
+              className="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-red-50 dark:hover:bg-red-900/20 text-red-600 dark:text-red-400 cursor-pointer transition-colors duration-200"
             >
               <FaSignOutAlt className="w-5 h-5" />
-              Log Out
+              <span className="font-medium">Log Out</span>
             </div>
           </li>
         </ul>

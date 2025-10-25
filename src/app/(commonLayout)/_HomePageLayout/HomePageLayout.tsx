@@ -3,7 +3,11 @@ import Navbar from "../_homePageComponents/_Navbar/Navbar";
 import { Footer } from "../_homePageComponents/Footer";
 import SidebarDrawer from "../_homePageComponents/_Sidebar/SidebarDrawer";
 
-export default function ConditionalLayout({ children }: { children: React.ReactNode }) {
+export default function HomePageLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
     <>
       <div className="sticky hidden md:flex top-0 w-full z-50">

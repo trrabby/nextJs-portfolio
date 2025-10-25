@@ -13,7 +13,9 @@ export default function Providers({ children }: { children: React.ReactNode }) {
         <ThemeProvider attribute={"class"} enableSystem defaultTheme="system">
           <RefProvider>
             <Toaster richColors position="top-center" />
-            {children}
+            <div className="relative bg-fourth/50 dark:bg-gray-900 text-gray-950 dark:text-fourth transition-all duration-500">
+              {children}
+            </div>
           </RefProvider>
         </ThemeProvider>
       </StoreProvider>

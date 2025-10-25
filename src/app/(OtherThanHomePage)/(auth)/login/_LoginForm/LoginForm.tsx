@@ -10,7 +10,6 @@ import { setUser } from "@/redux/features/auth/authSlice";
 import { getMyProfile } from "@/services/Users";
 import { useRouter, useSearchParams } from "next/navigation";
 import { signIn } from "next-auth/react";
-import Link from "next/link";
 
 function SearchParamsHandler({
   onRedirect,
@@ -59,7 +58,7 @@ const LoginForm = () => {
         });
         const user = await getMyProfile();
         dispatch(setUser({ user: user.data, token: res.data.accessToken }));
-        router.push(redirect || "/");
+        router.push(redirect || "/dashboard");
       } else {
         toast.error(res?.message, { id: loginToastId });
       }
@@ -79,7 +78,7 @@ const LoginForm = () => {
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="mx-auto mt-5 flex flex-col gap-6 w-full lg:w-8/12"
+      className="mx-auto mt-5 flex flex-col gap-6 w-full lg:w-10/12"
     >
       <Suspense fallback={null}>
         <SearchParamsHandler onRedirect={setRedirect} />
@@ -91,7 +90,7 @@ const LoginForm = () => {
           Email
         </label>
         <input
-          className="w-full px-4 py-3 rounded-lg bg-white/10 text-white placeholder-gray-600 border border-gray-600 focus:outline-none focus:border-accent focus:ring-2 focus:ring-accent transition"
+          className="w-full px-4 py-3 rounded-lg bg-white/10 text-white placeholder-gray-200 border border-gray-600 focus:outline-none hover:border-accent focus:border-accent focus:ring-2 focus:ring-accent transition"
           type="email"
           placeholder="Enter your email"
           {...register("email", { required: true })}
@@ -110,14 +109,14 @@ const LoginForm = () => {
         </label>
         <div className="relative">
           <input
-            className="w-full px-4 py-3 rounded-lg bg-white/10 text-white placeholder-gray-600 border border-gray-600 focus:outline-none focus:border-accent focus:ring-2 focus:ring-accent transition"
+            className="w-full px-4 py-3 rounded-lg bg-white/10 text-white placeholder-gray-200 border border-gray-600 focus:outline-none hover:border-accent focus:border-accent focus:ring-2 focus:ring-accent transition"
             type={toggle ? "text" : "password"}
             placeholder="Enter your password"
             {...register("pass", { required: true })}
           />
           <span
             onClick={() => setToggle(!toggle)}
-            className="absolute right-3 top-3 text-gray-300 cursor-pointer hover:text-accent transition"
+            className="absolute right-3 top-4 text-gray-300 cursor-pointer hover:text-accent transition"
           >
             {toggle ? <FaRegEyeSlash size={20} /> : <FaRegEye size={20} />}
           </span>
@@ -160,16 +159,6 @@ const LoginForm = () => {
         >
           <FaGithub /> GitHub
         </button>
-      </div>
-
-      {/* Links */}
-      <div className="flex justify-between text-sm text-gray-300 mt-4">
-        <Link href="/forgot-password" className="hover:text-accent transition">
-          Forgot Password?
-        </Link>
-        <Link href="/register" className="hover:text-accent transition">
-          Create Account
-        </Link>
       </div>
     </form>
   );

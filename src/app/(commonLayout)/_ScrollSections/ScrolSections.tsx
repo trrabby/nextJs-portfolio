@@ -8,7 +8,7 @@ import ClientSectionRefs from "./ClientSectionRefs";
 
 export default function ScrollSections() {
   return (
-    <div className="relative bg-fourth dark:bg-gray-900 transition-all duration-500">
+    <div>
       <ClientSectionRefs>
         <section data-section="home" className="min-h-screen">
           <Banner />

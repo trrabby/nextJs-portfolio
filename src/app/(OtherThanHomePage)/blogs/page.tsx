@@ -1,7 +1,7 @@
 "use client";
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useEffect, useState, useCallback } from "react";
-import { BlogCard } from "@/app/(commonLayout)/_homePageComponents/_Cards/BlogCard";
+import { BlogCard } from "@/app/(CommonLayout)/_homePageComponents/_Cards/BlogCard";
 import { getBlogs } from "@/services/Blogs";
 import { IBlog } from "@/constants";
 import { SectionHead } from "@/components/SectionHead";
@@ -100,12 +100,15 @@ const BlogsClient = () => {
           </select>
         </div>
       </div>
+      {loading && (
+        <div className="flex h-[80vh] items-center justify-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-4 border-muted border-t-gray-950" />
+        </div>
+      )}
 
       {/* --- Blog Grid --- */}
       <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-8 mt-12">
-        {loading ? (
-          <p className="text-center text-gray-500 col-span-full">Loading...</p>
-        ) : blogs.length === 0 ? (
+        {blogs.length === 0 ? (
           <p className="text-center text-gray-500 col-span-full">
             No blogs found.
           </p>

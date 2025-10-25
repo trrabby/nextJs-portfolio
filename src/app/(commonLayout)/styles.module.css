@@ -2,19 +2,18 @@
   background-image: url(../../../public/portfolioAssets/5.webp);
 }
 
-/* line effect under navlinks */
+/* Line effect under navlinks */
 .animated_underline::after {
   content: "";
   display: block;
   position: absolute;
   left: 50%;
-  bottom: 20px;
+  bottom: 0px;
   width: 0;
   height: 2px;
   background: #84fadf;
   transition: left 0.3s, width 0.3s;
   border-radius: 2px;
-  bottom: 0px;
 }
 
 .animated_underline:hover::after,
@@ -23,8 +22,7 @@
   width: 100%;
 }
 
-/* animation under navbar */
-
+/* Animated navbar background */
 .navbar_backdrop {
   position: absolute;
   inset: 0;
@@ -33,7 +31,7 @@
   height: 100px;
   background: linear-gradient(
     180deg,
-    #84fadf 0%,
+    #4eb69e 0%,
     #84fade59 50%,
     #94969b60 100%
   );
@@ -41,6 +39,7 @@
   animation: diagonalMove 10s linear infinite;
   backdrop-filter: blur(10px);
 }
+
 .navbar_backdrop_sm {
   z-index: -1;
   background: linear-gradient(
@@ -65,13 +64,13 @@
   }
 }
 
-/* triangle */
+/* Triangle under navbar */
 .triangle {
   width: 0;
   height: 0;
   border-top: 15px solid transparent;
   border-bottom: 15px solid transparent;
-  border-left: 25px solid #84fadea4; /* Change color as needed */
+  border-left: 25px solid #84fadea4;
   position: absolute;
   bottom: -26px;
   right: 10px;
@@ -79,15 +78,62 @@
   z-index: -1;
 }
 
-.styled_button1 {
-  transition: 2s ease;
-  background: linear-gradient(90deg, #84fadf, #94969b);
-  padding: 10px 20px;
-  border-radius: 8px;
-  color: white;
-  font-weight: bold;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+/* Submenu styling */
+.submenuContent {
+  width: 180px;
+  background: linear-gradient(
+    90deg,
+    #669187 0%,
+    rgba(57, 73, 69, 0.897) 50%,
+    #03030360 100%
+  );
+  backdrop-filter: blur(10px);
+  border-radius: 10px;
+  border: 1px solid #84fade4f;
+  backdrop-filter: blur(8px);
+  overflow: hidden;
+  animation: diagonalMove 10s linear infinite;
 }
-.styled_button1:hover {
-  background: linear-gradient(90deg, #94969b, #84fadf);
+
+.submenuItem {
+  color: #e2e2e2;
+  padding: 10px 15px;
+  font-weight: 500;
+  position: relative;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.submenuItem:hover {
+  color: #29ebbd;
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
+.submenuItem::after {
+  content: "";
+  display: block;
+  position: absolute;
+  left: 50%;
+  bottom: 0px;
+  width: 0;
+  height: 2px;
+  background: #84fadf;
+  transition: left 0.3s, width 0.3s;
+  border-radius: 2px;
+}
+
+.submenuItem:hover::after {
+  left: 0;
+  width: 100%;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }

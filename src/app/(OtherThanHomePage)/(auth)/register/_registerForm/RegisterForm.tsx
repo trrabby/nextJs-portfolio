@@ -4,7 +4,6 @@
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { FaRegEye, FaRegEyeSlash, FaCloudUploadAlt } from "react-icons/fa";
-import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { getMyProfile, registerUser } from "@/services/Users";
@@ -100,7 +99,7 @@ const RegisterForm = () => {
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="mx-auto flex flex-col gap-6 w-full lg:w-8/12"
+      className="mx-auto flex flex-col gap-6 w-full lg:w-10/12"
     >
       {/* Name */}
       <div className="flex flex-col text-left">
@@ -243,16 +242,6 @@ const RegisterForm = () => {
       >
         Create Account
       </button>
-
-      {/* Links */}
-      <div className="flex justify-between text-sm text-gray-300 mt-4">
-        <Link href="/login" className="hover:text-accent transition">
-          Already have an account?
-        </Link>
-        <Link href="/" className="hover:text-accent transition">
-          Go Home
-        </Link>
-      </div>
     </form>
   );
 };
