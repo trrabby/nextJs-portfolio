@@ -29,7 +29,7 @@ export const BlogCard = ({ blog }: BlogCardProps) => {
     text.length <= maxLength ? text : text.slice(0, maxLength) + "...";
 
   return (
-    <div className="flex flex-col bg-white dark:bg-gray-800 rounded-xl shadow-md hover:shadow-lg transition-transform duration-300 transform hover:-translate-y-1 w-full sm:w-[90%] md:w-80 mx-auto md:mx-0 overflow-hidden">
+    <div className="flex flex-col bg-white dark:bg-gray-800 rounded-xl shadow-md hover:shadow-lg transition-transform duration-300 transform hover:-translate-y-1 w-full sm:w-[90%] md:w-80 mx-auto md:mx-0 overflow-hidden border border-accent/20 dark:border-gray-700 md:min-h-[550px]">
       {/* Image */}
       <div className="relative bg-white p-2">
         <div className="h-48">
@@ -69,7 +69,7 @@ export const BlogCard = ({ blog }: BlogCardProps) => {
         </div>
 
         {/* Title */}
-        <h3 className="text-black dark:text-fourth font-bold text-lg sm:text-xl line-clamp-2 mb-2">
+        <h3 className="text-black dark:text-fourth font-bold text-base line-clamp-2 mb-2">
           {blog?.title}
         </h3>
 

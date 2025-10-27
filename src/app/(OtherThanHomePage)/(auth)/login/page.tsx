@@ -7,7 +7,7 @@ import bgImage from "../../../../../public/portfolioAssets/4.webp";
 
 const Login = () => {
   return (
-    <section className="relative py-20  min-h-screen flex items-center justify-center bg-slate-900">
+    <section className="relative lg:py-20  min-h-screen flex items-center justify-center bg-slate-900">
       {/* --- Background Image with Overlay --- */}
       <div className="absolute inset-0">
         <Image
@@ -21,27 +21,6 @@ const Login = () => {
         />
         <div className="absolute inset-0 bg-black/50 backdrop-blur-[1px]"></div>
       </div>
-
-      {/* --- Home Button ---
-      <Link
-        href="/"
-        className="absolute top-6 left-6 z-10 flex items-center gap-2 bg-white/10 backdrop-blur-md text-white px-4 py-2.5 rounded-lg hover:bg-white/20 transition-colors border border-white/20"
-      >
-        <svg
-          className="w-5 h-5"
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={2}
-            d="M10 19l-7-7m0 0l7-7m-7 7h18"
-          />
-        </svg>
-        <span className="font-medium">Home</span>
-      </Link> */}
 
       {/* --- Main Content Card --- */}
       <div className="relative w-full max-w-5xl mx-4">
@@ -62,8 +41,7 @@ const Login = () => {
                 </div>
                 <div>
                   <h1 className="flex gap-1 lg:text-2xl font-bold text-white text-nowrap">
-                    Towfique{" "}
-                    <span className="text-accent">Verse Dashboard</span>
+                    Towfiq <span className="text-accent">Verse Dashboard</span>
                   </h1>
                   <p className="text-blue-200 text-sm">Secure Access</p>
                 </div>

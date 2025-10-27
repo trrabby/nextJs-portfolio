@@ -14,7 +14,7 @@ const BlogsClient = () => {
   const [category, setCategory] = useState("");
   const [sort, setSort] = useState(""); // alphabetical | date
   const [page, setPage] = useState(1);
-  const [limit] = useState(6);
+  const [limit] = useState(8);
   const [totalPages, setTotalPages] = useState(1);
   const [loading, setLoading] = useState(false);
 
@@ -22,19 +22,22 @@ const BlogsClient = () => {
     try {
       setLoading(true);
       const res: any = await getBlogs(String(page), String(limit), {
-        search,
+        searchTerm: search,
         category,
         sort,
       });
       const data = res?.data?.result || [];
       setBlogs(data);
-      setTotalPages(res?.data?.totalPages || 1);
+      const noOfData = res?.data?.meta?.total;
+      const totalPageCount = noOfData ? Math.ceil(noOfData / limit) : 1;
+      setTotalPages(totalPageCount || 1);
 
       // Extract unique categories dynamically from blogs
+
+      const extractCategory: any = await getBlogs();
+      const catagoryData = extractCategory?.data?.result || [];
       const allCategories: string[] = Array.from(
-        new Set(
-          res?.data?.result?.map((b: IBlog) => b.category).filter(Boolean)
-        )
+        new Set(catagoryData?.map((b: IBlog) => b.category).filter(Boolean))
       );
       if (allCategories.length > 0) setCategories(allCategories);
     } catch (err) {
@@ -58,7 +61,7 @@ const BlogsClient = () => {
       />
 
       {/* --- Filters --- */}
-      <div className="flex flex-wrap justify-between items-center mt-10 gap-5">
+      <div className="flex flex-wrap justify-between items-center mt-10 gap-5 ">
         <input
           type="text"
           placeholder="Search blogs..."
@@ -69,7 +72,7 @@ const BlogsClient = () => {
           }}
         />
 
-        <div className="flex gap-4 items-center">
+        <div className="flex flex-row md:flex-row gap-4 items-center justify-center">
           <select
             className="border rounded-md px-3 py-2 text-gray-700 dark:text-fourth"
             value={category}
@@ -95,37 +98,47 @@ const BlogsClient = () => {
             }}
           >
             <option value="">Sort By</option>
-            <option value="alphabetical">Alphabetical (A–Z)</option>
-            <option value="date">Newest First</option>
+            <option value="title">Alphabetical (A–Z)</option>
+            <option value="-title">Alphabetical (Z–A)</option>
+            <option value="createdAt">Oldest First</option>
+            <option value="-createdAt">Newest First</option>
           </select>
         </div>
       </div>
       {loading && (
-        <div className="flex h-[80vh] items-center justify-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-4 border-muted border-t-gray-950" />
+        <div className="flex gap-2 items-center justify-center mt-20 ">
+          <p>Please wait, fetching blogs...</p>
+          <div className="animate-spin rounded-full h-6 w-6 border-4 border-muted border-t-gray-950" />
         </div>
       )}
 
       {/* --- Blog Grid --- */}
-      <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-8 mt-12">
-        {blogs.length === 0 ? (
-          <p className="text-center text-gray-500 col-span-full">
-            No blogs found.
-          </p>
-        ) : (
-          blogs.map((blog) => (
-            <motion.div
-              key={blog._id}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.4 }}
-            >
-              <BlogCard blog={blog} />
-            </motion.div>
-          ))
-        )}
-      </div>
-
+      {!loading && (
+        <div>
+          <div>
+            {blogs.length === 0 ? (
+              <p className="text-center text-gray-500 col-span-full">
+                No blogs found.
+              </p>
+            ) : (
+              <div className="grid lg:grid-cols-4 md:grid-cols-2 grid-cols-1 justify-between mt-12 w-full mx-auto gap-8">
+                {blogs.map((blog) => (
+                  <motion.div
+                    key={blog._id}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.4 }}
+                  >
+                    <div className="flex justify-around ">
+                      <BlogCard blog={blog} />
+                    </div>
+                  </motion.div>
+                ))}
+              </div>
+            )}
+          </div>
+        </div>
+      )}
       {/* --- Pagination --- */}
       <div className="flex justify-center items-center mt-12 gap-4">
         <button
