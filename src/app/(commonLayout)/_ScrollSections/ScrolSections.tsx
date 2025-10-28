@@ -2,9 +2,9 @@
 import { Banner } from "../_homePageComponents/Banner";
 import { About } from "../_homePageComponents/About";
 import FeaturedBlogs from "../_homePageComponents/FeaturedBlogs";
-import Projects from "../_homePageComponents/Projects";
 import { Contacts } from "../_homePageComponents/Contacts";
 import ClientSectionRefs from "./ClientSectionRefs";
+import FeaturedProjects from "../_homePageComponents/FeaturedProjects";
 
 export default function ScrollSections() {
   return (
@@ -20,7 +20,7 @@ export default function ScrollSections() {
           <FeaturedBlogs />
         </section>
         <section data-section="projects" className="min-h-screen">
-          <Projects />
+          <FeaturedProjects />
         </section>
         <section data-section="contacts" className="min-h-screen">
           <Contacts />

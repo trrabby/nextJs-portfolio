@@ -29,16 +29,32 @@ export const getProjects = async (
   query?: { [key: string]: string | string[] | undefined }
 ) => {
   try {
-    const res = await fetch(
-      `${
-        config().Backend_URL
-      }/projects?limit=${limit}&page=${page}&searchTerm=${query}`,
-      {
-        next: {
-          tags: ["PROJECTS"],
-        },
-      }
-    );
+    // Build dynamic query params
+    const params = new URLSearchParams();
+
+    if (page) params.append("page", page);
+    if (limit) params.append("limit", limit);
+
+    if (query) {
+      Object.entries(query).forEach(([key, value]) => {
+        if (Array.isArray(value)) {
+          value.forEach((v) => v && params.append(key, v));
+        } else if (value) {
+          params.append(key, value);
+        }
+      });
+    }
+
+    // Construct the final URL with only valid params
+    const url = `${config().Backend_URL}/projects${
+      params.toString() ? `?${params.toString()}` : ""
+    }`;
+    console.log(url);
+    const res = await fetch(url, {
+      method: "GET",
+      next: { tags: ["PROJECTS"] },
+    });
+
     const data = await res.json();
     return data;
   } catch (error: any) {

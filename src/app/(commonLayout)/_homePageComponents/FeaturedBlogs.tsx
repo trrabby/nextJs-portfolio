@@ -15,7 +15,7 @@ const FeaturedBlogs = async () => {
   return (
     <div>
       <SectionHead
-        title="Blogs"
+        title="Featured Blogs"
         titleColor="text--gray-800 dark:text-fourth"
         para="Insights, tutorials and thoughts on web development, programming and technology trends."
         paraColor="text-gray-600 dark:text-fourth"

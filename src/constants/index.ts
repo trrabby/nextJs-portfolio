@@ -33,3 +33,19 @@ export interface IBlog {
   isDeleted?: boolean;
   createdAt?: Date;
 }
+
+export interface IProject {
+  _id?: string;
+  projTitle: string;
+  liveLInk: string;
+  serverLink: string;
+  clientLink: string;
+  shortDescription: string;
+  descriptionOfProject: string;
+  stackUsed: string[];
+  thumbnails: string[];
+  specialRemarks?: string;
+  featured?: boolean;
+  isDeleted?: boolean;
+  createdAt?: Date;
+}

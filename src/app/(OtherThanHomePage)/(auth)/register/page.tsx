@@ -6,7 +6,7 @@ import bgImage from "../../../../../public/portfolioAssets/4.webp"; // Use the s
 
 const Register = () => {
   return (
-    <section className="relative lg:py-20 min-h-screen flex items-center justify-center bg-slate-900">
+    <section className="relative py-20 min-h-screen flex items-center justify-center bg-slate-900">
       {/* --- Background Image with Overlay --- */}
       <div className="absolute inset-0">
         <Image

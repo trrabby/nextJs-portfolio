@@ -72,9 +72,9 @@ const BlogsClient = () => {
           }}
         />
 
-        <div className="flex flex-row md:flex-row gap-4 items-center justify-center">
+        <div className="flex flex-row gap-4 items-center justify-center">
           <select
-            className="border rounded-md px-3 py-2 text-gray-700 dark:text-fourth"
+            className="border rounded-md px-3 py-2 text-gray-700 dark:text-fourth w-6/12"
             value={category}
             onChange={(e) => {
               setCategory(e.target.value);
@@ -90,7 +90,7 @@ const BlogsClient = () => {
           </select>
 
           <select
-            className="border rounded-md px-3 py-2 text-gray-700 dark:text-fourth"
+            className="border rounded-md px-3 py-2 text-gray-700 dark:text-fourth w-6/12"
             value={sort}
             onChange={(e) => {
               setSort(e.target.value);

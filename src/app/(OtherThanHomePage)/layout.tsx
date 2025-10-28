@@ -16,7 +16,7 @@ export default function ConditionalLayout({
       <div className="fixed flex md:hidden top-0 left-4 z-50 bg-transparent">
         <SidebarDrawer />
       </div>
-      <div className="pt-10">{children}</div>
+      <div className="md:pt-10">{children}</div>
       <Footer />
     </>
   );
