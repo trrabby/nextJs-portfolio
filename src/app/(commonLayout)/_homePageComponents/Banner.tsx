@@ -10,7 +10,7 @@ import profile from "../../../../public/portfolioAssets/profile.png";
 export const Banner = () => {
   return (
     <section
-      className={`relative flex items-center justify-center h-screen overflow-hidden bg-accent/10 dark:bg-gray-950 pt-20 rounded-b-xl`}
+      className={`relative flex items-center justify-center h-screen overflow-hidden bg-accent/10 dark:bg-gray-950 pt-20 pb-5 rounded-b-xl`}
     >
       <div
         className={`absolute top-[-10%] left-[-10%] w-[500px] h-[500px] bg-accent dark:bg-primary/20 rounded-full blur-[150px] -z-10 opacity-70 animate-pulse-slow`}
@@ -133,7 +133,7 @@ export const Banner = () => {
             className="flex flex-wrap justify-center md:justify-start gap-4 mt-8"
           >
             <Link
-              href="https://drive.google.com/file/d/1OUsLkQwZTCdwPm5hca7qvK-ozsuN4ygl/view"
+              href="https://drive.google.com/file/d/1s84dtJ8wvfYFQqmbsgJuCH6zreMCXPO9/view?usp=drive_link"
               target="_blank"
               // Primary Button (Dark Mode style)
               className={`flex items-center gap-2 bg-[#00C9A7] text-[#0B0F1B] dark:bg-[#8499bb] dark:text-white px-7 py-3 rounded-full font-bold shadow-lg shadow-[#00C9A7]/30 dark:shadow-[#8499bb]/30 hover:scale-[1.03] transition-transform duration-300  `}

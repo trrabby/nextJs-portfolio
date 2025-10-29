@@ -14,21 +14,16 @@ import daisi from "../../public/portfolioAssets/skill-icon/daisi.png";
 import shadcn from "../../public/portfolioAssets/skill-icon/shadcn.png";
 import antd from "../../public/portfolioAssets/skill-icon/antdesign.png";
 
-// Skill Icons Export Object
-export const skillIcons: { [key: string]: string | StaticImageData } = {
-  // Programming Languages
+// Icon Map
+const icons: Record<string, string | StaticImageData> = {
   JavaScript:
     "https://raw.githubusercontent.com/devicons/devicon/master/icons/javascript/javascript-original.svg",
   TypeScript: ts,
-
-  // Frontend Frameworks
   React:
     "https://raw.githubusercontent.com/devicons/devicon/master/icons/react/react-original-wordmark.svg",
   "Next.js": nextImg,
   "Redux/RTK Query": redux,
   "React Router DOM": reactRouter,
-
-  // UI Libraries & Styling
   HTML: "https://raw.githubusercontent.com/devicons/devicon/master/icons/html5/html5-original-wordmark.svg",
   CSS: "https://raw.githubusercontent.com/devicons/devicon/master/icons/css3/css3-original-wordmark.svg",
   "Tailwind CSS":
@@ -37,37 +32,29 @@ export const skillIcons: { [key: string]: string | StaticImageData } = {
   "Ant Design": antd,
   DaisyUI: daisi,
   "shadcn/ui": shadcn,
-
-  // Backend & Runtime
   "Node.js":
     "https://raw.githubusercontent.com/devicons/devicon/master/icons/nodejs/nodejs-original-wordmark.svg",
   "Express.js": expressImg,
-
-  // Database & ORM
   MongoDB:
     "https://raw.githubusercontent.com/devicons/devicon/master/icons/mongodb/mongodb-original-wordmark.svg",
   Mongoose: mongoose,
   PostgreSQL: "https://www.postgresql.org/media/img/about/press/elephant.png",
   Prisma: "https://avatars.githubusercontent.com/u/17219288?s=200&v=4",
-
-  // Authentication & Security
   Firebase: "https://www.vectorlogo.zone/logos/firebase/firebase-icon.svg",
   "NextAuth.js": nextAuth,
   JWT: "https://jwt.io/img/pic_logo.svg",
   OAuth: "https://oauth.net/images/oauth-logo-square.png",
-
-  // Development Tools
   Git: "https://www.vectorlogo.zone/logos/git-scm/git-scm-icon.svg",
   GitHub: githubImg,
   Figma: "https://www.vectorlogo.zone/logos/figma/figma-icon.svg",
 };
 
-// Helper function to get icon by skill name
-export const getSkillIcon = (skillName: string): string | StaticImageData => {
-  return skillIcons[skillName] || skillIcons["React"]; // Fallback to React icon
+// Universal icon getter (reusable)
+export const imo = (skill: string): string | StaticImageData => {
+  return icons[skill] || icons["React"]; // fallback to React if not found
 };
 
-// Type for skill names for better TypeScript support
-export type SkillName = keyof typeof skillIcons;
+// Optional: Strong typing for better intellisense
+export type SkillName = keyof typeof icons;
 
-export default skillIcons;
+export default imo;

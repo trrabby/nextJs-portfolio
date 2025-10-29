@@ -23,7 +23,7 @@ const FeaturedProjects = async () => {
         <div className="grid md:grid-cols-2 grid-cols-1 gap-8 mt-12">
           {projects.length > 0 ? (
             projects
-              .slice(0, 4)
+              .slice(0, 5)
               .map((project: IProject) => (
                 <ProjectCard key={project._id} project={project} />
               ))
