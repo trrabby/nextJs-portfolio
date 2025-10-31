@@ -20,10 +20,10 @@ const FeaturedProjects = async () => {
           paraColor="text-gray-600 dark:text-fourth"
         />
 
-        <div className="grid md:grid-cols-2 grid-cols-1 gap-8 mt-12">
+        <div className="grid md:grid-cols-3 grid-cols-1 gap-8 mt-12">
           {projects.length > 0 ? (
             projects
-              .slice(0, 5)
+              .slice(0, 3)
               .map((project: IProject) => (
                 <ProjectCard key={project._id} project={project} />
               ))
@@ -37,7 +37,7 @@ const FeaturedProjects = async () => {
         <div className="flex justify-end items-center mt-10">
           <Link
             href="/projects"
-            className="rounded bg-transparent px-8 py-3 text-base font-medium text-accent shadow hover:bg-accent hover:text-white hover:scale-105 duration-500 border border-blue-200"
+            className="bg-transparent px-6 md:px-8 py-2 md:py-3 text-base font-medium text-accent dark:text-fourth shadow hover:bg-accent dark:hover:bg-slate-700 hover:scale-105 hover:text-white hover:border-white duration-700 border border-blue-200 mt-5 hover:duration-500 rounded-md mr-5"
           >
             See More
           </Link>
