@@ -7,7 +7,7 @@ import { useRouter } from "next/navigation";
 import { useCallback } from "react";
 
 export const useScrollToSection = () => {
-  const { homeRef, aboutRef, blogsRef, projectsRef, contactsRef } =
+  const { homeRef, aboutRef, blogsRef, projectsRef, hireMeRef, contactsRef } =
     useSectionRefs();
   const router = useRouter();
 
@@ -16,6 +16,7 @@ export const useScrollToSection = () => {
     about: aboutRef,
     blogs: blogsRef,
     projects: projectsRef,
+    hireMe: hireMeRef,
     contacts: contactsRef,
   };
 
@@ -40,6 +41,8 @@ export const useScrollToSection = () => {
 
   const scrollToSection = useCallback(
     (id: string, navbarHeight = 100) => {
+      console.log("Scrolling to section:", id);
+
       // Check if we're on home page
       if (window.location.pathname !== "/") {
         sessionStorage.setItem("scrollToSection", id);

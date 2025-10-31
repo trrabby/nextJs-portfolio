@@ -10,7 +10,7 @@ export default function ClientSectionRefs({
 }: {
   children: React.ReactNode;
 }) {
-  const { homeRef, aboutRef, blogsRef, projectsRef, contactsRef } =
+  const { homeRef, aboutRef, blogsRef, projectsRef, hireMeRef, contactsRef } =
     useSectionRefs();
 
   const { handleStoredScroll } = useScrollToSection();
@@ -21,6 +21,7 @@ export default function ClientSectionRefs({
     about: aboutRef,
     blogs: blogsRef,
     projects: projectsRef,
+    hireMe: hireMeRef,
     contacts: contactsRef,
   };
 

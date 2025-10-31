@@ -25,6 +25,7 @@ const navlinks = [
   { id: "about", name: "About" },
   { id: "blogs", name: "Blogs", hasSubmenu: true },
   { id: "projects", name: "Projects", hasSubmenu: true },
+  { id: "hireMe", name: "Hire Me" },
   { id: "contacts", name: "Contacts" },
 ];
 

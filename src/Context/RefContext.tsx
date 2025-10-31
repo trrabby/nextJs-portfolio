@@ -6,6 +6,7 @@ type SectionRefs = {
   aboutRef: RefObject<HTMLElement | null>;
   blogsRef: RefObject<HTMLElement | null>;
   projectsRef: RefObject<HTMLElement | null>;
+  hireMeRef: RefObject<HTMLElement | null>;
   contactsRef: RefObject<HTMLElement | null>;
 };
 
@@ -16,6 +17,7 @@ export const RefProvider = ({ children }: { children: React.ReactNode }) => {
   const aboutRef = useRef<HTMLElement | null>(null);
   const blogsRef = useRef<HTMLElement | null>(null);
   const projectsRef = useRef<HTMLElement | null>(null);
+  const hireMeRef = useRef<HTMLElement | null>(null);
   const contactsRef = useRef<HTMLElement | null>(null);
 
   const sectionRefs: SectionRefs = {
@@ -23,6 +25,7 @@ export const RefProvider = ({ children }: { children: React.ReactNode }) => {
     aboutRef,
     blogsRef,
     projectsRef,
+    hireMeRef,
     contactsRef,
   };
 
@@ -33,6 +36,7 @@ export const RefProvider = ({ children }: { children: React.ReactNode }) => {
 
 export const useSectionRefs = () => {
   const context = useContext(RefContext);
+  // console.log("Context Value:", context);
   if (!context) {
     throw new Error("useSectionRefs must be used within RefProvider");
   }

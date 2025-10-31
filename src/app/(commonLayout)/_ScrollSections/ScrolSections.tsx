@@ -5,6 +5,7 @@ import FeaturedBlogs from "../_homePageComponents/FeaturedBlogs";
 import { Contacts } from "../_homePageComponents/Contacts";
 import ClientSectionRefs from "./ClientSectionRefs";
 import FeaturedProjects from "../_homePageComponents/FeaturedProjects";
+import HireMe from "../_homePageComponents/HireMe";
 
 export default function ScrollSections() {
   return (
@@ -21,6 +22,9 @@ export default function ScrollSections() {
         </section>
         <section data-section="projects" className="min-h-screen">
           <FeaturedProjects />
+        </section>
+        <section data-section="hireMe" className="min-h-screen">
+          <HireMe />
         </section>
         <section data-section="contacts" className="min-h-screen">
           <Contacts />

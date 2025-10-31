@@ -12,13 +12,11 @@ import logo1 from "../../../../public/portfolioAssets/SiteLog/t4.png";
 import { FaAngleDoubleUp } from "react-icons/fa";
 import Link from "next/link";
 import Image from "next/image";
-import { useSectionRefs } from "@/Context/RefContext";
+import { useScrollToSection } from "@/hooks/useScrollToSection";
 
 export const Footer = () => {
   const [init, setInit] = useState(false);
-  // ✅ use the shared refs
-  const { homeRef, aboutRef, blogsRef, projectsRef, contactsRef } =
-    useSectionRefs();
+  const { scrollToSection } = useScrollToSection();
 
   useEffect(() => {
     initParticlesEngine(async (engine: any) => {
@@ -49,30 +47,6 @@ export const Footer = () => {
       </a>
     </ul>
   );
-
-  const scrollToSection = (id: string) => {
-    const refMap: Record<string, React.RefObject<HTMLElement | null>> = {
-      home: homeRef,
-      about: aboutRef,
-      blogs: blogsRef,
-      projects: projectsRef,
-      contacts: contactsRef,
-    };
-
-    const section = refMap[id]?.current;
-    if (section) {
-      const navbarHeight = 100; // Adjust to actual height
-      const sectionTop = section.getBoundingClientRect().top + window.scrollY;
-      const currentScrollY = window.scrollY;
-
-      // Scroll direction logic
-      const isScrollingUp = sectionTop < currentScrollY;
-      const offset = isScrollingUp ? navbarHeight : 0;
-      const top = sectionTop - offset;
-
-      window.scrollTo({ top, behavior: "smooth" });
-    }
-  };
 
   return (
     <div>
@@ -189,6 +163,13 @@ export const Footer = () => {
             >
               Colleborate Me
             </a>
+
+            <div
+              onClick={() => scrollToSection("hireMe")}
+              className=" transition hover:cursor-pointer hover:opacity-75 p-0 m-0"
+            >
+              Hire Me
+            </div>
 
             <div
               onClick={() => scrollToSection("contacts")}
