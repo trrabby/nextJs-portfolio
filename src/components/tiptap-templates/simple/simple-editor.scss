@@ -22,7 +22,7 @@ body {
     background-color 0.25s ease;
   overflow: visible;
   margin: 1rem auto;
-  width: 980px;
+  width: 100%;
   z-index: 20;
   overflow-y: scroll;
 }
@@ -339,12 +339,15 @@ body {
 @media screen and (max-width: 640px) {
   .simple-editor-content {
     padding: 0.75rem;
+    height: 20%;
   }
 
-  .simple-editor-wrapper {
-    margin: 0.75rem;
-    width: 300px;
-    z-index: 20;
-    overflow-y: scroll;
+  .tiptap-toolbar {
+    display: inline-block;
+    position: absolute;
+    top: 0;
+    height: 3.5rem;
+    overflow-x: auto;
+    padding: 1rem;
   }
 }

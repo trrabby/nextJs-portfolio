@@ -156,7 +156,7 @@ const AddBlogPage = () => {
           </div>
 
           {/* Blog Content */}
-          <div className="flex flex-col">
+          <div className="flex flex-col w-full">
             <label className="font-medium mb-2 h-6">
               <Typewriter
                 words={[
