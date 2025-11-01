@@ -8,7 +8,6 @@ import { IBlog } from "@/constants";
 const FeaturedBlogs = async () => {
   const res = await getBlogs("", "", {
     featured: "true",
-    author: "686d39d04e5a05d9420dc7e3",
   });
   // console.log("✅ Blogs fetched:", res.data.result);
 
