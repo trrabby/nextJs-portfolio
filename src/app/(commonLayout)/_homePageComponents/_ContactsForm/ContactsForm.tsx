@@ -1,14 +1,16 @@
 "use client";
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-import { MdDriveFileRenameOutline } from "react-icons/md";
-import { Typewriter } from "react-simple-typewriter";
 import emailjs from "emailjs-com";
 import { config } from "@/config";
 import { toast } from "sonner";
+import { MdDriveFileRenameOutline } from "react-icons/md";
+import { AiOutlineMail, AiOutlinePhone } from "react-icons/ai";
 
 export const ContactForm = () => {
+  const [loading, setLoading] = useState(false);
+
   const {
     register,
     handleSubmit,
@@ -16,15 +18,16 @@ export const ContactForm = () => {
     formState: { errors },
   } = useForm();
 
-  const onSubmit = (formInfo: any) => {
+  const onSubmit = async (formInfo: any) => {
     const templateParams = {
       name: formInfo.name,
       email: formInfo.email,
       number: formInfo.number,
       message: formInfo.message,
     };
-    // console.log(templateParams);
-    const emailToastId = toast.loading("Sending email...");
+
+    const toastId = toast.loading("Sending message...");
+    setLoading(true);
     emailjs
       .send(
         config().EmailJS_Service_ID as string,
@@ -33,103 +36,135 @@ export const ContactForm = () => {
         config().EmailJS_User_ID! as string
       )
       .then(
-        (response) => {
-          console.log("SUCCESS!", response.status, response.text);
-          toast.success("Email sent successfully!", { id: emailToastId });
+        () => {
+          toast.success(
+            "Message sent successfully! You will be responded soon.",
+            { id: toastId }
+          );
           reset();
         },
-        (error) => {
-          console.error("FAILED...", error);
-          toast.error("Failed to send email. Please try again later.", {
-            id: emailToastId,
+        () => {
+          toast.error("Failed to send message. Please try again later.", {
+            id: toastId,
           });
         }
-      );
+      )
+      .finally(() => setLoading(false));
   };
 
   return (
-    <div className="backdrop-blur-lg md:w-8/12 w-10/12 mx-auto p-5 py-10 shadow-sm bg-white  dark:bg-gray-800 shadow-gray-800 rounded-xl">
-      <form
-        onSubmit={handleSubmit(onSubmit)}
-        className="mx-auto md:mt-10 flex flex-col gap-5 w-full lg:w-8/12"
-      >
-        <label
-          data-aos="flip-up"
-          data-aos-duration="1000"
-          className="input input-bordered flex items-center gap-2 text-gray-800 dark:text-fourth  bg-transparent border border-third shadow-md hover:shadow-accent pl-2 rounded-lg"
-        >
-          <MdDriveFileRenameOutline />
+    <form
+      onSubmit={handleSubmit(onSubmit)}
+      className="mx-auto mt-5 flex flex-col gap-6 w-full lg:w-10/12"
+    >
+      {/* Full Name */}
+      <div className="flex flex-col w-full text-left">
+        <label className="text-sm font-semibold text-gray-700 dark:text-gray-200 mb-1">
+          Full Name
+        </label>
+        <div className="relative">
+          <MdDriveFileRenameOutline className="absolute left-3 top-4 text-gray-400 dark:text-gray-300" />
           <input
-            className="text-gray-800 dark:text-fourth bg-transparent w-full p-3"
             type="text"
-            placeholder="Your Name"
+            placeholder="Enter your full name"
             {...register("name", { required: true })}
-          />
-        </label>
-        {errors.name && (
-          <span className="text-red-600 text-xs">This field is required</span>
-        )}
-        <label
-          data-aos="flip-up"
-          data-aos-duration="1000"
-          className="input input-bordered  flex items-center gap-2 text-gray-800 dark:text-fourth   bg-transparent  border border-third shadow-md hover:shadow-accent pl-2  rounded-lg"
-        >
-          <MdDriveFileRenameOutline />
-          <input
-            className="text-gray-800 dark:text-fourth   bg-transparent  w-full p-3"
-            type="email"
-            placeholder="Your Email"
-            {...register("email", { required: true })}
-          />
-        </label>
-        {errors.email && (
-          <span className="text-red-600 text-xs">This field is required</span>
-        )}
-        <label
-          data-aos="flip-up"
-          data-aos-duration="1000"
-          className="input input-bordered flex items-center gap-2 text-gray-800 dark:text-fourth  bg-transparent border border-third shadow-md hover:shadow-accent pl-2 rounded-lg"
-        >
-          <MdDriveFileRenameOutline />
-          <input
-            className="text-gray-800 dark:text-fourth bg-transparent  w-full p-3 border-none "
-            type="number"
-            placeholder="Your Mobile Number"
-            {...register("number", { required: true })}
-          />
-        </label>
-        {errors.number && (
-          <span className="text-red-600 text-xs">This field is required</span>
-        )}
-        <div className="text-gray-800 dark:text-fourth">
-          <Typewriter
-            words={["Write Your Message Here..."]}
-            loop={5}
-            cursor
-            cursorStyle="|"
-            typeSpeed={70}
-            deleteSpeed={50}
-            delaySpeed={1000}
+            className="w-full pl-10 pr-4 py-3 rounded-lg 
+            bg-gray-100 dark:bg-white/10 
+            text-gray-900 dark:text-white 
+            placeholder-gray-500 dark:placeholder-gray-300 
+            border border-gray-300 dark:border-gray-600 
+            focus:outline-none hover:border-accent focus:border-accent focus:ring-2 focus:ring-accent transition"
           />
         </div>
-        <textarea
-          data-aos="flip-up"
-          data-aos-duration="1000"
-          onSelect={blur}
-          className="h-52 bg-transparent border border-third text-gray-800 dark:text-fourth font-bold p-5 text-xl rounded-lg shadow-md shover:shadow-accent"
-          {...register("message", { required: true })}
-        />
-        {errors.message && (
-          <span className="text-red-600 text-xs">This field is required</span>
+        {errors.name && (
+          <span className="text-red-500 text-xs mt-1">
+            This field is required
+          </span>
         )}
-        <button
-          className="rounded bg-transparent px-12 py-2 text-base font-medium text-accent drak:text-white shadow hover:bg-accent dark:hover:bg-slate-700 hover:text-fourth border hover:scale-105 duration-700 flex gap-3 justify-center items-center w-3/12 mx-auto"
-          type="submit"
-        >
+      </div>
+
+      {/* Email */}
+      <div className="flex flex-col w-full text-left">
+        <label className="text-sm font-semibold text-gray-700 dark:text-gray-200 mb-1">
           Email
-          {/* {loading ? <LoadingSpinner /> : "Email"} */}
-        </button>
-      </form>
-    </div>
+        </label>
+        <div className="relative">
+          <AiOutlineMail className="absolute left-3 top-4 text-gray-400 dark:text-gray-300" />
+          <input
+            type="email"
+            placeholder="Enter your email address"
+            {...register("email", { required: true })}
+            className="w-full pl-10 pr-4 py-3 rounded-lg 
+            bg-gray-100 dark:bg-white/10 
+            text-gray-900 dark:text-white 
+            placeholder-gray-500 dark:placeholder-gray-300 
+            border border-gray-300 dark:border-gray-600 
+            focus:outline-none hover:border-accent focus:border-accent focus:ring-2 focus:ring-accent transition"
+          />
+        </div>
+        {errors.email && (
+          <span className="text-red-500 text-xs mt-1">
+            This field is required
+          </span>
+        )}
+      </div>
+
+      {/* Phone Number */}
+      <div className="flex flex-col w-full text-left">
+        <label className="text-sm font-semibold text-gray-700 dark:text-gray-200 mb-1">
+          Mobile Number
+        </label>
+        <div className="relative">
+          <AiOutlinePhone className="absolute left-3 top-4 text-gray-400 dark:text-gray-300" />
+          <input
+            type="number"
+            placeholder="Enter your contact number"
+            {...register("number", { required: true })}
+            className="w-full pl-10 pr-4 py-3 rounded-lg 
+            bg-gray-100 dark:bg-white/10 
+            text-gray-900 dark:text-white 
+            placeholder-gray-500 dark:placeholder-gray-300 
+            border border-gray-300 dark:border-gray-600 
+            focus:outline-none hover:border-accent focus:border-accent focus:ring-2 focus:ring-accent transition"
+          />
+        </div>
+        {errors.number && (
+          <span className="text-red-500 text-xs mt-1">
+            This field is required
+          </span>
+        )}
+      </div>
+
+      {/* Message */}
+      <div className="flex flex-col w-full text-left">
+        <label className="text-sm font-semibold text-gray-700 dark:text-gray-200 mb-1">
+          Message
+        </label>
+        <textarea
+          {...register("message", { required: true })}
+          placeholder={`Hi Towfiq, I'm interested in building a modern eCommerce website for my fashion brand...`}
+          className="w-full px-4 py-3 h-40 rounded-lg 
+          bg-gray-100 dark:bg-white/10 
+          text-gray-900 dark:text-white 
+          placeholder-gray-500 dark:placeholder-gray-300 
+          border border-gray-300 dark:border-gray-600 
+          focus:outline-none hover:border-accent focus:border-accent focus:ring-2 focus:ring-accent transition resize-none"
+        ></textarea>
+        {errors.message && (
+          <span className="text-red-500 text-xs mt-1">
+            This field is required
+          </span>
+        )}
+      </div>
+
+      {/* Submit */}
+      <button
+        type="submit"
+        disabled={loading}
+        className="w-full py-3 rounded-lg bg-accent text-white font-semibold text-lg tracking-wide shadow-lg hover:bg-accent/90 hover:scale-[1.02] active:scale-[0.98] transition disabled:opacity-50"
+      >
+        {loading ? "Sending..." : "Send Message"}
+      </button>
+    </form>
   );
 };

@@ -13,7 +13,7 @@ export default function Providers({ children }: { children: React.ReactNode }) {
         <ThemeProvider attribute={"class"} enableSystem defaultTheme="system">
           <RefProvider>
             <Toaster richColors position="top-center" />
-            <div className="relative bg-fourth/50 dark:bg-gray-900 text-gray-950 dark:text-fourth transition-all duration-500">
+            <div className="relative bg-fourth/50 dark:bg-gradient-to-r dark:from-gray-950 dark:to-gray-800 text-gray-950 dark:text-fourth transition-all duration-500">
               {children}
             </div>
           </RefProvider>

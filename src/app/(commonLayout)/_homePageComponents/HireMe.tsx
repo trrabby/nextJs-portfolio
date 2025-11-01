@@ -1,131 +1,166 @@
 /* eslint-disable react/no-unescaped-entities */
 // components/HireMePage.tsx
-import Link from "next/link";
-import { CheckCircle, Code, Zap, Shield, Smartphone, Bug } from "lucide-react";
+import {
+  CheckCircle,
+  Code,
+  Smartphone,
+  Bug,
+  Database,
+  Server,
+  Gauge,
+} from "lucide-react";
+import { SectionHead } from "@/components/SectionHead";
+import HireMeContacts from "./_hireMeContacts/HireMeContacts";
 
 const HireMePage = () => {
   const services = [
     {
       icon: <Code className="w-8 h-8" />,
-      title: "MERN Stack Development",
+      title: "Full Stack Website",
+      headerColor: "from-indigo-500 to-purple-600",
       description:
-        "Full-stack web applications using MongoDB, Express.js, React, and Node.js",
+        "Full-stack web applications using PostgreSQL, MongoDB, Express.js, React and Node.js.",
       features: [
         "Custom web application development",
-        "RESTful API development",
+        "RESTful API creation",
         "Database design & optimization",
         "User authentication & authorization",
-        "Real-time features implementation",
-        "Payment gateway integration",
+        "Real-time functionality",
+        "Payment gateway integration i.e. Stripe/SSL Commerz etc",
       ],
-      price: "Starting at $50",
-      delivery: "3-5 days delivery",
+      price: "Starting at $100",
+      delivery: "Delivery starts from 5 days",
       revisions: "Unlimited revisions",
-      fiverrLink:
-        "https://www.fiverr.com/towfiqueomar/create-mern-stack-technology-based-website",
     },
     {
       icon: <Smartphone className="w-8 h-8" />,
-      title: "Next.js Responsive Development",
+      title: "Next.js Website",
+      headerColor: "from-blue-500 to-cyan-500",
       description:
-        "High-performance, SEO-optimized websites using Next.js with responsive design",
+        "High-performance, SEO-optimized websites using Next.js with modern responsive layouts.",
       features: [
-        "Server-side rendering (SSR) & Static site generation (SSG)",
+        "SSR & SSG implementation",
         "Mobile-first responsive design",
-        "SEO optimization",
-        "Performance optimization",
+        "SEO & performance optimization",
         "TypeScript integration",
         "Modern UI/UX implementation",
+        "User authentication & authorization",
+        "Dynamic routing & API setup",
       ],
-      price: "Starting at $40",
-      delivery: "2-4 days delivery",
+      price: "Starting at $100",
+      delivery: "Delivery starts from 5 days",
       revisions: "Unlimited revisions",
-      fiverrLink:
-        "https://www.fiverr.com/towfiqueomar/create-responsive-website-using-nextjs",
     },
     {
       icon: <Bug className="w-8 h-8" />,
       title: "Website Bug Fixing",
+      headerColor: "from-rose-500 to-pink-500",
       description:
-        "Comprehensive debugging and issue resolution for existing websites",
+        "Comprehensive debugging and issue resolution for existing websites.",
       features: [
-        "JavaScript/TypeScript bug fixes",
-        "CSS styling issues resolution",
-        "Performance issues debugging",
+        "Frontend & backend bug fixes",
+        "CSS and layout correction",
+        "Performance debugging",
         "Cross-browser compatibility",
-        "Responsive design fixes",
-        "Code optimization & refactoring",
+        "Responsive adjustments",
+        "Code refactoring",
+        "Feature enhancements",
       ],
-      price: "Starting at $20",
+      price: "Starting at $30",
       delivery: "1-2 days delivery",
       revisions: "Unlimited revisions",
-      fiverrLink: "https://www.fiverr.com/towfiqueomar/fix-bug-of-your-website",
+    },
+    {
+      icon: <Server className="w-8 h-8" />,
+      title: "Backend Development",
+      headerColor: "from-emerald-500 to-teal-500",
+      description:
+        "Efficient, secure and scalable backend systems to power your applications.",
+      features: [
+        "Node.js & Express.js API development",
+        "Authentication & JWT handling",
+        "Real-time communication with Socket.io",
+        "Error handling & validation",
+        "Microservices architecture",
+        "Server security best practices",
+      ],
+      price: "Starting at $60",
+      delivery: "Delivery starts from 5 days",
+      revisions: "Unlimited revisions",
+    },
+    {
+      icon: <Database className="w-8 h-8" />,
+      title: "Database & Integrations",
+      headerColor: "from-orange-500 to-yellow-500",
+      description:
+        "Robust database setup and third-party API integrations for seamless workflows.",
+      features: [
+        "MongoDB & PostgreSQL design",
+        "Database normalization & indexing",
+        "Cloud database setup (Firebase/AWS)",
+        "Third-party API integration",
+        "Data migration & backup",
+        "Optimized query performance",
+      ],
+      price: "Starting at $60",
+      delivery: "3-5 days delivery",
+      revisions: "Unlimited revisions",
+    },
+    {
+      icon: <Gauge className="w-8 h-8" />,
+      title: "Performance Optimization",
+      headerColor: "from-yellow-500 to-lime-500",
+      description:
+        "Boost your website speed, reduce load times, and enhance SEO ranking.",
+      features: [
+        "Lighthouse performance improvements",
+        "Lazy loading & code splitting",
+        "Image & asset optimization",
+        "Server-side caching strategies",
+        "Minification & compression setup",
+        "Core Web Vitals enhancement",
+      ],
+      price: "Starting at $50",
+      delivery: "3-5 days delivery",
+      revisions: "Unlimited revisions",
     },
   ];
 
-  const technologies = {
-    frontend: [
-      "React",
-      "Next.js",
-      "TypeScript",
-      "Tailwind CSS",
-      "Redux",
-      "Material-UI",
-    ],
-    backend: [
-      "Node.js",
-      "Express.js",
-      "MongoDB",
-      "PostgreSQL",
-      "Firebase",
-      "AWS",
-    ],
-    tools: ["Git", "Docker", "Jest", "Cypress", "Webpack", "Vite"],
-  };
-
   return (
-    <section className="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50 dark:from-gray-900 dark:to-blue-900 py-12">
+    <section className="min-h-screen">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Header Section */}
-        <div className="text-center mb-16">
-          <h1 className="text-4xl md:text-5xl font-bold text-gray-800 dark:text-white mb-4">
-            Hire Me for Your Project
-          </h1>
-          <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
-            Professional full-stack developer specializing in MERN stack,
-            Next.js, and bug fixing. Let's bring your ideas to life with clean,
-            efficient, and scalable code.
-          </p>
-        </div>
+        <SectionHead
+          title="Services I Offer"
+          para="Professional full-stack developer specializing in Full stack,
+            Next.js, backend systems and performance optimization."
+        />
 
         {/* Services Grid */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 my-16">
           {services.map((service, index) => (
             <div
               key={index}
               className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-200 dark:border-gray-700 overflow-hidden"
             >
-              {/* Service Header */}
-              <div className="p-6 border-b border-gray-200 dark:border-gray-700">
-                <div className="flex items-center gap-4 mb-4">
-                  <div className="p-2 bg-blue-100 dark:bg-blue-900 rounded-lg text-blue-600 dark:text-blue-400">
-                    {service.icon}
-                  </div>
-                  <div>
-                    <h3 className="text-xl font-bold text-gray-800 dark:text-white">
-                      {service.title}
-                    </h3>
-                    <p className="text-sm text-gray-600 dark:text-gray-400">
-                      {service.price}
-                    </p>
-                  </div>
+              {/* Colorful Header */}
+              <div
+                className={`p-6 bg-gradient-to-r ${service.headerColor} text-white flex items-center gap-4`}
+              >
+                <div className="p-2 bg-white/20 rounded-lg">{service.icon}</div>
+                <div>
+                  <h3 className="text-xl font-bold">{service.title}</h3>
+                  <p className="text-sm opacity-90">{service.price}</p>
                 </div>
+              </div>
+
+              {/* Description */}
+              <div className="p-6 border-b border-gray-200 dark:border-gray-700">
                 <p className="text-gray-600 dark:text-gray-300">
                   {service.description}
                 </p>
               </div>
 
-              {/* Features List */}
+              {/* Features */}
               <div className="p-6">
                 <h4 className="font-semibold text-gray-800 dark:text-white mb-3">
                   What's Included:
@@ -142,124 +177,26 @@ const HireMePage = () => {
                 </ul>
               </div>
 
-              {/* Service Footer */}
+              {/* Footer */}
               <div className="p-6 bg-gray-50 dark:bg-gray-700">
                 <div className="flex justify-between items-center text-sm text-gray-600 dark:text-gray-400 mb-4">
                   <span>🚀 {service.delivery}</span>
                   <span>🔄 {service.revisions}</span>
                 </div>
-                <Link
-                  href={service.fiverrLink}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-semibold py-3 px-4 rounded-lg transition-all duration-300 transform hover:scale-105 text-center block"
-                >
-                  Order Now on Fiverr
-                </Link>
               </div>
             </div>
           ))}
         </div>
 
-        {/* Technologies Section */}
-        <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-8 mb-12">
-          <h2 className="text-3xl font-bold text-center text-gray-800 dark:text-white mb-8">
-            Technologies I Work With
-          </h2>
-          <div className="grid md:grid-cols-3 gap-8">
-            <div className="text-center">
-              <div className="flex justify-center mb-4">
-                <Zap className="w-8 h-8 text-yellow-500" />
-              </div>
-              <h3 className="text-xl font-semibold text-gray-800 dark:text-white mb-4">
-                Frontend
-              </h3>
-              <div className="flex flex-wrap justify-center gap-2">
-                {technologies.frontend.map((tech, index) => (
-                  <span
-                    key={index}
-                    className="bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 px-3 py-1 rounded-full text-sm font-medium"
-                  >
-                    {tech}
-                  </span>
-                ))}
-              </div>
-            </div>
-
-            <div className="text-center">
-              <div className="flex justify-center mb-4">
-                <Shield className="w-8 h-8 text-green-500" />
-              </div>
-              <h3 className="text-xl font-semibold text-gray-800 dark:text-white mb-4">
-                Backend
-              </h3>
-              <div className="flex flex-wrap justify-center gap-2">
-                {technologies.backend.map((tech, index) => (
-                  <span
-                    key={index}
-                    className="bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 px-3 py-1 rounded-full text-sm font-medium"
-                  >
-                    {tech}
-                  </span>
-                ))}
-              </div>
-            </div>
-
-            <div className="text-center">
-              <div className="flex justify-center mb-4">
-                <Code className="w-8 h-8 text-purple-500" />
-              </div>
-              <h3 className="text-xl font-semibold text-gray-800 dark:text-white mb-4">
-                Tools & Testing
-              </h3>
-              <div className="flex flex-wrap justify-center gap-2">
-                {technologies.tools.map((tech, index) => (
-                  <span
-                    key={index}
-                    className="bg-purple-100 dark:bg-purple-900 text-purple-800 dark:text-purple-200 px-3 py-1 rounded-full text-sm font-medium"
-                  >
-                    {tech}
-                  </span>
-                ))}
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* CTA Section */}
-        <div className="text-center bg-gradient-to-r from-blue-600 to-purple-600 rounded-2xl p-8 text-white">
-          <h2 className="text-3xl font-bold mb-4">
-            Ready to Start Your Project?
-          </h2>
-          <p className="text-xl mb-6 opacity-90">
-            Let's discuss your requirements and create something amazing
-            together.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link
-              href="https://www.fiverr.com/towfiqueomar"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="bg-white text-blue-600 hover:bg-gray-100 font-bold py-3 px-8 rounded-lg transition-all duration-300 transform hover:scale-105"
-            >
-              Visit My Fiverr Profile
-            </Link>
-            <Link
-              href="/contact"
-              className="bg-transparent border-2 border-white hover:bg-white hover:text-blue-600 font-bold py-3 px-8 rounded-lg transition-all duration-300 transform hover:scale-105"
-            >
-              Contact Directly
-            </Link>
-          </div>
-        </div>
-
         {/* Additional Info */}
-        <div className="mt-12 text-center text-gray-600 dark:text-gray-400">
+        <div className="my-12 text-center text-gray-600 dark:text-gray-400">
           <p className="text-sm">
             💼 100% Satisfaction Guaranteed | ⚡ Fast Delivery | 🔒 Secure
             Payments
           </p>
         </div>
+
+        <HireMeContacts />
       </div>
     </section>
   );

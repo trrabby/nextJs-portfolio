@@ -25,21 +25,21 @@ export const SectionHead: React.FC<SectionHeadProps> = ({
     >
       <h1
         className={`md:text-3xl font-bold ${
-          titleColor ? titleColor : "text-primary"
+          titleColor ? titleColor : "text-primary dark:text-white"
         }  text-4xl`}
       >
         {title}
       </h1>
       <span
         className={`${
-          specialColor ? specialColor : "text-accent"
+          specialColor ? specialColor : "text-accent dark:text-white"
         } font-bold md:text-xl text-base w-full mx-auto text-center`}
       >
         {special}
       </span>
       <p
         className={`mt-4 ${
-          paraColor ? paraColor : "text-primary"
+          paraColor ? paraColor : "text-primary dark:text-white/70"
         } md:text-lg text-base  lg:w-6/12 w-10/12 mx-auto text-center flex gap-2 items-center justify-center`}
       >
         {para}
