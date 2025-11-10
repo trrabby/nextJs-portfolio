@@ -3,23 +3,15 @@ import Link from "next/link";
 import { IBlog } from "@/constants";
 import Image from "next/image";
 import { IoPricetags } from "react-icons/io5";
+import { formatDate } from "@/utils/DateFormat";
 
 interface BlogCardProps {
   blog: IBlog;
 }
 
 export const BlogCard = ({ blog }: BlogCardProps) => {
+  console.log(blog);
   // Format date
-  const formatDate = (date?: string | Date | null) => {
-    if (!date) return "";
-    const d = date instanceof Date ? date : new Date(date);
-    if (isNaN(d.getTime())) return "";
-    return d.toLocaleDateString("en-US", {
-      year: "numeric",
-      month: "short",
-      day: "numeric",
-    });
-  };
 
   // Strip HTML tags safely
   const stripHtml = (html: string) => html.replace(/<[^>]+>/g, "");
@@ -88,11 +80,7 @@ export const BlogCard = ({ blog }: BlogCardProps) => {
                     ? blog?.author.imgUrl
                     : "https://randomuser.me/api/portraits/men/32.jpg"
                 }
-                alt={
-                  typeof blog?.author === "string"
-                    ? blog?.author
-                    : blog?.author?.name
-                }
+                alt={"Author"}
                 fill
                 className="rounded-full border-2 border-accent"
               />
