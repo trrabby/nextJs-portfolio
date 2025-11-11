@@ -6,6 +6,7 @@ import { getBlogs } from "@/services/Blogs";
 import { IBlog } from "@/constants";
 import { SectionHead } from "@/components/SectionHead";
 import { motion } from "framer-motion";
+import BackButton from "./[id]/_InterectiveSec/BackButton";
 
 const BlogsClient = () => {
   const [blogs, setBlogs] = useState<IBlog[]>([]);
@@ -53,6 +54,9 @@ const BlogsClient = () => {
 
   return (
     <section className="py-16 px-5 lg:px-20">
+      <div className="p-2 absolute">
+        <BackButton />
+      </div>
       <SectionHead
         title="All Blogs"
         titleColor="text-gray-800 dark:text-fourth"

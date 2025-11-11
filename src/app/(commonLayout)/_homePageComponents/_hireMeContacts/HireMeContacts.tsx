@@ -35,7 +35,7 @@ const HireMeContacts = () => {
         </div>
         <div
           onClick={() => scrollToSection("contacts")}
-          className="bg-transparent border border-white hover:bg-gradient-to-r from-accent/20 to-accent font-bold py-3 px-8 rounded-lg transition-all duration-300 transform hover:scale-105"
+          className="bg-transparent border border-white hover:bg-gradient-to-r from-accent/20 to-accent font-bold py-3 px-8 rounded-lg transition-all duration-300 transform hover:scale-105 cursor-pointer"
         >
           Contact Directly
         </div>

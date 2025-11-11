@@ -2,6 +2,7 @@ import Image from "next/image";
 import { getABlog } from "@/services/Blogs";
 import BlogInteractions from "./_InterectiveSec/BlogInteractions";
 import { formatDate } from "@/utils/DateFormat";
+import BackButton from "./_InterectiveSec/BackButton";
 
 const BlogDetailsPage = async ({
   params,
@@ -22,6 +23,9 @@ const BlogDetailsPage = async ({
 
   return (
     <article className="group flex flex-col rounded-2xl overflow-hidden border bg-gray-100 dark:bg-gray-900 shadow-lg transition-all duration-500 hover:shadow-xl text-gray-700 dark:text-gray-300 border-accent/20 dark:border-gray-800 py-16 px-5 lg:px-20 space-y-10">
+      <div className="p-2 absolute">
+        <BackButton />
+      </div>
       {/* COVER IMAGE */}
       <div className="relative w-full h-80 lg:h-[500px] rounded-2xl overflow-hidden shadow-md">
         <Image
