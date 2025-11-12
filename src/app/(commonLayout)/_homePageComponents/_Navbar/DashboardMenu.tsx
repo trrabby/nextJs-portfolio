@@ -11,8 +11,18 @@ type DashboardMenuProps = {
 };
 
 const navlinks = [
-  { name: "Profile", link: "/profile", Icon: <FaUserCircle /> },
-  { name: "Dashboard", link: "/dashboard", Icon: <FaTachometerAlt /> },
+  {
+    name: "Profile",
+    link: "/profile",
+    Icon: <FaUserCircle />,
+    target: "_self",
+  },
+  {
+    name: "Dashboard",
+    link: "/dashboard",
+    Icon: <FaTachometerAlt />,
+    target: "_blank",
+  },
 ];
 
 export default function DashboardMenu({
@@ -64,7 +74,7 @@ export default function DashboardMenu({
         <ul className="flex flex-col space-y-1">
           {navlinks.map((item) => (
             <li key={item.name}>
-              <Link href={item.link}>
+              <Link href={item.link} target={item.target}>
                 <div
                   onClick={() => setDashboardOpen(false)}
                   className="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-200 cursor-pointer transition-colors duration-200"
