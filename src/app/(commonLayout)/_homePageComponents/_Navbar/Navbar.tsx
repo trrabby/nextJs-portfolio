@@ -55,8 +55,8 @@ export default function Navbar() {
   const [activeSubmenu, setActiveSubmenu] = useState<string | null>(null);
   const user = useAppSelector(selectCurrentUser);
   const dispatch = useAppDispatch();
-  const { data: session, status } = useSession();
   const { scrollToSection } = useScrollToSection();
+  const { data: session, status } = useSession();
 
   useEffect(() => {
     const syncReduxUser = async () => {

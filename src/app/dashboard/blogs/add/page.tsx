@@ -12,6 +12,8 @@ import { SimpleEditor } from "@/components/tiptap-templates/simple/simple-editor
 import { useRouter } from "next/navigation";
 import { SectionHead } from "@/components/SectionHead";
 import { Typewriter } from "react-simple-typewriter";
+import Zoom from "react-medium-image-zoom";
+import "react-medium-image-zoom/dist/styles.css";
 
 export interface IBlogFormData {
   title: string;
@@ -46,6 +48,8 @@ const AddBlogPage = () => {
     loading: thumbnailLoading,
     handleImageChange: handleThumbnailChange,
     resetImages: resetThumbnails,
+    setFiles: setThumbnailFiles,
+    setPreviews,
   } = useImageHandler(true);
 
   const onSubmit = async (data: IBlogFormData) => {
@@ -94,8 +98,20 @@ const AddBlogPage = () => {
     }
   };
 
+  const handleRemoveThumbnail = (index: number) => {
+    // Remove from previews
+    const updatedPreviews = thumbnailPreviews.filter((_, i) => i !== index);
+
+    // Remove from files
+    const updatedFiles = thumbnailFiles.filter((_, i) => i !== index);
+
+    // Update states manually (do NOT call resetThumbnails)
+    setThumbnailFiles(updatedFiles);
+    setPreviews(updatedPreviews);
+  };
+
   return (
-    <div className="min-h-screen bg-gradient-to-br md:py-12 md:px-4">
+    <div className="min-h-screen bg-gradient-to-br md:p-4">
       <motion.div
         initial={{ opacity: 0, y: 40 }}
         animate={{ opacity: 1, y: 0 }}
@@ -187,33 +203,73 @@ const AddBlogPage = () => {
           </div>
 
           {/* Thumbnails */}
-          <div className="flex flex-col">
-            <label className="font-medium mb-2">Thumbnails</label>
-            <input
-              type="file"
-              accept="image/*"
-              required
-              multiple
-              onChange={handleThumbnailChange}
-              className="text-gray-700 dark:text-[#f2f7ff]"
-            />
+          <div className="flex flex-col w-full">
+            <label className="font-medium mb-2 text-lg text-gray-700 dark:text-gray-200">
+              Upload Thumbnails
+            </label>
+
+            {/* Upload Box */}
+            <label
+              className="border-2 border-dashed border-[#04d1a1] dark:border-[#04d1a1]/60 
+               rounded-2xl p-6 flex flex-col items-center justify-center gap-3
+               cursor-pointer bg-gray-50 dark:bg-gray-800/40 
+               hover:bg-[#04d1a1]/5 dark:hover:bg-[#04d1a1]/10 
+               transition-all duration-300"
+            >
+              <span className="text-sm text-gray-600 dark:text-gray-300">
+                Click to upload
+              </span>
+
+              <span className="text-xs text-gray-500 dark:text-gray-400">
+                You can upload multiple images
+              </span>
+
+              <input
+                type="file"
+                accept="image/*"
+                required
+                multiple
+                onChange={handleThumbnailChange}
+                className="hidden"
+              />
+            </label>
+
+            {/* Loading */}
             {thumbnailLoading && (
-              <p className="text-sm text-[#04d1a1] mt-1">Loading previews...</p>
+              <p className="text-sm text-[#04d1a1] mt-2">Loading previews...</p>
             )}
 
+            {/* Preview Grid */}
             {thumbnailPreviews.length > 0 && (
-              <div className="flex flex-wrap gap-3 mt-4">
+              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 mt-5">
                 {thumbnailPreviews.map((src, idx) => (
                   <div
                     key={idx}
-                    className="relative w-28 h-28 rounded-xl overflow-hidden border border-[#84fadf] dark:border-[#04d1a1] shadow-md"
+                    className="relative group w-full aspect-square rounded-xl overflow-hidden
+                     border border-[#04d1a1]/40 dark:border-[#04d1a1]/60 
+                     shadow-lg hover:shadow-xl transition-all duration-300"
                   >
-                    <Image
-                      src={src}
-                      alt={`Thumbnail ${idx + 1}`}
-                      fill
-                      className="object-cover"
-                    />
+                    {/* Zoomable Image */}
+                    <Zoom>
+                      <Image
+                        src={src}
+                        alt={`Thumbnail ${idx + 1}`}
+                        fill
+                        className="object-cover cursor-zoom-in group-hover:scale-105 
+                         transition-transform duration-500"
+                      />
+                    </Zoom>
+
+                    {/* Remove Button */}
+                    <button
+                      type="button"
+                      onClick={() => handleRemoveThumbnail(idx)}
+                      className="absolute top-2 right-2 bg-red-500 text-white w-7 h-7 
+                       text-xs rounded-full flex items-center justify-center
+                       opacity-90 hover:bg-red-600 transition-all duration-200 shadow-md"
+                    >
+                      ✕
+                    </button>
                   </div>
                 ))}
               </div>

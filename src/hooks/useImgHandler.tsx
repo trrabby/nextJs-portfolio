@@ -38,7 +38,15 @@ const useImageHandler = (multiple = false) => {
     setFiles([]);
   };
 
-  return { previews, files, loading, handleImageChange, resetImages };
+  return {
+    previews,
+    files,
+    loading,
+    handleImageChange,
+    resetImages,
+    setFiles,
+    setPreviews,
+  };
 };
 
 export default useImageHandler;
