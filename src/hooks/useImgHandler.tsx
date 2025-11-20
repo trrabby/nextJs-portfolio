@@ -6,26 +6,32 @@ const useImageHandler = (multiple = false) => {
   const [files, setFiles] = useState<File[]>([]);
   const [loading, setLoading] = useState(false);
 
-  // ✅ Handle one or multiple file selections
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFiles = e.target.files;
     if (!selectedFiles || selectedFiles.length === 0) return;
 
     setLoading(true);
 
-    const fileArray = multiple ? Array.from(selectedFiles) : [selectedFiles[0]]; // Limit to one file if multiple = false
+    // Convert current selections
+    const newFiles = multiple ? Array.from(selectedFiles) : [selectedFiles[0]];
+
+    // Merge with existing files
+    const mergedFiles = multiple ? [...files, ...newFiles] : newFiles;
 
     const previewArray: string[] = [];
+    let processed = 0;
 
-    fileArray.forEach((file) => {
+    mergedFiles.forEach((file) => {
       const reader = new FileReader();
       reader.onloadend = () => {
         previewArray.push(reader.result as string);
 
-        // ✅ Update previews only when all files are read
-        if (previewArray.length === fileArray.length) {
+        processed++;
+
+        // Update once all previews are fully generated
+        if (processed === mergedFiles.length) {
+          setFiles(mergedFiles);
           setPreviews(previewArray);
-          setFiles(fileArray);
           setLoading(false);
         }
       };
@@ -38,6 +44,46 @@ const useImageHandler = (multiple = false) => {
     setFiles([]);
   };
 
+  // New function to add existing previews (URLs from server)
+  const addExistingPreviews = (urls: string[]) => {
+    setPreviews((prev) => [
+      ...prev,
+      ...urls.filter((url) => !prev.includes(url)),
+    ]);
+  };
+
+  // New function to set both previews and files separately
+  const setPreviewsOnly = (urls: string[]) => {
+    setPreviews(urls);
+    // Don't modify files array when setting existing previews
+  };
+
+  // New function to add new files with previews
+  const addNewFiles = (newFiles: File[]) => {
+    if (newFiles.length === 0) return;
+
+    setLoading(true);
+    const mergedFiles = multiple ? [...files, ...newFiles] : newFiles;
+
+    const previewArray: string[] = [];
+    let processed = 0;
+
+    newFiles.forEach((file) => {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        previewArray.push(reader.result as string);
+        processed++;
+
+        if (processed === newFiles.length) {
+          setFiles(mergedFiles);
+          setPreviews((prev) => [...prev, ...previewArray]);
+          setLoading(false);
+        }
+      };
+      reader.readAsDataURL(file);
+    });
+  };
+
   return {
     previews,
     files,
@@ -46,6 +92,9 @@ const useImageHandler = (multiple = false) => {
     resetImages,
     setFiles,
     setPreviews,
+    addExistingPreviews,
+    setPreviewsOnly,
+    addNewFiles,
   };
 };
 

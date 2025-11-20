@@ -1,3 +1,41 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* --- FIX AntD Table Colors for Light/Dark Mode --- */
+.custom-table .ant-table,
+.custom-table .ant-table-container,
+.custom-table .ant-table-content,
+.custom-table .ant-table-thead > tr > th,
+.custom-table .ant-table-tbody > tr > td {
+  background-color: inherit !important;
+  color: inherit !important;
+}
+
+/* Hover rows */
+.custom-table .ant-table-tbody > tr:hover > td {
+  background-color: rgba(255, 255, 255, 0.4) !important;
+}
+.dark .custom-table .ant-table-tbody > tr:hover > td {
+  background-color: rgba(30, 41, 59, 0.6) !important; /* slate-800 */
+}
+
+/* Borders */
+.custom-table .ant-table-wrapper,
+.custom-table .ant-table,
+.custom-table .ant-table-container {
+  border-color: inherit !important;
+}
+
+/* Light mode row hover */
+.custom-table .ant-table-tbody > tr:hover > td {
+  background-color: #f1f5f9 !important; /* slate-100 */
+  transition: background-color 0.25s ease;
+  cursor: pointer;
+}
+
+/* Dark mode row hover */
+.dark .custom-table .ant-table-tbody > tr:hover > td {
+  background-color: #92939442 !important; /* slate-800 */
+  cursor: pointer;
+}
