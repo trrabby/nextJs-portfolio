@@ -2,9 +2,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import * as React from "react";
 import Button from "@mui/material/Button";
-import { RiMenuFill, RiMenuFoldLine } from "react-icons/ri";
 import Sidebar from "./Sidebar";
-// adjust path if needed
+import { cn } from "@/utils/utils";
 
 export default function SidebarDrawer() {
   const [open, setOpen] = React.useState(false);
@@ -12,24 +11,42 @@ export default function SidebarDrawer() {
   return (
     <div className="bg-none">
       <Button className="fixed">
-        {open ? (
+        <div
+          className="py-2 px-0 z-40 cursor-pointer"
+          onClick={() => setOpen(!open)}
+        >
+          {/* HAMBURGER BUTTON */}
           <div
-            className="p-4 shadow-2xl shadow-primary rounded-full bg-transparent z-40"
-            onClick={() => setOpen(!open)}
+            className={cn(
+              "w-8 h-6 flex flex-col justify-between transition-all duration-300",
+              "relative"
+            )}
           >
-            <RiMenuFoldLine className="w-10 h-10 text-accent dark:text-fourth" />
+            <span
+              className={cn(
+                "block w-full h-[3px] bg-accent dark:bg-fourth transition-all duration-300",
+                open && "translate-y-[10px] rotate-45"
+              )}
+            ></span>
+
+            <span
+              className={cn(
+                "block w-full h-[3px] bg-accent dark:bg-fourth transition-all duration-300",
+                open && "opacity-0"
+              )}
+            ></span>
+
+            <span
+              className={cn(
+                "block w-full h-[3px] bg-accent dark:bg-fourth transition-all duration-300",
+                open && "-translate-y-[10px] -rotate-45"
+              )}
+            ></span>
           </div>
-        ) : (
-          <div
-            className="p-4 shadow-primary rounded-full bg-transparent z-40"
-            onClick={() => setOpen(!open)}
-          >
-            <RiMenuFill className="w-10 h-10 text-accent dark:text-fourth" />
-          </div>
-        )}
+          {/* END HAMBURGER */}
+        </div>
       </Button>
 
-      {/* ✅ sectionRefs comes from context now */}
       <Sidebar open={open} onClose={() => setOpen(false)} />
     </div>
   );

@@ -1,6 +1,7 @@
 "use client";
 import { useState } from "react";
 import { ThumbsUp, ThumbsDown, MessageSquare } from "lucide-react";
+import { FaRegComments } from "react-icons/fa";
 
 const BlogInteractions = () => {
   const [likes, setLikes] = useState(0);
@@ -40,7 +41,7 @@ const BlogInteractions = () => {
       <div className="flex items-center gap-6 mb-10">
         <button
           onClick={handleLike}
-          className={`flex items-center gap-2 px-5 py-2.5 rounded-full transition-all shadow-sm ${
+          className={`flex items-center gap-2 p-2 rounded-md transition-all shadow-sm ${
             active === "like"
               ? "bg-accent text-white scale-105"
               : "bg-accent/30 text-white hover:bg-accent/40"
@@ -51,7 +52,7 @@ const BlogInteractions = () => {
 
         <button
           onClick={handleDislike}
-          className={`flex items-center gap-2 px-5 py-2.5 rounded-full transition-all shadow-sm ${
+          className={`flex items-center gap-2 p-2 rounded-md transition-all shadow-sm ${
             active === "dislike"
               ? "bg-red-600 text-white scale-105"
               : "bg-red-100 text-red-700 hover:bg-red-200"
@@ -59,6 +60,9 @@ const BlogInteractions = () => {
         >
           <ThumbsDown className="w-5 h-5" /> {dislikes}
         </button>
+        <div className="bg-slate-500 p-2 rounded-md flex items-center gap-2 text-white">
+          <FaRegComments className="w-5 h-5" /> {dislikes}
+        </div>
       </div>
 
       {/* Comment Section */}

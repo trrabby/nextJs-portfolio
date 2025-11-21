@@ -2,7 +2,7 @@ import { SectionHead } from "@/components/SectionHead";
 import { getProjects } from "@/services/Projects";
 import { IProject } from "@/constants";
 import ProjectCard from "@/app/(CommonLayout)/_homePageComponents/_Cards/ProjectCards";
-import BackButton from "../blogs/[id]/_InterectiveSec/BackButton";
+import BackButton from "../../../components/BackButton";
 
 export const revalidate = 60; // cache refresh every 1 minute
 

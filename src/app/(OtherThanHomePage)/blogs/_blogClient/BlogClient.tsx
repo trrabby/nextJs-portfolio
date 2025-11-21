@@ -6,7 +6,7 @@ import { BlogCard } from "@/app/(CommonLayout)/_homePageComponents/_Cards/BlogCa
 import { getBlogs } from "@/services/Blogs";
 import { IBlog } from "@/constants";
 import { SectionHead } from "@/components/SectionHead";
-import BackButton from "../[id]/_InterectiveSec/BackButton";
+import BackButton from "../../../../components/BackButton";
 
 interface BlogsClientProps {
   initialBlogs: IBlog[];
