@@ -5,6 +5,8 @@ import { getBlogs } from "@/services/Blogs";
 import { BlogCard } from "@/app/(CommonLayout)/_homePageComponents/_Cards/BlogCard";
 import { IBlog } from "@/constants";
 
+export const revalidate = 60; // cache refresh every 1 minute
+
 const FeaturedBlogs = async () => {
   const res = await getBlogs("", "", {
     featured: "true",

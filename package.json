@@ -43,6 +43,7 @@
     "browser-image-compression": "^2.0.2",
     "emailjs-com": "^3.2.0",
     "framer-motion": "^12.4.2",
+    "html-react-parser": "^5.2.10",
     "jwt-decode": "^4.0.0",
     "lodash.throttle": "^4.1.1",
     "lucide-react": "^0.545.0",

@@ -5,6 +5,9 @@ import { formatDate } from "@/utils/DateFormat";
 import BackButton from "../../../../components/BackButton";
 import BlogCarousel from "./_InterectiveSec/BlogCarousel";
 import UpdateButton from "./_InterectiveSec/UpdateButton";
+import BlogHtmlContent from "./_InterectiveSec/BlogHtmlContent";
+
+export const revalidate = 60; // cache refresh every 1 minute
 
 const BlogDetailsPage = async ({
   params,
@@ -14,8 +17,6 @@ const BlogDetailsPage = async ({
   const { id } = await params;
   const { data: blog } = await getABlog(id);
   const blogData = blog[0];
-
-  // console.log(blogData);
 
   if (!blogData) {
     return (
@@ -35,7 +36,7 @@ const BlogDetailsPage = async ({
 
         <BlogCarousel thumbnails={blogData.thumbnails} />
         <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex flex-col justify-end p-8 text-white">
-          <h1 className="text-xl lg:text-5xl font-bold drop-shadow-lg">
+          <h1 className="text-xl lg:text-4xl font-bold drop-shadow-lg">
             {blogData.title}
           </h1>
           <p className="text-sm mt-2 opacity-90">
@@ -89,10 +90,7 @@ const BlogDetailsPage = async ({
       </div>
 
       {/* BLOG CONTENT */}
-      <div
-        className="prose max-w-none text-gray-800 dark:text-gray-200 leading-relaxed prose-headings:text-gray-900 dark:prose-headings:text-white prose-a:text-accent dark:prose-a:text-yellow-400"
-        dangerouslySetInnerHTML={{ __html: blogData.content }}
-      />
+      <BlogHtmlContent blogData={blogData} />
 
       {/* CLIENT INTERACTIONS */}
       <div className="border-t border-gray-300 dark:border-gray-700 pt-8">
