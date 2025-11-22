@@ -50,7 +50,7 @@ export const getBlogs = async (
     const url = `${config().Backend_URL}/blogs${
       params.toString() ? `?${params.toString()}` : ""
     }`;
-    console.log(url);
+    // console.log(url);
     const res = await fetch(url, {
       method: "GET",
       next: { tags: ["BLOGS"] },

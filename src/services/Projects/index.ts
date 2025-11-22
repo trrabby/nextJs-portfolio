@@ -49,7 +49,7 @@ export const getProjects = async (
     const url = `${config().Backend_URL}/projects${
       params.toString() ? `?${params.toString()}` : ""
     }`;
-    console.log(url);
+    // console.log(url);
     const res = await fetch(url, {
       method: "GET",
       next: { tags: ["PROJECTS"] },
