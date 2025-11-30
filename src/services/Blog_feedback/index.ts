@@ -83,8 +83,8 @@ export const getFeedbacksBlogWise = async (id: string) => {
   }
 };
 
-// get a feedback
-export const getAFeedback = async (id: string) => {
+// get a feedback author wise
+export const getAFeedbackAuthorWise = async (id: string) => {
   try {
     const res = await fetch(`${config().Backend_URL}/feedbacks/${id}`, {
       next: {
@@ -98,8 +98,26 @@ export const getAFeedback = async (id: string) => {
   }
 };
 
-// update feedback
-export const updateFeedback = async (
+// get a single feedback
+export const getSingleFeedback = async (id: string) => {
+  try {
+    const res = await fetch(
+      `${config().Backend_URL}/feedbacks/single-feedback/${id}`,
+      {
+        next: {
+          tags: ["FEEDBACKS"],
+        },
+      }
+    );
+    const data = await res.json();
+    return data;
+  } catch (error: any) {
+    return Error(error.message);
+  }
+};
+
+// update feedback bt feedback Id
+export const updateFeedbackById = async (
   id: string,
   payload: FormData
 ): Promise<any> => {
@@ -121,12 +139,15 @@ export const updateFeedback = async (
 // delete feedback
 export const deleteFeedback = async (id: string): Promise<any> => {
   try {
-    const res = await fetch(`${config().Backend_URL}/blogs/delete-blog/${id}`, {
-      method: "PUT",
-      headers: {
-        Authorization: (await cookies()).get("accessToken")!.value,
-      },
-    });
+    const res = await fetch(
+      `${config().Backend_URL}/feedbacks/delete-feedback/${id}`,
+      {
+        method: "PUT",
+        headers: {
+          Authorization: (await cookies()).get("accessToken")!.value,
+        },
+      }
+    );
     revalidateTag("BLOGS");
     return res.json();
   } catch (error: any) {

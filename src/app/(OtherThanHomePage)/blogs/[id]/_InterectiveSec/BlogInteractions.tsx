@@ -2,14 +2,16 @@
 import { useState } from "react";
 import { ThumbsUp, ThumbsDown, MessageSquare } from "lucide-react";
 import { FaRegComments } from "react-icons/fa";
+import { IBlog } from "@/constants";
 
-const BlogInteractions = () => {
+const BlogInteractions = ({ blogData }: { blogData: IBlog }) => {
   const [likes, setLikes] = useState(0);
   const [dislikes, setDislikes] = useState(0);
   const [comment, setComment] = useState("");
   const [comments, setComments] = useState<string[]>([]);
   const [active, setActive] = useState<"like" | "dislike" | null>(null);
 
+  console.log(blogData);
   const handleLike = () => {
     setLikes((prev) => prev + 1);
     setActive("like");

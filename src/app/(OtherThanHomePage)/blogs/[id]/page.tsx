@@ -16,7 +16,7 @@ const BlogDetailsPage = async ({
 }) => {
   const { id } = await params;
   const { data: blog } = await getABlog(id);
-  const blogData = blog[0];
+  const blogData = blog;
 
   if (!blogData) {
     return (
@@ -94,7 +94,7 @@ const BlogDetailsPage = async ({
 
       {/* CLIENT INTERACTIONS */}
       <div className="border-t border-gray-300 dark:border-gray-700 pt-8">
-        <BlogInteractions />
+        <BlogInteractions blogData={blogData} />
       </div>
     </article>
   );
